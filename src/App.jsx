@@ -1,20 +1,20 @@
 import "./App.css";
-import Categories from "./component/Categories";
-import Footer from "./component/Footer";
-import Items from "./component/Items";
-import Product from "./component/Product";
-import Testimonials from "./component/Testimonials";
-import Working from "./component/Working";
+import Home from "./Home";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./component/Signup";
+import Login from "./component/Login";
 
 function App() {
   return (
     <>
-      <Product />
-      <Working />
-      <Categories />
-      <Items />
-      <Testimonials />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
