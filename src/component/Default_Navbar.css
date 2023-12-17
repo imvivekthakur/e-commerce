@@ -1,0 +1,23 @@
+.nav-link {
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-link:hover {
+    background-color: #4a5568;
+  }
+  #img1{
+    transition: 0.3s;
+  }
+  #img2{
+    transition: 0.3s;
+  }
+  .nav-link.active:hover, .nav-link.active:focus {
+    background-color: #4a5568;
+}
+
+
+  

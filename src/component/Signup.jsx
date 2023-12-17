@@ -1,5 +1,5 @@
 import React from "react";
-import signUpImg from "../assets/signUp.svg";
+// import signUpImg from "../assets/signUp.svg";
 
 const Signup = () => {
   return (
