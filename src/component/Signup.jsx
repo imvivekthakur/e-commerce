@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 // import signUpImg from "../assets/signUp.svg";
 
 const Signup = () => {
@@ -300,6 +301,15 @@ const Signup = () => {
                       REGISTER NOW
                     </button>
                   </div>
+                </div>
+                <div className="text-center">
+                  Already have an account?{" "}
+                  <NavLink
+                    to="/login"
+                    className="font-bold hover:text-primary hover:underline"
+                  >
+                    Login
+                  </NavLink>
                 </div>
               </div>
             </div>

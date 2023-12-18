@@ -101,7 +101,7 @@ const DefaultNavbar = () => {
               </li>
               <li className="mb-2 md:mb-0">
                 <NavLink
-                  to="/contact"
+                  to="/login"
                   className="nav-link"
                   activeClassName="active-link"
                 >

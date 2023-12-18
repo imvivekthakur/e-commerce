@@ -8,6 +8,10 @@ import Footer from "./component/Footer";
 import Default_Navbar from "./component/Default_Navbar";
 import City_Preference from "./component/City_Preference";
 import Slider from "./component/Slider";
+import Buy from "./component/Buy";
+import Rent from "./component/Rent";
+import Rooms from "./component/Rooms";
+import Setup from "./component/Setup";
 
 const Home = () => {
   return (
@@ -18,6 +22,10 @@ const Home = () => {
       <Product />
       <Working />
       <Categories />
+      <Buy/>
+      <Rent/>
+      <Rooms/>
+      <Setup/>
       <Items />
       <Testimonials />
       <Footer />
