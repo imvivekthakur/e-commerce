@@ -33,7 +33,7 @@ const Suggestions = () => {
         type="text"
         value={searchQuery}
         placeholder="What are you searching for?"
-        className="search-input w-80 border focus:border-blue-500 focus:outline-5 outline-none px-4 py-2"
+        className="search-input w-60 md:w-80 border focus:border-blue-500 focus:outline-5 outline-none px-2 py-1 md:px-4 md:py-2"
         onChange={handleSearchChange}
         onFocus={handleSearchChange} 
         onBlur={clearSuggestions}

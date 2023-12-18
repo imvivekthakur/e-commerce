@@ -99,6 +99,15 @@ const DefaultNavbar = () => {
               <li className="flex items-center mt-5">
                 <Suggestions />
               </li>
+              <li className="mb-2 md:mb-0">
+                <NavLink
+                  to="/contact"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Login
+                </NavLink>
+              </li>
             </ul>
 
             <div className="flex flex-row items-center justify-center">
@@ -107,7 +116,7 @@ const DefaultNavbar = () => {
                   <img
                     src={Heart}
                     alt="Heart Image"
-                    className="w-6 h-6 hover:w-9 hover:h-8 sm:mx-auto mt-5"
+                    className="w-6 h-6 hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
                     id="img1"
                   />
                 </button>
@@ -117,7 +126,7 @@ const DefaultNavbar = () => {
                   <img
                     src={Cart}
                     alt="Heart Image"
-                    className="w-6 h-6 hover:w-9 hover:h-8 sm:mx-auto mt-5"
+                    className="w-6 h-6 hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
                     id="img2"
                   />
                 </button>
