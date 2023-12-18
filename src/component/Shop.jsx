@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DefaultNavbar from "./Default_Navbar";
 import Products from "./Products";
 import ReactPaginate from "react-paginate";
+import Card from './Card'
 
 const Shop = () => {
   const cardsData = [
@@ -58,7 +59,7 @@ const Shop = () => {
   const items = cardsData;
   //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 2;
+  const itemsPerPage = 6;
 
   const endOffset = itemOffset + itemsPerPage;
   //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -111,7 +112,17 @@ const Shop = () => {
           </button>
         </div>
       </div>
-      <Products />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
+        {currentItems.map((card, index) => (
+          <Card
+            key={index}
+            img={card.img}
+            title={card.title}
+            desc={card.desc}
+            price={card.price}
+          />
+        ))}
+      </div>
       <div className="flex justify-center items-center m-10 mb-16">
         <ReactPaginate
           breakLabel="..."
