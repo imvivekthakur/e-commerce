@@ -33,27 +33,27 @@ const CityPreference = () => {
     setSidebarOpen(false);
   };
 
-  const searchLocationByPinCode = async () => {
-    try {
-      const response = await fetch("/path/to/indian_pin_codes.json"); // Replace with the actual path to your JSON file
-      const data = await response.json();
+  // const searchLocationByPinCode = async () => {
+  //   try {
+  //     const response = await fetch("/path/to/indian_pin_codes.json"); // Replace with the actual path to your JSON file
+  //     const data = await response.json();
   
-      const cityData = data[pinCode];
+  //     const cityData = data[pinCode];
   
-      if (cityData) {
-        const cityName = cityData.city;
-        setCity(cityName);
-        setLocation({
-          latitude: cityData.latitude,
-          longitude: cityData.longitude,
-        });
-      } else {
-        console.log("City not found for the provided pin code.");
-      }
-    } catch (error) {
-      console.error("Error fetching city:", error);
-    }
-  };
+  //     if (cityData) {
+  //       const cityName = cityData.city;
+  //       setCity(cityName);
+  //       setLocation({
+  //         latitude: cityData.latitude,
+  //         longitude: cityData.longitude,
+  //       });
+  //     } else {
+  //       console.log("City not found for the provided pin code.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching city:", error);
+  //   }
+  // };
   
   
   
@@ -109,6 +109,7 @@ const CityPreference = () => {
 
   return (
     <div className="flex justify-between">
+      {/* Button for toggling sidebar */}
       <button
         className="fixed flex flex-row p-5 text-black bg-gray-300 px-4 rounded z-60"
         onClick={toggleSidebar}
@@ -116,47 +117,57 @@ const CityPreference = () => {
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />
         {city ? `Current City: ${city}` : "Select Your City"}
       </button>
+
+      {/* Sidebar */}
       <div
         className={`fixed z-60 top-0 left-0 h-full bg-white overflow-x-hidden transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } w-64 p-4 shadow z-0`}
         style={{ zIndex: 60 }}
       >
+        {/* Close button */}
+        <div className="flex z-60 justify-end mb-2">
+          <button
+            className="border p-2 text-black rounded-full hover:bg-red-600 hover:text-white cursor-pointer transition duration-300"
+            onClick={closeSidebar}
+          >
+            X
+          </button>
+        </div>
+
+        {/* Sidebar content */}
         <div className="sidebar-content">
-          <div className="flex z-60 justify-end mb-2">
-            <button
-              className="border p-2 text-black rounded-full hover:bg-red-600 hover:text-white cursor-pointer transition duration-300"
-              onClick={closeSidebar}
-            >
-              X
-            </button>
-          </div>
+          {/* Search button for current location */}
           <div>
             <button
               onClick={searchCurrentLocation}
               className="search-button w-full text-black underline p-2 rounded"
             >
-              {city ? `Current City: ${city}` : "get Current location"}
+              {city ? `Current City: ${city}` : "Get Current Location"}
             </button>
           </div>
+
+          {/* Search by Pin Code */}
           <div>
-        <input
-          type="text"
-          placeholder="Enter Pin Code"
-          value={pinCode}
-          onChange={(e) => setPinCode(e.target.value)}
-          className="search-input w-full border focus:border-blue-500 focus:outline-5 outline-none px-4 py-2"
-        />
-        <button
-          onClick={searchLocationByPinCode}
-          className="search-button w-full text-black underline p-2 rounded mt-2"
-        >
-          Search by Pin Code
-        </button>
-      </div>
+            <input
+              type="text"
+              placeholder="Enter Pin Code"
+              value={pinCode}
+              onChange={(e) => setPinCode(e.target.value)}
+              className="search-input w-full border focus:border-blue-500 focus:outline-5 outline-none px-4 py-2"
+            />
+            <button
+              // onClick={searchLocationByPinCode}
+              className="search-button w-full text-black underline p-2 rounded mt-2"
+            >
+              Search by Pin Code
+            </button>
+          </div>
+
+          {/* City selection */}
           <nav className="mt-4">
             <p className="mb-2 font-bold text-center">Select a City:</p>
-            <ul className="grid grid-cols-3 gap-6">
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {indianCities.map(({ name, image }) => (
                 <li
                   key={name}

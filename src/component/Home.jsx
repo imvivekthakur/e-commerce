@@ -21,7 +21,6 @@ const Home = () => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
-      <Products />
       <Working />
       <Categories />
       <Buy />
@@ -29,6 +28,7 @@ const Home = () => {
       <Rooms />
       <Setup />
       <Items />
+      <Product/>
       <Testimonials />
       <Features />
       <Footer />
