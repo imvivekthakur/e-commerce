@@ -1,5 +1,6 @@
 import React from "react";
 import loginImg from "../assets/signin.svg";
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -61,6 +62,14 @@ const Login = () => {
                       LOGIN
                     </button>
                   </div>
+                </div>
+                <div className="text-center">
+                  New User?{" "}
+                  <NavLink
+                  to="/signup"
+                  className="font-bold hover:text-primary hover:underline">
+                    Register
+                  </NavLink>
                 </div>
               </div>
             </div>
