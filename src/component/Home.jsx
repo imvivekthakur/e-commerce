@@ -8,6 +8,11 @@ import Footer from "./Footer";
 import Default_Navbar from "./Default_Navbar";
 import City_Preference from "./City_Preference";
 import Slider from "./Slider";
+import Buy from "./Buy";
+import Rent from "./Rent";
+import Rooms from "./Rooms";
+import Setup from "./Setup";
+import Products from "./Products";
 import Features from "./Features";
 
 const Home = () => {
@@ -16,9 +21,13 @@ const Home = () => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
-      <Product />
+      <Products />
       <Working />
       <Categories />
+      <Buy />
+      <Rent />
+      <Rooms />
+      <Setup />
       <Items />
       <Testimonials />
       <Features />
