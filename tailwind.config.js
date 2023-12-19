@@ -6,7 +6,10 @@ export default {
       colors: {
         primary: "#CDA274",
       },
+      fontFamily: {
+        "plus-jakarta-sans": ["Plus Jakarta Sans", "sans-serif"],
+      },
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [require("flowbite/plugin")],
 };
