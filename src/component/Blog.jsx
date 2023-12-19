@@ -19,8 +19,8 @@ const Blog = () => {
           </span>
         </h1>
       </div>
-      {/* <Features />
-      <Footer /> */}
+      {/* <Features /> */}
+      <Footer />
     </>
   );
 };

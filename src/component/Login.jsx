@@ -1,11 +1,14 @@
 import React from "react";
 import loginImg from "../assets/signin.svg";
 import { NavLink } from "react-router-dom";
+import DefaultNavbar from "./Default_Navbar";
+import Footer from "./Footer";
 
 const Login = () => {
   return (
     <>
-      <div className="min-w-screen min-h-screen bg-white flex items-center justify-center px-5 py-5">
+      <DefaultNavbar/>
+      <div className="min-w-screen min-h-screen bg-white flex items-center justify-center mt-20 px-5 py-5">
         <div
           className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden"
           style={{ maxWidth: "1000px" }}
@@ -76,6 +79,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

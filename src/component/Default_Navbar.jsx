@@ -121,7 +121,7 @@ const DefaultNavbar = () => {
                   />
                 </button>
               </NavLink>
-              <NavLink to="/addtocart">
+              <NavLink to="/cart">
                 <button className="ml-4">
                   <img
                     src={Cart}
