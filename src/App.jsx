@@ -10,6 +10,8 @@ import Blog from "./component/Blog";
 import Product from "./component/Product";
 import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
+import TogglePack from "./component/Toggle_Pack";
+import DefaultNavbar from "./component/Default_Navbar";
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/toggle" element={<TogglePack/>} />
         </Routes>
       </BrowserRouter>
     </>

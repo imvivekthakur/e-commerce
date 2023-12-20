@@ -101,6 +101,15 @@ const DefaultNavbar = () => {
               </li>
               <li className="mb-2 md:mb-0">
                 <NavLink
+                  to="/toggle"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Package
+                </NavLink>
+              </li>
+              <li className="mb-2 md:mb-0">
+                <NavLink
                   to="/login"
                   className="nav-link"
                   activeClassName="active-link"
