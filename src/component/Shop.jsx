@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DefaultNavbar from "./Default_Navbar";
-import Products from "./Products";
 import ReactPaginate from "react-paginate";
-import Card from "./Card";
+import Card from './Card'
+import Footer from "./Footer";
 
 const Shop = () => {
   const cardsData = [
@@ -140,6 +140,7 @@ const Shop = () => {
           breakLinkClassName="text-primary"
         />
       </div>
+      <Footer/>
     </>
   );
 };

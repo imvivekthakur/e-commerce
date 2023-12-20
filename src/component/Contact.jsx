@@ -11,17 +11,24 @@ const Contact = () => {
   return (
     <>
       <DefaultNavbar />
-      <div className="mx-auto w-full md:w-[100%]">
+      <div className="relative">
         <img
           src={contactImg}
-          alt="contact"
-          className="w-full h-auto object-cover"
+          alt="shop"
+          className="w-screen h-80 blur-sm object-cover"
         />
+        <h1 className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-opacity-70 p-4">
+          <span className="text-white drop-shadow text-4xl font-bold">
+            Contact Us
+          </span>
+        </h1>
+      </div>
+      <div className="mx-auto w-full md:w-[100%]">
         <div className="text-center m-8 pb-9">
           <h1 className="text-4xl text-[#CDA274] font-bold m-3">
             Get In Touch With Us
           </h1>
-          <p className="font-plus-jakarta-sans text-center text-base font-normal leading-5 tracking-normal mt-5 pt-2 text-[#9F9F9F] mx-auto text-center md:w-[50%]">
+          <p className="font-plus-jakarta-sans text-base font-normal leading-5 tracking-normal mt-5 pt-2 text-[#9F9F9F] mx-auto text-center md:w-[50%]">
             For More Information About Our Product & Services. Please Feel Free
             To Drop Us An Email. Our Staff Always Be There To Help You Out. Do
             Not Hesitate!

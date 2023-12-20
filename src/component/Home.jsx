@@ -1,5 +1,4 @@
 import React from "react";
-import Product from "./Product";
 import Working from "./Working";
 import Categories from "./Categories";
 import Items from "./Items";
@@ -12,7 +11,6 @@ import Buy from "./Buy";
 import Rent from "./Rent";
 import Rooms from "./Rooms";
 import Setup from "./Setup";
-import Products from "./Products";
 import Features from "./Features";
 
 const Home = () => {
@@ -21,7 +19,6 @@ const Home = () => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
-      <Products />
       <Working />
       <Categories />
       <Buy />
