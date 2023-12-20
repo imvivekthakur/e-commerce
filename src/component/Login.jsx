@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import loginImg from "../assets/signin.svg";
 import { NavLink } from "react-router-dom";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 
 const Login = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
-      <DefaultNavbar/>
+      <DefaultNavbar />
       <div className="min-w-screen min-h-screen bg-white flex items-center justify-center mt-20 px-5 py-5">
         <div
           className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden"
@@ -69,8 +76,9 @@ const Login = () => {
                 <div className="text-center">
                   New User?{" "}
                   <NavLink
-                  to="/signup"
-                  className="font-bold hover:text-primary hover:underline">
+                    to="/signup"
+                    className="font-bold hover:text-primary hover:underline"
+                  >
                     Register
                   </NavLink>
                 </div>
@@ -79,7 +87,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import contactImg from "../assets/contactImg.svg";
 import DefaultNavbar from "./Default_Navbar";
 import Features from "./Features";
@@ -17,6 +17,14 @@ import post4 from "../assets/post4.png";
 import post5 from "../assets/post5.png";
 
 const Blog = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <>
       <DefaultNavbar />

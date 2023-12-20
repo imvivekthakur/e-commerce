@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DefaultNavbar from "./Default_Navbar";
 import contactImg from "../assets/contactImg.svg";
 import addressImg from "../assets/address.svg";
@@ -8,6 +8,13 @@ import Features from "./Features";
 import Footer from "./Footer";
 
 const Contact = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <DefaultNavbar />

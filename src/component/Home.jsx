@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Working from "./Working";
 import Categories from "./Categories";
 import Items from "./Items";
@@ -14,6 +14,14 @@ import Setup from "./Setup";
 import Features from "./Features";
 
 const Home = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <>
       <Default_Navbar />
