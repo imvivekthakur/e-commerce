@@ -28,7 +28,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="flex w-full md:w-[90%] flex-col md:flex-row p-4 items-center mx-auto justify-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-[80%] ">
+        <div className="flex w-full md:w-[70%] flex-col md:flex-row p-4 items-center mx-auto justify-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-[80%] ">
           <div className=" md:w-1/2 pr-0 md:pr-8">
             <div className="mb-4 p-4 flex items-center">
               <img src={addressImg} alt="" className="mr-8" />
