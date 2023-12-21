@@ -48,7 +48,7 @@ const TogglePack = () => {
           alt="shop"
           className="w-screen h-80 blur-sm object-cover"
         />
-        <h1 className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-opacity-70 p-4">
+        <h1 className="absolute top-2/3 left-1/2 w-full mx-auto transform -translate-x-1/2 -translate-y-1/2 z-10 bg-opacity-70 p-4">
           <div className="text-white text-center leading-relaxed drop-shadow text-4xl font-bold">
             All the furniture you can take.
             <br />
