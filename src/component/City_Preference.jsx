@@ -111,7 +111,7 @@ const CityPreference = () => {
     <div className="flex justify-between">
       {/* Button for toggling sidebar */}
       <button
-        className="fixed flex flex-row p-5 text-black bg-gray-300 px-4 rounded z-60"
+        className="fixed flex flex-row p-5 text-black bg-gray-300 px-4 rounded z-50 left-0 top-1/2 transform -translate-y-1/2"
         onClick={toggleSidebar}
       >
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />

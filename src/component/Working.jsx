@@ -2,7 +2,6 @@ import React from 'react'
 import calender from '../assets/calender.svg'
 import location from '../assets/location.svg'
 import car from '../assets/car.svg'
-import line from '../assets/line.svg'
 
 const Working = () => {
   return (
