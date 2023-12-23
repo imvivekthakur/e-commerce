@@ -6,7 +6,7 @@ import bike from "../assets/motorbike.svg";
 
 const Rent = () => {
   return (
-    <div>
+    <div className='max-h-screen overflow-auto'>
       <h1 className='text-4xl font-bold text-primary text-center p-5'>Rent</h1>
       <p className='text-2xl font-semibold text-center p-5'>Own Brand New or Refurbished furniture for your homes.<br/>Choose from over 2000 Products.</p>
       <div className='flex flex-col sm:flex-row justify-center items-center'>
@@ -31,7 +31,7 @@ const Rent = () => {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
 export default Rent;

@@ -29,8 +29,6 @@ const Home = () => {
       <City_Preference />
       <Working />
       <Categories />
-      <Buy />
-      <Rent />
       <Rooms />
       <Setup />
       <Items />

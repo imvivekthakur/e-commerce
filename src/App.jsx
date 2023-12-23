@@ -11,6 +11,7 @@ import Cart from "./component/Cart";
 import Checkout from "./component/Checkout";
 import TogglePack from "./component/Toggle_Pack";
 import DefaultNavbar from "./component/Default_Navbar";
+import CityPreference from "./component/City_Preference";
 
 function App() {
   return (
@@ -24,7 +25,6 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<Blog />} />
           <Route path="/blog" element={<Blog />} />
-
           <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />

@@ -111,18 +111,18 @@ const CityPreference = () => {
     <div className="flex justify-between">
       {/* Button for toggling sidebar */}
       <button
-        className="fixed flex flex-row p-5 text-black bg-gray-300 px-4 rounded z-50 left-0 top-1/2 transform -translate-y-1/2"
+        className="fixed flex flex-row p-5 hover:bg-primary hover:text-white hover:scale-110 transition-transform text-black bg-gray-300 px-4 rounded z-50 left-0 top-1/2 transform -translate-y-1/2"
         onClick={toggleSidebar}
       >
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />
-        {city ? `Current City: ${city}` : "Select Your City"}
+        {city ? `Delivery to: ${city}` : "Delivery to"}
       </button>
 
       {/* Sidebar */}
       <div
         className={`fixed z-60 top-0 left-0 h-full bg-white overflow-x-hidden transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } w-64 p-4 shadow z-0`}
+        } w-90 p-4 shadow z-0`}
         style={{ zIndex: 60 }}
       >
         {/* Close button */}
@@ -143,7 +143,7 @@ const CityPreference = () => {
               onClick={searchCurrentLocation}
               className="search-button w-full text-black underline p-2 rounded"
             >
-              {city ? `Current City: ${city}` : "Get Current Location"}
+              {city ? `Delivery to: ${city}` : "Get Current Location"}
             </button>
           </div>
 
