@@ -1,11 +1,11 @@
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import slider1 from "../Images/slider-1.jpg";
-import slider2 from "../Images/slider2.jpg";
-import slider3 from "../Images/slider3.jpg";
-import slider4 from "../Images/slider4.jpg";
-import slider5 from "../Images/slider5.jpg";
+import slider1 from "../assets/slider-1.jpg";
+import slider2 from "../assets/slider2.jpg";
+import slider3 from "../assets/slider3.jpg";
+import slider4 from "../assets/slider4.jpg";
+import slider5 from "../assets/slider5.jpg";
 import { CiCircleCheck } from "react-icons/ci";
 import { CiClock2 } from "react-icons/ci";
 import { FaMapLocationDot } from "react-icons/fa6";

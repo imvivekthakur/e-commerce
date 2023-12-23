@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import loginImg from "../assets/signin.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
+import { validatemail, validatepassword } from "../utils/validation";
+import { ToastContainer, toast } from "react-toastify";
+import { loginUserThunk } from "../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -12,6 +19,74 @@ const Login = () => {
       behavior: "smooth",
     });
   }, []);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const userData = {
+    email,
+    password,
+  };
+
+  console.log(userData, "userdata");
+
+  const handleLogin = () => {
+    if (!validatemail(email)) {
+      toast.error(`Invalid email format`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
+
+    if (!validatepassword(password)) {
+      toast.error(
+        `Invalid password format, Use capital ,small letters, numbers and special characters`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+      return;
+    }
+    dispatch(loginUserThunk(userData))
+      .then((res) => {
+        console.log(res);
+        // setLoading(res.payload.data.isLoading);
+        if (res.payload.data.success) {
+          toast.success(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+
+          setEmail("");
+          setPassword("");
+
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+
+          localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
+        }
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
   return (
     <>
       <DefaultNavbar />
@@ -45,6 +120,8 @@ const Login = () => {
                         type="email"
                         className="w-full -ml-10 pl-6 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary"
                         placeholder="johnsmith@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                   </div>
@@ -62,13 +139,18 @@ const Login = () => {
                         type="password"
                         className="w-full -ml-10 pl-6 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary"
                         placeholder="************"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white rounded-lg px-3 py-3 font-semibold">
+                    <button
+                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white rounded-lg px-3 py-3 font-semibold"
+                      onClick={handleLogin}
+                    >
                       LOGIN
                     </button>
                   </div>
@@ -87,6 +169,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <Footer />
     </>
   );
