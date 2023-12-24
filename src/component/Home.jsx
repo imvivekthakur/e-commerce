@@ -12,6 +12,7 @@ import Rent from "./Rent";
 import Rooms from "./Rooms";
 import Setup from "./Setup";
 import Features from "./Features";
+import Trend from "./Trend";
 
 const Home = () => {
   useEffect(() => {
@@ -27,6 +28,7 @@ const Home = () => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
+      <Trend />
       <Working />
       <Categories />
       <Rooms />
