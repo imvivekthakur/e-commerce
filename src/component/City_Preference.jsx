@@ -17,7 +17,7 @@ import chandigarh from "../assets/Chandigarh.svg";
 import vijaywada from "../assets/Vijaywada.svg";
 import nashik from "../assets/Nashik.svg";
 
-const CityPreference = () => {
+const CityPreference = (props) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
@@ -37,9 +37,9 @@ const CityPreference = () => {
   //   try {
   //     const response = await fetch("/path/to/indian_pin_codes.json"); // Replace with the actual path to your JSON file
   //     const data = await response.json();
-  
+
   //     const cityData = data[pinCode];
-  
+
   //     if (cityData) {
   //       const cityName = cityData.city;
   //       setCity(cityName);
@@ -54,10 +54,7 @@ const CityPreference = () => {
   //     console.error("Error fetching city:", error);
   //   }
   // };
-  
-  
-  
-  
+
   const searchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -115,7 +112,10 @@ const CityPreference = () => {
         onClick={toggleSidebar}
       >
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />
-        {city ? `Delivery to: ${city}` : "Delivery to"}
+        {/* {city ? `Delivery to: ${city}` : "Delivery to"} */}
+        {props.selectedCity
+          ? `Delivery to: ${props.selectedCity}`
+          : "Delivery to"}
       </button>
 
       {/* Sidebar */}
