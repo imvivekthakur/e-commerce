@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./City_Preference.css";
 import { RiMapPin2Fill } from "react-icons/ri";
 import bengalore from "../assets/Bengalore.svg";
@@ -17,11 +17,15 @@ import chandigarh from "../assets/Chandigarh.svg";
 import vijaywada from "../assets/Vijaywada.svg";
 import nashik from "../assets/Nashik.svg";
 
-const CityPreference = (props) => {
+const CityPreference = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
   const [pinCode, setPinCode] = useState("");
+
+  useEffect(() => {
+    setSidebarOpen(true);
+  }, []); 
 
   // Function to toggle sidebar visibility
   const toggleSidebar = () => {
@@ -112,10 +116,7 @@ const CityPreference = (props) => {
         onClick={toggleSidebar}
       >
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />
-        {/* {city ? `Delivery to: ${city}` : "Delivery to"} */}
-        {props.selectedCity
-          ? `Delivery to: ${props.selectedCity}`
-          : "Delivery to"}
+        {city ? `Delivery to: ${city}` : "Delivery to"}
       </button>
 
       {/* Sidebar */}
