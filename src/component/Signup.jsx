@@ -31,7 +31,20 @@ const Signup = () => {
     phone,
   };
 
+  // console.log(userData);
+
   const handleSignup = () => {
+    if (!email || !password || !phone || !name) {
+      toast.error(`Please fill all the required fields`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     if (!validatemail(email)) {
       toast.error(`Invalid email format`, {
         position: "top-right",
@@ -61,7 +74,7 @@ const Signup = () => {
 
     dispatch(registerUserThunk(userData))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
@@ -87,7 +100,7 @@ const Signup = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   };
@@ -417,6 +430,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <Footer />
     </>
   );

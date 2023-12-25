@@ -28,9 +28,20 @@ const Login = () => {
     password,
   };
 
-  console.log(userData, "userdata");
+  // console.log(userData, "userdata");
 
   const handleLogin = () => {
+    if (!email || !password) {
+      toast.error(`Please fill all the required fields`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     if (!validatemail(email)) {
       toast.error(`Invalid email format`, {
         position: "top-right",
@@ -59,7 +70,7 @@ const Login = () => {
     }
     dispatch(loginUserThunk(userData))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // setLoading(res.payload.data.isLoading);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
@@ -83,7 +94,7 @@ const Login = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   };
@@ -148,7 +159,7 @@ const Login = () => {
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
                     <button
-                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white rounded-lg px-3 py-3 font-semibold"
+                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white font-bold  rounded-lg px-3 py-3 dark:hover:bg-gray-700 p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underlinen  text-center m-2"
                       onClick={handleLogin}
                     >
                       LOGIN
