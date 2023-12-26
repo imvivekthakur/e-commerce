@@ -13,6 +13,8 @@ import TogglePack from "./component/Toggle_Pack";
 import DefaultNavbar from "./component/Default_Navbar";
 import CityPreference from "./component/City_Preference";
 import ShowUser from "./admin/ShowUser";
+import ForgotPassword from "./component/FogotPassword";
+import ResetPassword from "./component/ResetPassword";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/toggle" element={<TogglePack/>} />
           <Route path="/admin" element={<ShowUser/>} />
+          <Route path="/forget" element={<ForgotPassword />} />
+          <Route path="/reset" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/Logo.png";
 import Heart from "../assets/Heart.png";
@@ -6,13 +6,29 @@ import Cart from "../assets/Cart.png";
 import Suggestions from "./Suggestions";
 import "./Default_Navbar.css";
 import { CgProfile } from "react-icons/cg";
+import axios from "axios";
 
 const DefaultNavbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
-  console.log("user data ", userData);
+
+  const [users, setUsers] = useState([]);
+
+  const showUsers = async () => {
+    try {
+      const response = await axios.get("https://dummyjson.com/users/1");
+      console.log(response);
+      setUsers(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    showUsers();
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -125,7 +141,11 @@ const DefaultNavbar = () => {
                 ) : (
                   <>
                     <NavLink to="/admin">
-                      <CgProfile className="text-3xl justify-center items-center text-white" />
+                      <img
+                        className="rounded-full w-8 h-8 border-2 hover:scale-125 duration-300 text-3xl justify-center items-center text-white"
+                        src={users.image}
+                        alt=""
+                      />
                     </NavLink>
                   </>
                 )}
