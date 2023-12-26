@@ -88,7 +88,7 @@ const Trend = () => {
               <div>
                 <h3 className="font-bold">Locations</h3>
                 <div className="flex items-center gap-1">
-                  <p>Select city</p>
+                  <p>{selectedCity ? selectedCity : "Select city"}</p>
                   <img
                     src={arrow}
                     alt=""
@@ -183,7 +183,7 @@ const Trend = () => {
               <div>
                 <h3 className="font-bold">Locations</h3>
                 <div className="flex items-center gap-1">
-                  <p>Select city</p>
+                  <p>{selectedCity2 ? selectedCity2 : "Select city"}</p>
                   <img
                     src={arrow}
                     alt=""

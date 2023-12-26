@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./City_Preference.css";
 import { RiMapPin2Fill } from "react-icons/ri";
 import bengalore from "../assets/Bengalore.svg";
@@ -23,10 +23,6 @@ const CityPreference = () => {
   const [city, setCity] = useState(null);
   const [pinCode, setPinCode] = useState("");
 
-  useEffect(() => {
-    setSidebarOpen(true);
-  }, []); 
-
   // Function to toggle sidebar visibility
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -41,9 +37,9 @@ const CityPreference = () => {
   //   try {
   //     const response = await fetch("/path/to/indian_pin_codes.json"); // Replace with the actual path to your JSON file
   //     const data = await response.json();
-
+  
   //     const cityData = data[pinCode];
-
+  
   //     if (cityData) {
   //       const cityName = cityData.city;
   //       setCity(cityName);
@@ -58,7 +54,10 @@ const CityPreference = () => {
   //     console.error("Error fetching city:", error);
   //   }
   // };
-
+  
+  
+  
+  
   const searchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -69,7 +68,7 @@ const CityPreference = () => {
               `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
             );
             const data = await response.json();
-            const cityName = data.address?.city;
+            const cityName = data.address?.city_district;
             setCity(cityName);
             setLocation({ latitude, longitude });
           } catch (error) {

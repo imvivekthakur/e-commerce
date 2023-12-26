@@ -20,15 +20,28 @@ const imageStyle = {
   zIndex: 0,
 };
 const customStyles = {
+  overlay: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1000,
+  },
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    position: "static",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    maxWidth: "800px",
+    padding: "20px",
+    border: "none",
+    backgroundColor: "white",
+    borderRadius: "10px",
+    outline: "none",
   },
 };
+
 
 const overlayStyle = {
   position: "absolute",
@@ -104,7 +117,7 @@ const Slider = () => {
                   <div>
                     <button
                       onClick={closeModal}
-                      className="bg-red-500 border rounded-lg relative text-white p-2"
+                      className="bg-red-500 border rounded-lg absolute text-white p-2 mt-4"
                     >
                       x
                     </button>
