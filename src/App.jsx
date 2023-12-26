@@ -12,6 +12,7 @@ import Checkout from "./component/Checkout";
 import TogglePack from "./component/Toggle_Pack";
 import DefaultNavbar from "./component/Default_Navbar";
 import CityPreference from "./component/City_Preference";
+import ShowUser from "./admin/ShowUser";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/toggle" element={<TogglePack/>} />
+          <Route path="/admin" element={<ShowUser/>} />
         </Routes>
       </BrowserRouter>
     </>

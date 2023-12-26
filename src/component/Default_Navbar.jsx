@@ -5,9 +5,14 @@ import Heart from "../assets/Heart.png";
 import Cart from "../assets/Cart.png";
 import Suggestions from "./Suggestions";
 import "./Default_Navbar.css";
+import { CgProfile } from "react-icons/cg";
 
 const DefaultNavbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const userData = JSON.parse(localStorage.getItem("userInfo"));
+  const userAvailable = localStorage.getItem("userInfo") ? true : false;
+  console.log("user data ", userData);
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -109,13 +114,21 @@ const DefaultNavbar = () => {
                 </NavLink>
               </li>
               <li className="mb-2 md:mb-0">
-                <NavLink
-                  to="/login"
-                  className="nav-link"
-                  activeClassName="active-link"
-                >
-                  Login
-                </NavLink>
+                {!userAvailable ? (
+                  <NavLink
+                    to="/login"
+                    className="nav-link"
+                    activeClassName="active-link"
+                  >
+                    Login
+                  </NavLink>
+                ) : (
+                  <>
+                    <NavLink to="/admin">
+                      <CgProfile className="text-3xl justify-center items-center text-white" />
+                    </NavLink>
+                  </>
+                )}
               </li>
             </ul>
 
@@ -143,7 +156,7 @@ const DefaultNavbar = () => {
             </div>
           </div>
         </div>
-      </nav>  
+      </nav>
     </div>
   );
 };

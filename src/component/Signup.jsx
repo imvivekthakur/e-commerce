@@ -409,7 +409,7 @@ const Signup = () => {
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
                     <button
-                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white font-bold  rounded-lg px-3 py-3 dark:hover:bg-gray-700 p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underlinen  text-center m-2"
+                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white font-bold  rounded-lg px-3 py-3 dark:hover:bg-gray-700 p-3 hover:bg-gray-500 hover:text-white hover:no-underlinen  text-center m-2"
                       onClick={handleSignup}
                     >
                       REGISTER NOW

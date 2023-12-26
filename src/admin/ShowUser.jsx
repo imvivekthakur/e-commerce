@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import DefaultNavbar from "../component/Default_Navbar";
+import Footer from "../component/Footer";
 
 const ShowUser = () => {
   const [users, setUsers] = useState([]);
@@ -20,8 +22,9 @@ const ShowUser = () => {
 
   return (
     <>
+      <DefaultNavbar />
       <div className="flex flex-col justify-center items-center" key={users.id}>
-        <h1 className="text-4xl font-bold p-3">Admin Profile</h1>
+        <h1 className="text-4xl font-bold p-3 mt-40">Admin Profile</h1>
         <img
           className="rounded-full w-40 h-40 border"
           src={users.image}
@@ -67,6 +70,7 @@ const ShowUser = () => {
           Update Profiles
         </button>
       </div>
+      <Footer />
     </>
   );
 };

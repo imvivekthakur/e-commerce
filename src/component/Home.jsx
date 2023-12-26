@@ -13,7 +13,6 @@ import Rooms from "./Rooms";
 import Setup from "./Setup";
 import Features from "./Features";
 import Trend from "./Trend";
-import ShowUser from "../admin/ShowUser";
 
 const Home = () => {
   useEffect(() => {
@@ -35,7 +34,6 @@ const Home = () => {
       <Rooms />
       <Setup />
       <Items />
-      <ShowUser/>
       <Testimonials />
       <Features />
       <Footer />
