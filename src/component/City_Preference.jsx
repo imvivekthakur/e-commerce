@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./City_Preference.css";
 import { RiMapPin2Fill } from "react-icons/ri";
 import bengalore from "../assets/Bengalore.svg";
@@ -23,6 +23,9 @@ const CityPreference = () => {
   const [city, setCity] = useState(null);
   const [pinCode, setPinCode] = useState("");
 
+  useEffect(()=>{
+    setSidebarOpen(true);
+  },[])
   // Function to toggle sidebar visibility
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);

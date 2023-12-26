@@ -13,6 +13,7 @@ import Rooms from "./Rooms";
 import Setup from "./Setup";
 import Features from "./Features";
 import Trend from "./Trend";
+import UserProfile from "../Users/UserProfile";
 
 const Home = () => {
   useEffect(() => {
@@ -34,6 +35,7 @@ const Home = () => {
       <Rooms />
       <Setup />
       <Items />
+      <UserProfile/>
       <Testimonials />
       <Features />
       <Footer />

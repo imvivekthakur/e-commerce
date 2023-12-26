@@ -38,6 +38,45 @@ const TogglePack = () => {
       items: 1,
     },
   };
+  const [selectedBox, setSelectedBox] = useState(null);
+
+  const handleBoxClick = (index) => {
+    setSelectedBox((prevSelectedBox) =>
+      prevSelectedBox === index ? null : index
+    );
+  };
+
+  const packageData=[
+    {
+      image:pack1,
+      name:"Basic",
+      price:"3500",
+      product:5,
+      Access:80,
+    },
+    {
+      image:pack2,
+      name:"Lite",
+      price:"5299",
+      product:7,
+      Access:170,
+    },
+    {
+      image:pack3,
+      name:"Premium",
+      price:"6399",
+      product:12,
+      Access:170,
+    },
+    {
+      image:pack4,
+      name:"Luxury",
+      price:"7399",
+      product:15,
+      Access:170,
+    }
+    
+  ]
 
   return (
     <>
@@ -70,7 +109,7 @@ const TogglePack = () => {
           </p>
           <div className="flex flex-row items-center">
             <span className="text-lg font-medium ml-2">
-              {enabled ? "Annually" : "Monthly"}
+              {enabled ? "Annually" : "Half yearly"}
             </span>
             <label className="cursor-pointer flex items-center">
               <input
@@ -82,6 +121,7 @@ const TogglePack = () => {
               <div
                 onClick={() => {
                   setEnabled(!enabled);
+                  setSelectedBox(null); // Reset selected box when changing the plan
                 }}
                 className={`relative m-5 mr-2 flex items-center rounded-full w-20 h-10 bg-primary peer cursor-pointer peer-focus:ring-green-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-10 after:transition-transform peer-checked:transform translate-x-full`}
               ></div>
@@ -92,429 +132,99 @@ const TogglePack = () => {
             <div className="flex flex-row justify-center">
               <div className="card-Annually">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
+                  {packageData.map((pack, index) => (
+                    <div
+                    key={index}
+                    className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
+                      selectedBox === index ? "outline-primary cursor-pointer" : ""
+                    } flex flex-col items-center`}
+                    onClick={() => handleBoxClick(index)}
+                  >
                     <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack1}
+                      className="h-80 w-80 object-cover mx-auto"
+                      src={pack.image}
                       alt="random"
                     />
-                    <div className="text-2xl font-bold pt-2">Basic</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$11</b> /night
+                    <div className="text-2xl text-center font-bold pt-2">
+                      {pack.name}
+                    </div>
+                    <div className="p-2 text-center">
+                      <p className="text-md">
+                        From <b className="text-4xl font-bold">₹{pack.price}</b>/month
                       </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
+                      <p>{pack.product} products</p>
+                      <p>
+                        Access to {pack.Access}+
+                        <br /> products
+                      </p>
+                      <div className="my-5"> 
+                        {selectedBox === index ? (
+                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            Browse Catalog
+                          </button>
+                        ) : (
+                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            <input type="radio" className="hidden" />
+                            Select Plan
+                          </label>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500">
                         No booking or credit card fees!
                       </p>
                     </div>
                   </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack2}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Lite</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$25</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack3}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Premium</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$35</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack4}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Luxury</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$121</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex flex-row justify-center">
               <div className="card-half">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {packageData.map((pack, index) => (
+                    <div
+                    key={index}
+                    className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
+                      selectedBox === index ? "outline-primary cursor-pointer" : ""
+                    } flex flex-col items-center`}
+                    onClick={() => handleBoxClick(index)}
+                  >
                     <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack1}
+                      className="h-80 w-80 object-cover mx-auto"
+                      src={pack.image}
                       alt="random"
                     />
-                    <div className="text-2xl font-bold pt-2">Basic</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$11</b> /night
+                    <div className="text-2xl text-center font-bold pt-2">
+                      {pack.name}
+                    </div>
+                    <div className="p-2 text-center">
+                      <p className="text-md">
+                        From <b className="text-4xl font-bold">₹{pack.price}</b>/month
                       </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
+                      <p>{pack.product} products</p>
+                      <p>
+                        Access to {pack.Access}+
+                        <br /> products
+                      </p>
+                      <div className="my-5"> 
+                        {selectedBox === index ? (
+                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            Browse Catalog
+                          </button>
+                        ) : (
+                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            <input type="radio" className="hidden" />
+                            Select Plan
+                          </label>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500">
                         No booking or credit card fees!
                       </p>
                     </div>
                   </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack2}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Lite</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$25</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack3}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Premium</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$35</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-white text-black border rounded-lg mx-auto text-center">
-                    <img
-                      className="h-80 w-80 mx-auto"
-                      src={pack4}
-                      alt="random"
-                    />
-                    <div className="text-2xl font-bold pt-2">Luxury</div>
-                    <div className="p-2">
-                      <ul
-                        className="m-5"
-                        style={{ borderTop: "2px solid black" }}
-                      >
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Private Bathroom
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Mini Refrigerator
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Flat-screen TV
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          In-Room Heating
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Hairdryer
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          High Speed Free WiFi
-                        </li>
-                        <li className="p-3 text-left font-bold flex items-center">
-                          <GoDotFill className="text-primary text-base mr-2" />{" "}
-                          Iron and Ironing Board
-                        </li>
-                      </ul>
-                      <p className="text-center text-md">
-                        From <b className="text-4xl font-bold">$121</b> /night
-                      </p>
-                      <button className="w-32 lg:w-40 my-3 lg:my-5 mx-auto text-white bg-primary hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        Book Now
-                      </button>
-                      <p className="text-center text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

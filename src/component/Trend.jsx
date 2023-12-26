@@ -54,24 +54,21 @@ const Trend = () => {
     setSelectedCity2(city);
     setShowCityDropdown2(false);
   };
+
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
-    setShowTimePicker(false);
   };
 
   const toggleTimePicker = () => {
     setShowTimePicker(!showTimePicker);
-    setShowDatePicker(false);
   };
 
   const toggleDatePicker2 = () => {
     setShowDatePicker2(!showDatePicker2);
-    setShowTimePicker2(false);
   };
 
   const toggleTimePicker2 = () => {
     setShowTimePicker2(!showTimePicker2);
-    setShowDatePicker2(false);
   };
 
   return (

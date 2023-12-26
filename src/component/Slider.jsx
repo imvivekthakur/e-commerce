@@ -141,7 +141,7 @@ const Slider = () => {
                   <div>
                     <button
                       onClick={closeModal1}
-                      className="bg-red-500 border rounded-lg text-white p-2  "
+                      className="bg-red-500 border rounded-lg text-white p-2 mt-10  "
                     >
                       x
                     </button>
