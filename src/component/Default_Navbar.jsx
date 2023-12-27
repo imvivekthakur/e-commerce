@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.png";
 import Heart from "../assets/Heart.png";
 import Cart from "../assets/Cart.png";
@@ -7,14 +7,24 @@ import Suggestions from "./Suggestions";
 import "./Default_Navbar.css";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
+import { Modal } from "antd";
 
 const DefaultNavbar = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
+  console.log("userdata ", userData);
 
   const [users, setUsers] = useState([]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+    window.location.reload(true);
+  };
 
   const showUsers = async () => {
     try {
@@ -140,21 +150,65 @@ const DefaultNavbar = () => {
                   </NavLink>
                 ) : (
                   <>
-                    <NavLink to="/admin">
+                    <div
+                      className="flex justify-center items-center w-8 h-8 hover:scale-125 duration-300"
+                      onClick={() => setModalOpen(true)}
+                    >
                       <img
-                        className="rounded-full w-8 h-8 border-2 hover:scale-125 duration-300 text-3xl justify-center items-center text-white"
+                        className="rounded-full border-2 object-cover justify-center items-center text-white"
                         src={users.image}
                         alt=""
                       />
-                    </NavLink>
+                    </div>
+                    <div className="relative">
+                      <Modal
+                        style={{
+                          position: "absolute",
+                          top: "16%",
+                          right: "10%",
+                        }}
+                        open={modalOpen}
+                        onOk={() => setModalOpen(false)}
+                        onCancel={() => setModalOpen(false)}
+                        footer={null}
+                      >
+                        <div
+                          className="flex items-center"
+                          // onClick={handleProfile}
+                        >
+                          <img
+                            src={users.image}
+                            className="object-cover h-9 w-9 mr-2 rounded-full bg-secondary"
+                          />
+                          <div className="text-lg font-bold">
+                            <NavLink to="/admin">
+                              <div onClick={() => setModalOpen(false)}>
+                                {/* {userData.user.name} */}
+                                Vivek Thakur
+                              </div>
+                            </NavLink>
+                          </div>
+                        </div>
+                        <div className="flex w-full justify-center items-center">
+                          <button
+                            className="mt-4 p-2 bg-primary rounded-md"
+                            // onClick={handleLogout}
+                          >
+                            <div className="font-bold text-lg tracking-widest text-white">
+                              Signout
+                            </div>
+                          </button>
+                        </div>
+                      </Modal>
+                    </div>
                   </>
                 )}
               </li>
             </ul>
 
-            <div className="flex flex-row items-center justify-center">
+            <div className="flex flex-row justify-center m-[-2px]">
               <NavLink to="/wishlist">
-                <button className="ml-4">
+                <button className="ml-4 justify-center items-center">
                   <img
                     src={Heart}
                     alt="Heart Image"

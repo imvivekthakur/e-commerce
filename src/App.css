@@ -3,3 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.ant-modal {
+  width: 250px !important;
+}

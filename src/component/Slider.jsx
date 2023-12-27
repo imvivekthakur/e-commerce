@@ -149,9 +149,7 @@ const Slider = () => {
                   </div>
                 </Modal>
 
-                <button className="flex items-center text-primary mr-3 mt-3 border rounded-lg p-2 sm:p-3 hover:bg-primary hover:text-white hover:scale-110 transition-transform">
-                  <FaMapLocationDot className="mr-2" /> Delivery to
-                </button>
+                
               </div>
             </div>
           </div>
