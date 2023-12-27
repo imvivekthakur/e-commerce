@@ -41,7 +41,7 @@ const ResetPassword = () => {
     }
 
     // Construct the URL with the reset token
-    const apiUrl = `https://ed-tech-8j0x.onrender.com/auth/reset?token=${token}`;
+    const apiUrl = `https://ecb-6n98.onrender.com/api/users/reset?token=${token}`;
     // Validate password and confirm password
     if (password !== confirmPassword) {
       // Handle password mismatch
@@ -75,7 +75,7 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-lg w-[90%] sm:w-[50%] md:w-[30%] text-black">
+      <div className="bg-white p-8 rounded shadow-lg w-[90%] sm:w-[60%] md:w-[50%] max-w-md text-black">
         <h2 className="text-4xl mb-6 font-bold">Reset Password</h2>
         {isPasswordReset ? (
           <p className="text-green-600">Password reset successful. You can now log in with your new password.</p>
@@ -103,12 +103,11 @@ const ResetPassword = () => {
             </div>
             <div className="mt-8">
               <div className="text-center">
-                <button
-                  type="submit"
-                  className="bg-primary hover:bg-white text-white border-primary hover:text-primary hover:border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl py-2 px-4 rounded"
-                >
-                  Reset Password
-                </button>
+                  <div
+                    className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
+                  >
+                    Reset Password
+                  </div>
               </div>
             </div>
           </form>

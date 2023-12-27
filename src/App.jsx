@@ -15,6 +15,8 @@ import CityPreference from "./component/City_Preference";
 import ShowUser from "./admin/ShowUser";
 import ForgotPassword from "./component/FogotPassword";
 import ResetPassword from "./component/ResetPassword";
+import EmailVerification from "./component/EmailVerification";
+import OTPVerification from "./component/OTPVerification";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path="/admin" element={<ShowUser/>} />
           <Route path="/forget" element={<ForgotPassword />} />
           <Route path="/reset" element={<ResetPassword />} />
+          <Route path='/email-verify' element={<EmailVerification/>} />
+          <Route path='/otp-verify' element={<OTPVerification/>} />
         </Routes>
       </BrowserRouter>
     </>

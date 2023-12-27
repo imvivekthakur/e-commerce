@@ -10,7 +10,7 @@ const ForgotPassword = () => {
     // API request logic here to send the email to the server
     // Set isSubmitted to true on successful request
     try {
-      const res = await fetch("https://ed-tech-8j0x.onrender.com/auth/forget", {
+      const res = await fetch("https://ecb-6n98.onrender.com/api/users/forget", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -26,7 +26,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="bg-gray-200 min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-lg w-[90%] sm:w-[50%] md:w-[30%] text-black">
+      <div className="bg-white p-8 rounded shadow-lg w-[90%] sm:w-[60%] md:w-[50%] max-w-md text-black">
         <h2 className="text-4xl mb-6 font-bold">Forget Password</h2>
         {isSubmitted ? (
           <p className="text-green-600">Check your email for further instructions.</p>
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
             <div className="submit mt-8">
                 <div className="text-center">
                   <div
-                    className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md"
+                    className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
                     onClick={handleSubmit}
                   >
                     Submit
