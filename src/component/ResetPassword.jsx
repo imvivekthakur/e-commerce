@@ -41,7 +41,7 @@ const ResetPassword = () => {
     }
 
     // Construct the URL with the reset token
-    const apiUrl = `http://localhost:5000/auth/reset?token=${token}`;
+    const apiUrl = `https://renting-carnival.onrender.com/auth/reset?token=${token}`;
     // Validate password and confirm password
     if (password !== confirmPassword) {
       // Handle password mismatch
