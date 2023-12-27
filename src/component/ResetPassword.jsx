@@ -41,7 +41,7 @@ const ResetPassword = () => {
     }
 
     // Construct the URL with the reset token
-    const apiUrl = `https://ecb-6n98.onrender.com/api/users/reset?token=${token}`;
+    const apiUrl = `http://localhost:5000/auth/reset?token=${token}`;
     // Validate password and confirm password
     if (password !== confirmPassword) {
       // Handle password mismatch
@@ -105,6 +105,7 @@ const ResetPassword = () => {
               <div className="text-center">
                   <div
                     className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
+                    onClick={handleResetPassword}
                   >
                     Reset Password
                   </div>
