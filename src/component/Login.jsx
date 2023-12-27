@@ -169,7 +169,7 @@ const Login = () => {
                 <div className="text-center">
                   New User?{" "}
                   <NavLink
-                    to="/signup"
+                    to="/email-verify"
                     className="font-bold hover:text-primary hover:underline"
                   >
                     Register

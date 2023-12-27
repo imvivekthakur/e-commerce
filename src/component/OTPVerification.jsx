@@ -1,15 +1,53 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { emailVerifyThunk } from "../redux/authSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const data = {
+    email,
+    otp,
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here, you can handle the verification logic with the submitted OTP
-    // For demonstration purposes, just console log the OTP
+
     console.log("Submitted OTP:", otp);
-    setIsSubmitted(true);
+    dispatch(emailVerifyThunk(data))
+      .then((res) => {
+        console.log(res);
+        if (res.payload.data.success) {
+          toast.success(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+
+          setEmail("");
+          setOTP("");
+
+          localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
+
+          setTimeout(() => {
+            navigate("/signup");
+          }, 5000);
+        }
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
   };
 
   return (
@@ -22,6 +60,17 @@ const OTPVerification = () => {
           </p>
         ) : (
           <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium">Enter Email:</label>
+              <input
+                type="text"
+                id="otp"
+                className="mt-1 p-2 w-full rounded-md border border-gray-300 bg-white"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
             <div className="mb-4">
               <label className="block text-sm font-medium">Enter OTP:</label>
               <input
@@ -46,6 +95,7 @@ const OTPVerification = () => {
           </form>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

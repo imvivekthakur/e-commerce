@@ -19,14 +19,12 @@ const Signup = () => {
     });
   }, []);
 
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
   const userData = {
     name,
-    email,
     password,
     phone,
   };
@@ -34,19 +32,8 @@ const Signup = () => {
   // console.log(userData);
 
   const handleSignup = () => {
-    if (!email || !password || !phone || !name) {
+    if (!password || !phone || !name) {
       toast.error(`Please fill all the required fields`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      return;
-    }
-    if (!validatemail(email)) {
-      toast.error(`Invalid email format`, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -88,14 +75,12 @@ const Signup = () => {
           });
 
           setName("");
-          setEmail("");
           setPassword("");
           setPhone("");
           setTimeout(() => {
             navigate("/");
           }, 3000);
         }
-        localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
 
         return res;
       })
@@ -343,26 +328,6 @@ const Signup = () => {
                         placeholder="John"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex -mx-3">
-                  <div className="w-full px-3 mb-5">
-                    <label htmlFor="" className="text-xs font-semibold px-1">
-                      Email
-                    </label>
-                    <div className="flex">
-                      <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                        <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
-                      </div>
-                      <input
-                        type="email"
-                        className="w-full -ml-10 pl-6 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary"
-                        placeholder="johnsmith@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                   </div>

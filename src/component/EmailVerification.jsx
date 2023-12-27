@@ -1,13 +1,46 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { emailThunk } from "../redux/authSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const EmailVerification = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const data = {
+    email,
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(emailThunk(data))
+      .then((res) => {
+        console.log(res);
+        if (res.payload.data.success) {
+          toast.success(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
 
-  }
+          setEmail("");
+
+          setTimeout(() => {
+            navigate("/otp-verify");
+          }, 5000);
+        }
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
 
   return (
     <div className="bg-gray-200 min-h-screen flex items-center justify-center">
@@ -43,6 +76,7 @@ const EmailVerification = () => {
           </form>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
