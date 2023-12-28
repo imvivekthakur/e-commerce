@@ -192,7 +192,7 @@ const DefaultNavbar = () => {
                         <div className="flex w-full justify-center items-center">
                           <button
                             className="mt-4 p-2 bg-primary rounded-md"
-                            // onClick={handleLogout}
+                            onClick={handleLogout}
                           >
                             <div className="font-bold text-lg tracking-widest text-white">
                               Signout

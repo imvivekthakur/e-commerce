@@ -36,8 +36,8 @@ const Home = () => {
       <Rooms />
       <Setup />
       <Items />
-      <ProductForm/>
-      <UserProfile/>
+      <ProductForm />
+      {/* <UserProfile /> */}
       <Testimonials />
       <Features />
       <Footer />
