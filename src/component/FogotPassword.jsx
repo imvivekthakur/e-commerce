@@ -10,7 +10,7 @@ const ForgotPassword = () => {
     // API request logic here to send the email to the server
     // Set isSubmitted to true on successful request
     try {
-      const res = await fetch("https://ecb-6n98.onrender.com/api/users/forget", {
+      const res = await fetch("https://renting-carnival.onrender.com/auth/login/forget", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
