@@ -21,18 +21,20 @@ const Signup = () => {
 
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [role, setRole] = useState("Buyer");
   const [phone, setPhone] = useState("");
 
   const userData = {
     name,
     password,
     phone,
+    role,
   };
 
-  // console.log(userData);
+  console.log(userData);
 
   const handleSignup = () => {
-    if (!password || !phone || !name) {
+    if (!password || !phone || !name || !role) {
       toast.error(`Please fill all the required fields`, {
         position: "top-right",
         autoClose: 3000,
@@ -89,6 +91,8 @@ const Signup = () => {
         return err.response;
       });
   };
+
+  console.log(role);
 
   return (
     <>
@@ -353,7 +357,7 @@ const Signup = () => {
                   </div>
                 </div>
                 <div className="flex -mx-3">
-                  <div className="w-full px-3 mb-12">
+                  <div className="w-full px-3 mb-4 ">
                     <label htmlFor="" className="text-xs font-semibold px-1">
                       Password
                     </label>
@@ -368,6 +372,25 @@ const Signup = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-12">
+                    <label htmlFor="" className="text-xs font-semibold px-1">
+                      User Type
+                    </label>
+                    <div className="flex">
+                      <select
+                        className="w-full  pl-6 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-primary"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                      >
+                        <option value="">Select User Type</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="seller">Seller</option>
+                      </select>
                     </div>
                   </div>
                 </div>
