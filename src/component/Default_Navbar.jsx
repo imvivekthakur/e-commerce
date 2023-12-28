@@ -41,7 +41,7 @@ const DefaultNavbar = () => {
         // console.log(err);
         return err.response;
       });
-  });
+  }, []);
 
   // console.log(profile);
   const showUsers = async () => {

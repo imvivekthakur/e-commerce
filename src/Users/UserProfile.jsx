@@ -5,6 +5,7 @@ import DefaultNavbar from "../component/Default_Navbar";
 import Footer from "../component/Footer";
 import { useDispatch } from "react-redux";
 import { profileThunk } from "../redux/authSlice";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const UserProfile = () => {
         // console.log(err);
         return err.response;
       });
-  });
+  }, []);
 
   useEffect(() => {
     showUsers();
@@ -48,6 +49,7 @@ const UserProfile = () => {
   return (
     <>
       <DefaultNavbar />
+
       <div className="flex flex-col justify-center items-center" key={users.id}>
         <h1 className="text-4xl font-bold p-3 mt-40">User Profile</h1>
         <div className="relative">
@@ -82,6 +84,11 @@ const UserProfile = () => {
         </ul>
       </div>
       <div className="flex justify-center">
+        <Link to="/product/create">
+          <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+            Create New Product
+          </button>
+        </Link>
         <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
           Update Profile
         </button>
