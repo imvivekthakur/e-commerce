@@ -138,7 +138,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="flex -mx-3">
-                  <div className="w-full px-3 mb-12">
+                  <div className="w-full px-3">
                     <label htmlFor="" className="text-xs font-semibold px-1">
                       Password
                     </label>
@@ -155,6 +155,9 @@ const Login = () => {
                       />
                     </div>
                   </div>
+                </div>
+                <div className="flex justify-end mb-12 mt-2 cursor-pointer hover:text-primary">
+                  <NavLink to="/forget">Forgot Password</NavLink>
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
