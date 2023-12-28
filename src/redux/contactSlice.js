@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import Api from "./API.jsx";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,

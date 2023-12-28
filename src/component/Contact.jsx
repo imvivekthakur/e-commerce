@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultNavbar from "./Default_Navbar";
 import contactImg from "../assets/contactImg.svg";
 import addressImg from "../assets/address.svg";
@@ -6,8 +6,17 @@ import phoneImg from "../assets/phone.svg";
 import clockImg from "../assets/clock.svg";
 import Features from "./Features";
 import Footer from "./Footer";
+import { useDispatch } from "react-redux";
+import { contactFormThunk } from "../redux/contactSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const Contact = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -15,6 +24,41 @@ const Contact = () => {
       behavior: "smooth",
     });
   }, []);
+
+  const data = {
+    name,
+    email,
+    phone,
+    message,
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    dispatch(contactFormThunk(data))
+      .then((res) => {
+        console.log(res);
+        if (res.payload.data.success) {
+          toast.success(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+
+          setEmail("");
+          setName("");
+          setPhone("");
+          setMessage("");
+        }
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
   return (
     <>
       <DefaultNavbar />
@@ -77,7 +121,7 @@ const Contact = () => {
             </div>
           </div>
           <div className="w-full md:w-1/2">
-            <form action="#">
+            <form onSubmit={submit}>
               <div className="mb-4">
                 <label
                   htmlFor="name"
@@ -89,6 +133,8 @@ const Contact = () => {
                   type="text"
                   id="name"
                   name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="mt-1 p-3 w-full border rounded-md border-primary"
                 />
               </div>
@@ -102,6 +148,8 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   name="email"
                   className="mt-1 p-3 w-full border-primary rounded-md"
                 />
@@ -114,7 +162,9 @@ const Contact = () => {
                   Phone
                 </label>
                 <input
+                  onChange={(e) => setPhone(e.target.value)}
                   type="text"
+                  value={phone}
                   id="phone"
                   name="phone"
                   className="mt-1 p-3 w-full border-primary rounded-md"
@@ -130,6 +180,8 @@ const Contact = () => {
                 <textarea
                   id="message"
                   name="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   rows="4"
                   className="mt-1 p-3 w-full border-primary rounded-md"
                 ></textarea>
@@ -148,6 +200,7 @@ const Contact = () => {
       </div>
       <Features />
       <Footer />
+      <ToastContainer />
     </>
   );
 };
