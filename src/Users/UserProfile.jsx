@@ -3,9 +3,15 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import DefaultNavbar from "../component/Default_Navbar";
 import Footer from "../component/Footer";
+import { useDispatch } from "react-redux";
+import { profileThunk } from "../redux/authSlice";
 
 const UserProfile = () => {
+  const dispatch = useDispatch();
+
   const [users, setUsers] = useState([]);
+
+  const [profile, setProfile] = useState();
 
   const showUsers = async () => {
     try {
@@ -16,6 +22,19 @@ const UserProfile = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    dispatch(profileThunk())
+      .then((res) => {
+        // console.log(res);
+        setProfile(res.payload.data.profile);
+        return res;
+      })
+      .catch((err) => {
+        // console.log(err);
+        return err.response;
+      });
+  });
 
   useEffect(() => {
     showUsers();
@@ -44,9 +63,7 @@ const UserProfile = () => {
             <FaPlus />
           </button>
         </div>
-        <h2 className="p-2 font-semibold">
-          {users.firstName} {users.lastName}
-        </h2>
+        <h2 className="p-2 font-semibold">{profile ? profile.name : ""}</h2>
       </div>
       <div>
         <h1 className="text-3xl p-3 text-center m-3 font-semibold">
@@ -54,14 +71,14 @@ const UserProfile = () => {
         </h1>
         <ul className="list-none p-0">
           <li className="p-3 border transition duration-500 text-center ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
-            <span>Email:</span> {users.email}
+            <span>Email:</span> {profile ? profile.email : ""}
           </li>
           <li className="p-3 border transition text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
-            <span>Phone:</span> {users.phone}
+            <span>Phone:</span> {profile ? profile.phone : ""}
           </li>
-          <li className="p-3 border transition text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
+          {/* <li className="p-3 border transition text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
             <span>Gender:</span> {users.gender}
-          </li>
+          </li> */}
         </ul>
       </div>
       <div className="flex justify-center">

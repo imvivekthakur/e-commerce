@@ -72,6 +72,25 @@ export const loginUserThunk = createAsyncThunk("auth/login", async (data) => {
     });
 });
 
+export const profileThunk = createAsyncThunk("auth/profile", async (data) => {
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${user.accessToken}`,
+    },
+  };
+  return await Api.get(`auth/profile`, config)
+    .then((res) => {
+      // console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      // console.log(err);
+      return err.response;
+    });
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -153,6 +172,26 @@ export const authSlice = createSlice({
         }
       })
       .addCase(loginUserThunk.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
+      })
+
+      //  profile
+      .addCase(profileThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(profileThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        // console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
+      })
+      .addCase(profileThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });

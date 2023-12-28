@@ -8,15 +8,19 @@ import "./Default_Navbar.css";
 import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 import { Modal } from "antd";
+import { useDispatch } from "react-redux";
+import { profileThunk } from "../redux/authSlice";
 
 const DefaultNavbar = () => {
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [profile, setProfile] = useState();
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
-  console.log("userdata ", userData);
+  // console.log("userdata ", userData);
 
   const [users, setUsers] = useState([]);
 
@@ -26,6 +30,20 @@ const DefaultNavbar = () => {
     window.location.reload(true);
   };
 
+  useEffect(() => {
+    dispatch(profileThunk())
+      .then((res) => {
+        // console.log(res);
+        setProfile(res.payload.data.profile);
+        return res;
+      })
+      .catch((err) => {
+        // console.log(err);
+        return err.response;
+      });
+  });
+
+  // console.log(profile);
   const showUsers = async () => {
     try {
       const response = await axios.get("https://dummyjson.com/users/1");
@@ -181,20 +199,19 @@ const DefaultNavbar = () => {
                             className="object-cover h-9 w-9 mr-2 rounded-full bg-secondary"
                           />
                           <div className="text-lg font-bold">
-                            <NavLink to="/admin">
+                            <NavLink to="/userProfile">
                               <div onClick={() => setModalOpen(false)}>
-                                {/* {userData.user.name} */}
-                                Vivek Thakur
+                                {profile ? profile.name : ""}
                               </div>
                             </NavLink>
                           </div>
                         </div>
                         <div className="flex w-full justify-center items-center">
                           <button
-                            className="mt-4 p-2 bg-primary rounded-md"
+                            className="mt-4 p-2 bg-primary rounded-md hover:bg-gray-500 hover:text-white"
                             onClick={handleLogout}
                           >
-                            <div className="font-bold text-lg tracking-widest text-white">
+                            <div className="font-light text-lg tracking-widest text-white ">
                               Signout
                             </div>
                           </button>

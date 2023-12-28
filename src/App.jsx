@@ -17,6 +17,7 @@ import ForgotPassword from "./component/FogotPassword";
 import ResetPassword from "./component/ResetPassword";
 import EmailVerification from "./component/EmailVerification";
 import OTPVerification from "./component/OTPVerification";
+import UserProfile from "./Users/UserProfile";
 
 function App() {
   return (
@@ -33,12 +34,13 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/toggle" element={<TogglePack/>} />
-          <Route path="/admin" element={<ShowUser/>} />
+          <Route path="/toggle" element={<TogglePack />} />
+          <Route path="/admin" element={<ShowUser />} />
+          <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/forget" element={<ForgotPassword />} />
           <Route path="/reset" element={<ResetPassword />} />
-          <Route path='/email-verify' element={<EmailVerification/>} />
-          <Route path='/otp-verify' element={<OTPVerification/>} />
+          <Route path="/email-verify" element={<EmailVerification />} />
+          <Route path="/otp-verify" element={<OTPVerification />} />
         </Routes>
       </BrowserRouter>
     </>
