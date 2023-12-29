@@ -33,11 +33,9 @@ export const createProductThunk = createAsyncThunk(
 export const getAllProductThunk = createAsyncThunk(
   "product/getAll",
   async (data) => {
-    const user = JSON.parse(localStorage.getItem("userInfo"));
     const config = {
       headers: {
         "Content-type": "multipart/form-data",
-        Authorization: `Bearer ${user.accessToken}`,
       },
     };
     return await Api.get(`product/getAll/`, config)
