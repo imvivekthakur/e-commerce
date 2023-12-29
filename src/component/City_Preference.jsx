@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./City_Preference.css";
 import { RiMapPin2Fill } from "react-icons/ri";
 import bengalore from "../assets/Bengalore.svg";
 import mumbai from "../assets/Mumbai.svg";
