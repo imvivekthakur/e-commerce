@@ -26,7 +26,7 @@ const DynamicProducts = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto mt-5 pt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto mt-5 pt-5 ">
         {allProducts.map((card, index) => (
           <ProductCard
             key={index}
@@ -37,6 +37,7 @@ const DynamicProducts = () => {
             stock={card.stock}
             category={card.category}
             seller={card.owner.name}
+            productId={card._id}
           />
         ))}
       </div>

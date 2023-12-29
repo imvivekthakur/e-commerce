@@ -52,7 +52,7 @@ export const getAllProductThunk = createAsyncThunk(
   }
 );
 
-export const authSlice = createSlice({
+export const productSlice = createSlice({
   name: "product",
   initialState: initialState,
   reducers: {},
@@ -79,4 +79,4 @@ export const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default productSlice.reducer;
