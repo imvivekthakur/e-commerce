@@ -3,89 +3,45 @@ import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import { useDispatch } from "react-redux";
 import { createProductThunk } from "../redux/productSlice";
+import FormData from "form-data";
 
 const ProductForm = () => {
+  const fd = new FormData();
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stock: "",
-    category: "",
-    images: Array(5).fill(null),
-  });
 
-  // const handleImageUpload = (e, index) => {
-  //   const files = e.target.files;
+  const [sendImage, setSendImage] = useState(null);
+  const [imageInArr, setImageInArr] = useState(null);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [stock, setStock] = useState("");
+  const [category, setCategory] = useState("");
 
-  //   if (files && files.length > 0) {
-  //     const updatedProductImages = [...product.image];
-  //     updatedProductImages[index] = URL.createObjectURL(files[0]);
-
-  //     setProduct((prevProduct) => ({
-  //       ...prevProduct,
-  //       image: updatedProductImages,
-  //     }));
-  //   }
-  // };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  const handleSendImage = (e, index) => {
+    setImageInArr(URL.createObjectURL(e.target.files[0]));
+    setSendImage(e.target.files[0]);
   };
 
-  // const handleFileChange = (e, index) => {
-  //   const newImages = [...formData.images];
-  //   newImages[index] = e.target.files[0];
-  //   setFormData({
-  //     ...formData,
-  //     images: newImages,
-  //   });
-  // };
-
-  const handleFileChange = (e, index) => {
-    const files = e.target.files;
-
-    if (files && files.length > 0) {
-      const newImages = [...formData.images];
-      newImages[index] = files[0];
-
-      // Update state with the new images
-      setFormData({
-        ...formData,
-        images: newImages,
-      });
-
-      // Optional: Create a preview of the selected image
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const previewImage = e.target.result;
-        console.log(`Image ${index + 1} Preview:`, previewImage);
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("price", formData.price);
-    formDataToSend.append("stock", formData.stock);
-    formDataToSend.append("category", formData.category);
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("category", category);
+    fd.append("price", price);
+    fd.append("stock", stock);
+    fd.append("description", description);
 
-    for (let i = 0; i < formData.images.length; i++) {
-      formDataToSend.append("images", formData.images[i]);
-
-      console.log(`Image ${i + 1}:`, formData.images[i]);
+    if (sendImage) {
+      fd.append("file", sendImage);
     }
-    formDataToSend.forEach((value, key) => {
-      console.log(`FormData key: ${key}, value: ${value}`);
-    });
 
-    dispatch(createProductThunk(formDataToSend))
+    // Log FormData content
+    for (const pair of fd.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    dispatch(createProductThunk(fd))
       .then((res) => {
         console.log(res);
         return res;
@@ -115,8 +71,8 @@ const ProductForm = () => {
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleInputChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="form-input mt-1 block w-full"
                 required
               />
@@ -132,8 +88,8 @@ const ProductForm = () => {
               <textarea
                 id="description"
                 name="description"
-                value={formData.description}
-                onChange={handleInputChange}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="form-textarea mt-1 block w-full"
                 required
               />
@@ -150,8 +106,8 @@ const ProductForm = () => {
                 type="text"
                 id="category"
                 name="category"
-                value={formData.category}
-                onChange={handleInputChange}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="form-input mt-1 block w-full"
                 required
               />
@@ -168,8 +124,8 @@ const ProductForm = () => {
                 type="text"
                 id="price"
                 name="price"
-                value={formData.price}
-                onChange={handleInputChange}
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
                 className="form-input mt-1 block w-full"
                 required
               />
@@ -186,8 +142,8 @@ const ProductForm = () => {
                 type="text"
                 id="stock"
                 name="stock"
-                value={formData.stock}
-                onChange={handleInputChange}
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
                 className="form-input mt-1 block w-full"
                 required
               />
@@ -204,24 +160,15 @@ const ProductForm = () => {
             {/* add phtot upload logic here */}
 
             {/* Input for each photo */}
-            {formData.images.map((image, index) => (
-              <div key={index} className="mb-2">
-                {image && (
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Product Image ${index + 1}`}
-                    className="w-20 h-20 object-cover rounded mr-2"
-                  />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  name={`image-${index + 1}`}
-                  onChange={(e) => handleFileChange(e, index)}
-                  className="form-input mt-1 block w-full"
-                />
-              </div>
-            ))}
+
+            <input
+              type="file"
+              name="file"
+              accept="image/png, image/jpg, image/jpeg"
+              onChange={(e) => {
+                handleSendImage(e);
+              }}
+            />
           </div>
 
           <button

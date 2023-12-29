@@ -14,7 +14,7 @@ export const createProductThunk = createAsyncThunk(
     const user = JSON.parse(localStorage.getItem("userInfo"));
     const config = {
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "multipart/form-data",
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
