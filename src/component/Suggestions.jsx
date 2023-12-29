@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import SearchIcon from "../assets/Search.png";
-import Suggestion from '../Suggestion';
+import SuggestionList from "../Suggestion";
 import "./Suggestions.css";
+import { useNavigate } from "react-router-dom";
 
 const Suggestions = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -13,7 +15,7 @@ const Suggestions = () => {
 
     // Display suggestions only when the input is focused
     if (document.activeElement.classList.contains("search-input")) {
-      const filteredSuggestions = Suggestion.filter((suggestion) =>
+      const filteredSuggestions = SuggestionList.filter((suggestion) =>
         suggestion.name.toLowerCase().includes(query.toLowerCase())
       );
       setSuggestions(filteredSuggestions);
@@ -22,9 +24,19 @@ const Suggestions = () => {
     }
   };
 
+  const handleSuggestionsClick = (event) => {
+    const clickedSuggestion = event.target.textContent;
+    setSearchQuery(clickedSuggestion);
+    setSuggestions([]);
+  };
+
   const clearSuggestions = () => {
     // Hide suggestions when the input loses focus
     setSuggestions([]);
+  };
+
+  const handleNav = () => {
+    navigate("/product");
   };
 
   return (
@@ -35,7 +47,7 @@ const Suggestions = () => {
         placeholder="What are you searching for?"
         className="search-input w-60 md:w-80 border focus:border-blue-500 focus:outline-5 outline-none px-2 py-1 md:px-4 md:py-2"
         onChange={handleSearchChange}
-        onFocus={handleSearchChange} 
+        onFocus={handleSearchChange}
         onBlur={clearSuggestions}
       />
 
@@ -43,10 +55,11 @@ const Suggestions = () => {
         src={SearchIcon}
         alt="Search Icon"
         className="search-icon"
+        onClick={handleNav}
       />
 
       {suggestions.length > 0 && (
-        <div className="suggestions-box">
+        <div className="suggestions-box" onMouseDown={handleSuggestionsClick}>
           <ul className="suggestions-list">
             {suggestions.map((suggestion, index) => (
               <li key={index} className="suggestion-item">
@@ -61,4 +74,3 @@ const Suggestions = () => {
 };
 
 export default Suggestions;
-
