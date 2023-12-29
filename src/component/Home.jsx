@@ -13,6 +13,7 @@ import Rooms from "./Rooms";
 import Setup from "./Setup";
 import Features from "./Features";
 import Trend from "./Trend";
+import DynamicProducts from "./DynamicProducts/DynamicProducts";
 
 const Home = () => {
   useEffect(() => {
@@ -29,6 +30,7 @@ const Home = () => {
       <Slider />
       <City_Preference />
       <Trend />
+      <DynamicProducts />
       <Working />
       <Categories />
       <Rooms />
