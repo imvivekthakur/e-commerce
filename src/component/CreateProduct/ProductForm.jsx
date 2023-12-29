@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import DefaultNavbar from "./Default_Navbar";
-import Footer from "./Footer";
+import DefaultNavbar from "../Default_Navbar";
+import Footer from "../Footer";
 import { useDispatch } from "react-redux";
-import { createProductThunk } from "../redux/productSlice";
+import { createProductThunk } from "../../redux/productSlice";
 import FormData from "form-data";
+import { ToastContainer, toast } from "react-toastify";
 
 const ProductForm = () => {
   const fd = new FormData();
@@ -44,6 +45,22 @@ const ProductForm = () => {
     dispatch(createProductThunk(fd))
       .then((res) => {
         console.log(res);
+        if (res.payload.data.success) {
+          toast.success(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+
+          setName("");
+          setCategory("");
+          setStock("");
+          setPrice("");
+          setDescription("");
+        }
         return res;
       })
       .catch((err) => {
@@ -54,13 +71,13 @@ const ProductForm = () => {
 
   return (
     <>
-      <DefaultNavbar />
-      <div className="max-w-md mx-auto mt-8 p-8 bg-white shadow-md rounded">
+      {/* <DefaultNavbar /> */}
+      <div className="max-w-md mx-auto p-7 bg-white shadow-md rounded">
         <h2 className="text-2xl font-bold text-center mb-4">Add Product</h2>
 
-        <form onSubmit={handleSubmit} enctype="multipart/form-data">
-          <div className="grid grid-cols-1 gap-4">
-            <div className="mb-4">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="grid grid-cols-1 gap-2">
+            <div className="mb-3">
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-600"
@@ -78,7 +95,7 @@ const ProductForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-600"
@@ -95,7 +112,7 @@ const ProductForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-600"
@@ -113,7 +130,7 @@ const ProductForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label
                 htmlFor="price"
                 className="block text-sm font-medium text-gray-600"
@@ -131,7 +148,7 @@ const ProductForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label
                 htmlFor="stock"
                 className="block text-sm font-medium text-gray-600"
@@ -150,16 +167,13 @@ const ProductForm = () => {
             </div>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label
               htmlFor="photos"
               className="block text-sm font-medium text-gray-600"
             >
-              Photos (Upload or provide URLs):
+              Upload Photos of Product:
             </label>
-            {/* add phtot upload logic here */}
-
-            {/* Input for each photo */}
 
             <input
               type="file"
@@ -173,13 +187,14 @@ const ProductForm = () => {
 
           <button
             type="submit"
-            className="btn-primary w-full p-4 border rounded-lg hover:bg-primary hover:text-white"
+            className="btn-primary w-full p-4 border rounded-lg bg-primary  hover:bg-gray-700 hover:text-white"
           >
             Add Product
           </button>
         </form>
       </div>
-      <Footer />
+      <ToastContainer />
+      {/* <Footer /> */}
     </>
   );
 };

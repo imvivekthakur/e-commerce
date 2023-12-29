@@ -6,6 +6,8 @@ import Footer from "../component/Footer";
 import { useDispatch } from "react-redux";
 import { profileThunk } from "../redux/authSlice";
 import { Link } from "react-router-dom";
+import ProductForm from "../component/CreateProduct/ProductForm";
+import Modal from "../component/CreateProduct/Modal";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,16 @@ const UserProfile = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const [isProductFormOpen, setIsProductFormOpen] = useState(false);
+
+  const openProductForm = () => {
+    setIsProductFormOpen(true);
+  };
+
+  const closeProductForm = () => {
+    setIsProductFormOpen(false);
   };
 
   useEffect(() => {
@@ -84,11 +96,16 @@ const UserProfile = () => {
         </ul>
       </div>
       <div className="flex justify-center">
-        <Link to="/product/create">
-          <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
-            Create New Product
-          </button>
-        </Link>
+        <button
+          onClick={openProductForm}
+          className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2"
+        >
+          Create New Product
+        </button>
+
+        <Modal isOpen={isProductFormOpen} onClose={closeProductForm}>
+          <ProductForm />
+        </Modal>
         <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
           Update Profile
         </button>

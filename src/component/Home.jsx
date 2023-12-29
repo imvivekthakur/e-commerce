@@ -13,8 +13,6 @@ import Rooms from "./Rooms";
 import Setup from "./Setup";
 import Features from "./Features";
 import Trend from "./Trend";
-import UserProfile from "../Users/UserProfile";
-import ProductForm from "./ProductForm";
 
 const Home = () => {
   useEffect(() => {
