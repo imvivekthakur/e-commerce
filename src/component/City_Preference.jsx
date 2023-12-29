@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./City_Preference.css";
 import { RiMapPin2Fill } from "react-icons/ri";
 import bengalore from "../assets/Bengalore.svg";
 import mumbai from "../assets/Mumbai.svg";
@@ -16,6 +15,7 @@ import mysuru from "../assets/Mysuru.svg";
 import chandigarh from "../assets/Chandigarh.svg";
 import vijaywada from "../assets/Vijaywada.svg";
 import nashik from "../assets/Nashik.svg";
+import { ToastContainer, toast } from "react-toastify";
 
 const CityPreference = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -23,9 +23,9 @@ const CityPreference = () => {
   const [city, setCity] = useState(null);
   const [pinCode, setPinCode] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     setSidebarOpen(true);
-  },[])
+  }, []);
   // Function to toggle sidebar visibility
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -36,31 +36,85 @@ const CityPreference = () => {
     setSidebarOpen(false);
   };
 
+  const searchLocationByPinCode = async () => {
+    try {
+      const url = `https://india-pincode-with-latitude-and-longitude.p.rapidapi.com/api/v1/pincode/${pinCode}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "6cbc1af7f0msh228776942d7512ap14da64jsn7e940118f10e",
+          "X-RapidAPI-Host": "india-pincode-with-latitude-and-longitude.p.rapidapi.com",
+        },
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+  
+      const cityData = data;
+  
+      if (cityData && Array.isArray(cityData)) {
+        let foundCity1 = null;
+        let foundCity2 = null
+  
+        for (let i = 0; i < cityData.length; i++) {
+          let cityName1 = cityData[i].state;
+          foundCity1 = indianCities.find((city) => city.name.toLowerCase() === cityName1.toLowerCase());
+          let cityName2 = cityData[i].district;
+          foundCity2 = indianCities.find((city) => city.name.toLowerCase() === cityName2.toLowerCase());
+
+          let foundCity = null;
+          let cityName = null;
+          if(foundCity1) {
+            foundCity = foundCity1;
+            cityName = cityName1;
+          } else {
+            foundCity = foundCity2;
+            cityName = cityName2;
+          }
+  
+          if (foundCity) {
+            setCity(cityName);
+            setLocation({
+              latitude: cityData[i].lat,
+              longitude: cityData[i].lng,
+            });
+            break; // Break out of the loop once a city is found
+          }
+        }
+  
+        if (!foundCity1 && !foundCity2) {
+          toast.error("Not available in your area!");
+          console.log("City not available in the list.");
+        }
+      } else {
+        console.log("Invalid or empty city data for the provided pin code.");
+      }
+    } catch (error) {
+      console.error("Error fetching city:", error);
+    }
+  };
+  
+
   // const searchLocationByPinCode = async () => {
+  //   const url = `https://india-pincode-with-latitude-and-longitude.p.rapidapi.com/api/v1/pincode/${pinCode}`;
+  //   const options = {
+  //     method: "GET",
+  //     headers: {
+  //       "X-RapidAPI-Key": "6cbc1af7f0msh228776942d7512ap14da64jsn7e940118f10e",
+  //       "X-RapidAPI-Host":
+  //         "india-pincode-with-latitude-and-longitude.p.rapidapi.com",
+  //     },
+  //   };
+
   //   try {
-  //     const response = await fetch("/path/to/indian_pin_codes.json"); // Replace with the actual path to your JSON file
-  //     const data = await response.json();
-  
-  //     const cityData = data[pinCode];
-  
-  //     if (cityData) {
-  //       const cityName = cityData.city;
-  //       setCity(cityName);
-  //       setLocation({
-  //         latitude: cityData.latitude,
-  //         longitude: cityData.longitude,
-  //       });
-  //     } else {
-  //       console.log("City not found for the provided pin code.");
-  //     }
+  //     const response = await fetch(url, options);
+  //     console.log("response ", response);
+  //     const result = await response.json();
+  //     console.log(result);
   //   } catch (error) {
-  //     console.error("Error fetching city:", error);
+  //     console.error(error);
   //   }
   // };
-  
-  
-  
-  
+
   const searchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -160,7 +214,7 @@ const CityPreference = () => {
               className="search-input w-full border focus:border-blue-500 focus:outline-5 outline-none px-4 py-2"
             />
             <button
-              // onClick={searchLocationByPinCode}
+              onClick={searchLocationByPinCode}
               className="search-button w-full text-black underline p-2 rounded mt-2"
             >
               Search by Pin Code
@@ -190,6 +244,7 @@ const CityPreference = () => {
           </nav>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
