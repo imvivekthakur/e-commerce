@@ -33,6 +33,15 @@ const EmailVerification = () => {
           setTimeout(() => {
             navigate("/otp-verify");
           }, 5000);
+        } else {
+          toast.error(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
         return res;
       })
@@ -69,7 +78,7 @@ const EmailVerification = () => {
                   className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
                   onClick={handleSubmit}
                 >
-                  Submit
+                  Send OTP
                 </div>
               </div>
             </div>

@@ -82,8 +82,16 @@ const Signup = () => {
           setTimeout(() => {
             navigate("/");
           }, 3000);
+        } else {
+          toast.error(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
-
         return res;
       })
       .catch((err) => {
