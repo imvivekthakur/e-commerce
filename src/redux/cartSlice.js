@@ -62,7 +62,7 @@ export const getCartThunk = createAsyncThunk("cart/get", async (data) => {
     },
   };
 
-  return await Api.post(`cart/get`, config)
+  return await Api.get(`cart/get`, config)
     .then((res) => {
       console.log(res);
       return res;

@@ -33,7 +33,7 @@ const ProductCard = ({
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Failed to add product to cart. Please try again.");
+        toast.error("Please Login to continue");
         return err.response;
       });
   };
