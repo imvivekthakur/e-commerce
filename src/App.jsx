@@ -60,6 +60,7 @@ function App() {
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
           <Route path="/about" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
+          <Route path="/product" element={<Product />} />
           <Route path="/product/:productId" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
