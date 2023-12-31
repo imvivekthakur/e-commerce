@@ -19,6 +19,7 @@ import EmailVerification from "./component/EmailVerification";
 import OTPVerification from "./component/OTPVerification";
 import UserProfile from "./Users/UserProfile";
 import DynamicProducts from "./component/DynamicProducts/DynamicProducts";
+import Wishlist from "./component/Wishlist";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/email-verify" element={<EmailVerification />} />
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
+          <Route path="/wishlist" element={<Wishlist />} />
 
           {/* <Route path="/product/create" element={<ProductForm />} /> */}
         </Routes>

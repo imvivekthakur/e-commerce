@@ -3,11 +3,15 @@ import DefaultNavbar from "./Default_Navbar";
 import CartItems from "./CartItems";
 import Pricing from "./Pricing";
 import Footer from "./Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  console.log(cart.cart);
+  const cart2 = cart.cart;
 
   const [allCart, setAllCart] = useState([]);
   const [detailedCartItems, setdetailedCartItems] = useState([]);
@@ -67,17 +71,19 @@ const Cart = () => {
             </h1>
           </div>
 
-          {allCart.map((card, index) => (
-            <CartItems
-              key={index}
-              quantity={card.quantity}
-              price={card.product.price}
-              name={card.product.name}
-              description={card.product.description}
-              image={card.product.productImage}
-              owner={card.product.owner.name}
-            />
-          ))}
+          {allCart &&
+            allCart.map((card, index) => (
+              <CartItems
+                key={index}
+                quantity={card.quantity}
+                price={card.product.price}
+                name={card.product.name}
+                description={card.product.description}
+                image={card.product.productImage}
+                owner={card.product.owner.name}
+                productId={card.product._id}
+              />
+            ))}
         </div>
         <div className="w-[95%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center">
           <div className="text-2xl font-bold text-center m-3 p-4 bg-white">
@@ -96,9 +102,16 @@ const Cart = () => {
           ))}
 
           {/* Display overall total */}
-          <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mt-10">
+          <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mt-10 mb-5">
             Total: Rs {overallTotal}
           </button>
+
+          <hr className="border-t-2 border-black my-5 w-full" />
+          <Link to="/checkout">
+            <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
+              Checkout
+            </button>
+          </Link>
         </div>
       </div>
       <Footer />

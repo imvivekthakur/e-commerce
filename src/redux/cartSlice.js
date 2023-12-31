@@ -5,6 +5,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  cart: [],
 };
 
 export const addToCartThunk = createAsyncThunk("cart/add", async (data) => {
@@ -19,11 +20,11 @@ export const addToCartThunk = createAsyncThunk("cart/add", async (data) => {
 
   return await Api.post(`cart/add`, data, config)
     .then((res) => {
-      console.log(res);
+      //  console.log(res);
       return res;
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return err.response;
     });
 });
@@ -73,6 +74,30 @@ export const getCartThunk = createAsyncThunk("cart/get", async (data) => {
     });
 });
 
+export const deleteProductThunk = createAsyncThunk(
+  "cart/delete",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    };
+
+    return await Api.post(`cart/delete`, data, config)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: initialState,
@@ -90,6 +115,7 @@ export const cartSlice = createSlice({
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
+          state.cart = action.payload.data.cart.items;
         } else {
           state.isSuccess = false;
           state.isError = true;
@@ -109,6 +135,7 @@ export const cartSlice = createSlice({
         state.isLoading = false;
         console.log(action.payload);
         if (action.payload.data.success) {
+          state.cart = action.payload.data.cart.items;
           state.isSuccess = true;
         } else {
           state.isSuccess = false;
@@ -130,12 +157,33 @@ export const cartSlice = createSlice({
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
+          state.cart = action.payload.data.cart;
         } else {
           state.isSuccess = false;
           state.isError = true;
         }
       })
       .addCase(getCartThunk.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
+      })
+
+      // delete product
+      .addCase(deleteProductThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProductThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          state.cart = action.payload.data.cart.items;
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
+      })
+      .addCase(deleteProductThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });
