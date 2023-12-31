@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getAllProductThunk } from "../redux/productSlice";
 import Working from "./Working";
 import Categories from "./Categories";
 import Items from "./Items";
@@ -15,7 +17,8 @@ import Features from "./Features";
 import Trend from "./Trend";
 import DynamicProducts from "./DynamicProducts/DynamicProducts";
 
-const Home = () => {
+const Home = ({allProducts}) => {
+  
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -30,12 +33,12 @@ const Home = () => {
       <Slider />
       <City_Preference />
       <Trend />
-      <DynamicProducts />
       <Working />
       <Categories />
       <Rooms />
       <Setup />
-      <Items />
+      {/* <DynamicProducts /> */}
+      <Items allProducts={allProducts}/>
       <Testimonials />
       <Features />
       <Footer />

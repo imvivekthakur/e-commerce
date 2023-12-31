@@ -3,8 +3,9 @@ import DefaultNavbar from "./Default_Navbar";
 import ReactPaginate from "react-paginate";
 import Card from "./Card";
 import Footer from "./Footer";
+import ProductCard from "./DynamicProducts/ProductCard";
 
-const Shop = () => {
+const Shop = ({ allProducts }) => {
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -12,58 +13,8 @@ const Shop = () => {
       behavior: "smooth",
     });
   }, []);
-  const cardsData = [
-    {
-      img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike1",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1622185135505-2d795003994a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike2",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1611429532458-f8bf8f6121fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike3",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1617109887854-f661d37fca2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike4",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike1",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1622185135505-2d795003994a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike2",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1611429532458-f8bf8f6121fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike3",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1617109887854-f661d37fca2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-      title: "Bike4",
-      desc: "Lorem ipsum dolor sit amet.",
-      price: 2000,
-    },
-  ];
 
-  const items = cardsData;
+  const items = allProducts;
   //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
@@ -121,12 +72,16 @@ const Shop = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
         {currentItems.map((card, index) => (
-          <Card
-            key={index}
-            img={card.img}
-            title={card.title}
-            desc={card.desc}
+          <ProductCard
+            key={card._id}
+            img={card.productImage}
+            title={card.name}
+            desc={card.description}
             price={card.price}
+            stock={card.stock}
+            category={card.category}
+            seller={card.owner.name}
+            productId={card._id}
           />
         ))}
       </div>

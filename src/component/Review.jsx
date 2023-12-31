@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import review from "../assets/review.svg"
+import React, { useEffect, useState } from "react";
+import review from "../assets/review.svg";
 import { Rate } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useParams } from "react-router-dom";
 
 const Review = () => {
+  const {productId} = useParams();
+  const [reviews, setReviews] = useState([]);
   const [commentMsg, setCommentMsg] = useState({
-    name: "",
-    email: "",
-    course: "",
     comment: "",
     rating: 0,
+    productId: productId,
   });
-  console.log(commentMsg);
   const user = JSON.parse(localStorage.getItem("userInfo")) ? true : false;
   const userData = JSON.parse(localStorage.getItem("userInfo"))?.user;
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setCommentMsg({ ...commentMsg, [name]: value });
   };
 
@@ -32,6 +31,8 @@ const Review = () => {
       console.log("login first");
       return;
     }
+    let accessToken = await JSON.parse(localStorage.getItem("userInfo")).accessToken;
+    
     setCommentMsg({
       ...commentMsg,
       name: userData.name,
@@ -39,120 +40,106 @@ const Review = () => {
     });
     try {
       const res = await fetch(
-        "https://hea-zg7o.onrender.com/feedback/submitFeedback",
+        "https://renting-carnival.onrender.com/review/create",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(commentMsg),
         }
       );
-      console.log("data sent!!");
       const data = await res.json();
-      console.log("hello", data);
+      console.log("response data ",data);
       if (!data) {
+        toast.error("Some error occured! Comment not sent")
         console.log("comment not sent");
       } else {
         toast.success("Comment Sent Successfully");
         console.log("comment sent successfully");
         setCommentMsg({
-          name: "",
-          email: "",
-          course: "",
           comment: "",
           rating: 0,
+          productId: productId,
         });
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error occured while commenting!!");
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://renting-carnival.onrender.com/review/get/${productId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+
+        setReviews(data.reviews);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div className="flex justify-center items-center my-12">
-      <form
-        method="POST"
-        className="w-full sm:w-[86%] grid grid-cols-1 lg:grid-cols-2 gap-4 border-2 rounded-lg overflow-hidden shadow-md "
-      >
-        <div className="rounded-lg overflow-hidden ">
-          <img className="w-full object-cover" src={review} alt="Review" />
-        </div>
-        <div className="flex justify-center items-center px-8 pt-2 md:pt-6 rounded-lg overflow-hidden ">
-          <div>
-            <h1 className="text-4xl text-center p-3 font-extrabold text-black">
-              Reviews and Comments
-            </h1>
-            <div className="text-center">
-              Remember to give a positive feedback
-            </div>
-            {user ? (
-              <>
-                <input
-                  type="text"
-                  name="name"
-                  value={userData.name}
-                  className="input border-2 rounded-md border-gray-200 w-full mt-6 bg-white"
-                  readOnly
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={userData.email}
-                  className="input border-2 rounded-md border-gray-200 w-full mt-6 bg-white"
-                  readOnly
-                />
-              </>
-            ) : (
-              <>
-                <input
-                  type="text"
-                  name="name"
-                  value={commentMsg.name}
-                  placeholder="Enter name"
-                  className="input border-2 rounded-md border-gray-200 w-full mt-6 bg-white"
-                  onChange={handleInput}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={commentMsg.email}
-                  placeholder="Enter email"
-                  className="input border-2 rounded-md border-gray-200 w-full mt-6 bg-white"
-                  onChange={handleInput}
-                />
-              </>
-            )}
-            
-
-            <div className="px-4 py-2 my-4 border rounded-lg">
-              <div>What would you rate the course? </div>
-              <Rate
-                className="text-primary"
-                name="rating"
-                value={commentMsg.rating}
-                onChange={handleRating}
-              />
-            </div>
-
-            <textarea
-              name="comment"
-              value={commentMsg.comment}
-              className="textarea textarea-bordered w-full h-32 mt-2 bg-white"
-              placeholder="Enter your response"
-              onChange={handleInput}
-            ></textarea>
-            <div className="container text-center my-6">
-              <div
-                className="btn bg-primary hover:bg-white text-white border-primary hover:text-primary hover:border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl"
-                onClick={handleSubmit}
-              >
-                Leave a comment
-              </div>
+    <div className="">
+      <div>
+        <p className="text-2xl font-bold mb-4 mt-4">Leave a comment</p>
+        <div className="my-4">
+          <div className="flex gap-4">
+            <img
+              className="w-10 h-10 object-cover bg-primary rounded-full"
+              src="https://robohash.org/hicveldicta.png"
+              alt="user profile"
+            />
+            <div className="text-sm md:text-md">
+              <h1 className="font-bold">{userData.name}</h1>
+              <Rate value={commentMsg.rating} onChange={handleRating}/>
             </div>
           </div>
+          <div className="flex flex-wrap justify-between my-4">
+            <input
+              className="w-fit min-w-md sm:w-[75%] border-0 border-b outline-none bg-transparent focus:outline-none text-sm"
+              type="text"
+              placeholder="Add a comment..."
+              value={commentMsg.comment}
+              onChange={handleInput}
+              name="comment"
+            />
+            <button className="bg-primary p-3 w-[17%] min-w-fit rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center mt-2" onClick={handleSubmit}>
+              Comment
+            </button>
+          </div>
         </div>
-      </form>
+        {reviews.map((review) => (
+          <div className="my-6" key={review._id}>
+            <div className="flex gap-4">
+              <img
+                className="w-10 h-10 object-cover bg-primary rounded-full"
+                src="https://robohash.org/hicveldicta.png"
+                alt="user profile"
+              />
+              <div className="text-sm md:text-md">
+                <h1 className="font-bold">{review.name}</h1>
+                <Rate value={review.rating} disabled/>
+              </div>
+            </div>
+            <p className="text-sm mt-1">
+              {review.comment}
+            </p>
+          </div>
+        ))}
+      </div>
+
       <ToastContainer />
     </div>
   );

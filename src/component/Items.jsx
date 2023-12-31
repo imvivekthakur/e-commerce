@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Products from "./Products";
+import DynamicProducts from "./DynamicProducts/DynamicProducts";
 
-const Items = () => {
+const Items = (allProducts) => {
   const [activeTab, setActiveTab] = useState(1);
 
   const handleClick = (index) => {
@@ -10,7 +11,7 @@ const Items = () => {
   return (
     <>
       <div className="text-center m-8">
-        <h1 className="text-4xl text-[#CDA274] font-bold m-3">
+        <h1 className="text-4xl text-primary font-bold m-3">
           Most popular Rental Items
         </h1>
         <p>Lorem ipsum dolor sit amet. </p>
@@ -18,7 +19,7 @@ const Items = () => {
       <div className="flex flex-wrap w-[90%] mx-auto">
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 1 ? "text-[#CDA274] border-[#CDA274] font-bold" : ""
+            activeTab === 1 ? "text-primary border-primary font-bold" : ""
           }`}
           onClick={() => handleClick(1)}
         >
@@ -26,7 +27,7 @@ const Items = () => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 2 ? "text-[#CDA274] border-[#CDA274] font-bold" : ""
+            activeTab === 2 ? "text-primary border-primary font-bold" : ""
           }`}
           onClick={() => handleClick(2)}
         >
@@ -34,7 +35,7 @@ const Items = () => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 3 ? "text-[#CDA274] border-[#CDA274] font-bold" : ""
+            activeTab === 3 ? "text-primary border-primary font-bold" : ""
           }`}
           onClick={() => handleClick(3)}
         >
@@ -42,16 +43,17 @@ const Items = () => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 4 ? "text-[#CDA274] border-[#CDA274] font-bold" : ""
+            activeTab === 4 ? "text-primary border-primary font-bold" : ""
           }`}
           onClick={() => handleClick(4)}
         >
           Bikes
         </div>
       </div>
-      <Products/>
+      {/* <Products/> */}
+      <DynamicProducts/>
       <div className="text-center my-6">
-        <button className="border-2 border-[#CDA274] text-[#CDA274] px-6 py-2 rounded-md">
+        <button className="border-2 border-primary text-primary px-6 py-2 rounded-md">
           Show More
         </button>
       </div>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addToCartThunk, removeFromCartThunk } from "../../redux/cartSlice";
+import { NavLink } from "react-router-dom";
 
 const ProductCard = ({
   img,
@@ -39,38 +40,40 @@ const ProductCard = ({
   };
 
   return (
-    <div className="product-card-link">
-      <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
-        <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
-        <div className="p-4">
-          <h1 className="text-lg font-bold p-1">{title}</h1>
-          <h2 className="text-md font-semibold p-1">
-            <span>Seller: </span>
-            {seller}
-          </h2>
+    <NavLink to={`/product/${productId}`}>
+      <div className="product-card-link">
+        <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
+          <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+          <div className="p-4">
+            <h1 className="text-lg font-bold p-1">{title}</h1>
+            <h2 className="text-md font-semibold p-1">
+              <span>Seller: </span>
+              {seller}
+            </h2>
 
-          <p className="text-sm p-1">{desc}</p>
-          <p className="text-md font-medium p-1">
-            <span>Category: </span>
-            {category}
-          </p>
+            <p className="text-sm p-1">{desc}</p>
+            <p className="text-md font-medium p-1">
+              <span>Category: </span>
+              {category}
+            </p>
 
-          <p className="font-bold p-1">Rs: {price}</p>
-          <p className="font-md p-1">
-            <span>Stocks Left: </span>
-            {stock}
-          </p>
+            <p className="font-bold p-1">Rs: {price}</p>
+            <p className="font-md p-1">
+              <span>Stocks Left: </span>
+              {stock}
+            </p>
+          </div>
+
+          <button
+            onClick={handleAddToCart}
+            className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4"
+          >
+            Add To Cart
+          </button>
         </div>
-
-        <button
-          onClick={handleAddToCart}
-          className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4"
-        >
-          Add To Cart
-        </button>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </NavLink>
   );
 };
 
