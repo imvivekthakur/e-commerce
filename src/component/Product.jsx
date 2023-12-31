@@ -1,14 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Rate } from "antd";
 import Products from "./Products";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
+import Review from "./Review";
+import { useParams } from "react-router-dom";
 
 const Product = () => {
+  const { productId } = useParams();
   const [isActive, setIsActive] = useState(1);
+  const [product, setProduct] = useState({});
   const handleClick = (index) => {
     setIsActive(index);
   };
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const res = await fetch(
+          `https://renting-carnival.onrender.com/product/get/${productId}`
+        );
+        const data = await res.json();
+        console.log("product details ", data);
+        if (!data) {
+          console.log("product details could not pe loaded");
+        } else {
+          setProduct(data.product);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProductDetails();
+  }, []);
 
   return (
     <>
@@ -30,27 +54,27 @@ const Product = () => {
           <div className="md:flex gap-2 w-full lg:w-1/2">
             <div className="flex md:block">
               <img
-                className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md"
+                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
                 src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="product"
               />
               <img
-                className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md"
+                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
                 src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="product"
               />
               <img
-                className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md"
+                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
                 src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="product"
               />
               <img
-                className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md"
+                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
                 src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="product"
               />
               <img
-                className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md"
+                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
                 src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
                 alt="product"
               />
@@ -58,22 +82,20 @@ const Product = () => {
             <div className="">
               <img
                 className="md:m-4 rounded-lg w-full block"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
+                src={product.productImage}
                 alt="product"
               />
             </div>
           </div>
           <div className="lg:w-1/2">
             <div className="md:w-[90%] mx-auto my-4 md:mx-10">
-              <h1 className="text-xl font-bold">Product Heading</h1>
-              <div className="text-sm text-gray-500">Rs 2000</div>
+              <h1 className="text-xl font-bold">{product.name}</h1>
+              <div className="text-sm text-gray-500">Rs {product.price}</div>
               <div>
-                <Rate allowHalf defaultValue={4.5} className="text-sm" />
+                <Rate value={product.rating || 4} disabled className="text-sm" />
               </div>
               <p className="text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis,
-                cum! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Ipsam, nobis!{" "}
+                {product.description}
               </p>
               <div className="my-2">
                 <div className="text-gray-500">Sizes</div>
@@ -120,40 +142,49 @@ const Product = () => {
 
         <div className="w-[90%] md:w-[75%] mx-auto">
           <div className="flex justify-center text-gray-500">
-            <div
-              className={`m-4 text-center ${isActive == 1 ? "font-bold" : ""}`}
-              onClick={() => handleClick(1)}
-            >
-              Description
+            <div className="m-4 text-center" onClick={() => handleClick(1)}>
+              <h1 className={`${isActive == 1 ? "font-bold" : ""}`}>
+                Description
+              </h1>
             </div>
             <div
               className={`m-4 text-center ${isActive == 2 ? "font-bold" : ""}`}
               onClick={() => handleClick(2)}
             >
-              Reviews[5]
+              Review
             </div>
           </div>
-          <div className=" text-sm text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda
-            tempora vel iste corrupti voluptates amet et dolorum provident,
-            aspernatur nihil incidunt dolorem repudiandae eius, dolore
-            voluptatum eos quam delectus possimus.
-            <br />
-            <br />
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse quod
-            unde dolores placeat non impedit iure praesentium similique iste et.
-          </div>
-          <div className="flex gap-6">
-            <img
-              className="w-1/2 h-56 my-6 rounded-2xl object-cover"
-              src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
-              alt="similar bedrooms"
-            />
-            <img
-              className="w-1/2 h-56 my-6 rounded-2xl object-cover"
-              src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
-              alt="similar bedrooms"
-            />
+          <p
+            className={`text-sm text-gray-700 mb-4 ${
+              isActive == 2 ? "hidden" : ""
+            }`}
+          >
+            <div className=" text-sm text-gray-500">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Assumenda tempora vel iste corrupti voluptates amet et dolorum
+              provident, aspernatur nihil incidunt dolorem repudiandae eius,
+              dolore voluptatum eos quam delectus possimus.
+              <br />
+              <br />
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse
+              quod unde dolores placeat non impedit iure praesentium similique
+              iste et.
+            </div>
+            <div className="flex gap-6">
+              <img
+                className="w-1/2 h-56 my-6 rounded-2xl object-cover"
+                src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
+                alt="similar bedrooms"
+              />
+              <img
+                className="w-1/2 h-56 my-6 rounded-2xl object-cover"
+                src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
+                alt="similar bedrooms"
+              />
+            </div>
+          </p>
+          <div className={`${isActive == 1 ? "hidden" : ""}`}>
+            <Review />
           </div>
         </div>
         <div>

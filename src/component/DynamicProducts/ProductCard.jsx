@@ -7,6 +7,7 @@ import {
   addToWishlistThunk,
   getWishlistThunk,
 } from "../../redux/wishlistSlice";
+import { NavLink } from "react-router-dom";
 
 const ProductCard = ({
   img,
@@ -87,7 +88,9 @@ const ProductCard = ({
   return (
     <div className="product-card-link">
       <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
-        <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+        <NavLink to={`/product/${productId}`}>
+          <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+        </NavLink>
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">{title}</h1>
           <h2 className="text-md font-semibold p-1">

@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Card from "./Card";
 import { useDispatch } from "react-redux";
 import { getWishlistThunk } from "../redux/wishlistSlice";
+import WishlistCard from "./WishListCard";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -117,12 +118,13 @@ const Wishlist = () => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 w-[90%] mx-auto">
         {currentItems.map((card, index) => (
-          <Card
+          <WishlistCard
             key={index}
             img={card.productImage}
             title={card.name}
             desc={card.description}
             price={card.price}
+            productId={card._id}
           />
         ))}
       </div>
