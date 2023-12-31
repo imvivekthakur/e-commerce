@@ -5,6 +5,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  wishlist: [],
 };
 
 export const addToWishlistThunk = createAsyncThunk(
@@ -113,6 +114,7 @@ export const wishlist = createSlice({
         state.isLoading = false;
         console.log(action.payload);
         if (action.payload.data.success) {
+          state.wishlist = action.payload.data.wishlist.products;
           state.isSuccess = true;
         } else {
           state.isSuccess = false;
@@ -133,6 +135,7 @@ export const wishlist = createSlice({
         state.isLoading = false;
         console.log(action.payload);
         if (action.payload.data.success) {
+          state.wishlist = action.payload.data.wishlist.products;
           state.isSuccess = true;
         } else {
           state.isSuccess = false;

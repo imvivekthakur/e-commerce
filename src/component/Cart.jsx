@@ -44,7 +44,28 @@ const Cart = () => {
         console.log(err);
         return err.response;
       });
-  }, []);
+  }, [cart2]);
+
+  // useEffect(() => {
+  //   dispatch(getCartThunk())
+  //     .then((res) => {
+  //       console.log(res);
+  //       setAllCart(res.payload.data.cart);
+  //       setdetailedCartItems(res.payload.data.detailedCartItems);
+
+  //       const total = res.payload.data.detailedCartItems.reduce(
+  //         (acc, item) => acc + item.itemTotal,
+  //         0
+  //       );
+  //       setOverallTotal(total);
+
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return err.response;
+  //     });
+  // }, [cart]);
 
   console.log(allCart);
   console.log(detailedCartItems);
@@ -71,8 +92,8 @@ const Cart = () => {
             </h1>
           </div>
 
-          {allCart &&
-            allCart.map((card, index) => (
+          {cart2 &&
+            cart2.map((card, index) => (
               <CartItems
                 key={index}
                 quantity={card.quantity}
@@ -90,7 +111,7 @@ const Cart = () => {
             Cart Total
           </div>
 
-          {allCart.map((card, index) => (
+          {/* {cart2.map((card, index) => (
             <div key={index} className="w-[90%] mx-auto font-normal max-w-xs">
               <div className="py-1 flex justify-between">
                 <span>
@@ -99,7 +120,7 @@ const Cart = () => {
                 <span> {card.product.price * card.quantity}</span>
               </div>
             </div>
-          ))}
+          ))} */}
 
           {/* Display overall total */}
           <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mt-10 mb-5">

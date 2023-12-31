@@ -3,13 +3,15 @@ import DefaultNavbar from "./Default_Navbar";
 import ReactPaginate from "react-paginate";
 import Footer from "./Footer";
 import Card from "./Card";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getWishlistThunk } from "../redux/wishlistSlice";
 import WishlistCard from "./WishListCard";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
 
+  const wishlist = useSelector((state) => state.wishlist).wishlist;
+  console.log(wishlist, "wishlist");
   const [cardsData, setArr] = useState([]);
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -33,57 +35,8 @@ const Wishlist = () => {
   }, []);
 
   console.log(cardsData);
-  // const cardsData = [
-  //   {
-  //     img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike1",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1622185135505-2d795003994a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike2",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1611429532458-f8bf8f6121fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike3",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1617109887854-f661d37fca2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike4",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike1",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1622185135505-2d795003994a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike2",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1611429532458-f8bf8f6121fe?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike3",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  //   {
-  //     img: "https://images.unsplash.com/photo-1617109887854-f661d37fca2d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmlrZXN8ZW58MHx8MHx8fDA%3D",
-  //     title: "Bike4",
-  //     desc: "Lorem ipsum dolor sit amet.",
-  //     price: 2000,
-  //   },
-  // ];
-  const items = cardsData;
+
+  const items = wishlist;
   //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 3;
