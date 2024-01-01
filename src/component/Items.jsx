@@ -1,13 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Products from "./Products";
 import DynamicProducts from "./DynamicProducts/DynamicProducts";
+import Card from "./Card";
+import ProductCard from "./DynamicProducts/ProductCard";
 
-const Items = (allProducts) => {
+const Items = ({ allProducts }) => {
   const [activeTab, setActiveTab] = useState(1);
+  const [filteredProducts, setFilteredProducts] = useState(allProducts);
+
+  console.log("all products ", allProducts);
+
+  useEffect(() => {
+    filterProducts(activeTab);
+  }, [activeTab]);
 
   const handleClick = (index) => {
     setActiveTab(index);
   };
+
+  const filterProducts = (index) => {
+    console.log("filtered products called !!", index);
+    if (index === 1) {
+      setFilteredProducts(allProducts); // Show all products for "Popular" tab
+    } else {
+      const filtered = allProducts.filter(
+        (product) => product.category === getCategoryName(index)
+      );
+      console.log("filtered ", filtered);
+      setFilteredProducts(filtered);
+    }
+  };
+
+  const getCategoryName = (index) => {
+    switch (index) {
+      case 1:
+        return "Popular";
+      case 2:
+        return "Furniture";
+      case 3:
+        return "Decorative Items";
+      case 4:
+        return "Vehicles";
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <div className="text-center m-8">
@@ -47,11 +85,26 @@ const Items = (allProducts) => {
           }`}
           onClick={() => handleClick(4)}
         >
-          Bikes
+          Vehicle
         </div>
       </div>
       {/* <Products/> */}
-      <DynamicProducts/>
+      {console.log("filtered products ", filteredProducts)}
+      {activeTab === 1 && <DynamicProducts />}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
+        {activeTab !== 1 &&
+          filteredProducts.map((card) => (
+            <ProductCard
+              img={card.productImage}
+              desc={card.description}
+              price={card.price}
+              stock={card.stock}
+              productCard={card.productId}
+              seller={card.owner.name}
+              category={card.category}
+            />
+          ))}
+      </div>
       <div className="text-center my-6">
         <button className="border-2 border-primary text-primary px-6 py-2 rounded-md">
           Show More

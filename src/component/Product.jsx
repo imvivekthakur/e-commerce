@@ -7,6 +7,14 @@ import Review from "./Review";
 import { useParams } from "react-router-dom";
 
 const Product = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const { productId } = useParams();
   const [isActive, setIsActive] = useState(1);
   const [product, setProduct] = useState({});
@@ -92,11 +100,13 @@ const Product = () => {
               <h1 className="text-xl font-bold">{product.name}</h1>
               <div className="text-sm text-gray-500">Rs {product.price}</div>
               <div>
-                <Rate value={product.rating || 4} disabled className="text-sm" />
+                <Rate
+                  value={product.rating || 4}
+                  disabled
+                  className="text-sm"
+                />
               </div>
-              <p className="text-sm">
-                {product.description}
-              </p>
+              <p className="text-sm">{product.description}</p>
               <div className="my-2">
                 <div className="text-gray-500">Sizes</div>
                 <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoDotFill } from "react-icons/go";
 import { FaCheckCircle } from "react-icons/fa";
 import packagebg from "../assets/packagepg.svg";
@@ -17,8 +17,17 @@ import room2 from "../assets/Room2.svg";
 import room3 from "../assets/Room3.svg";
 import room4 from "../assets/Room4.svg";
 import room5 from "../assets/Room5.svg";
+import Footer from "./Footer";
 
 const TogglePack = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const [enabled, setEnabled] = useState(false);
   const responsive = {
     superLargeDesktop: {
@@ -46,37 +55,36 @@ const TogglePack = () => {
     );
   };
 
-  const packageData=[
+  const packageData = [
     {
-      image:pack1,
-      name:"Basic",
-      price:"3500",
-      product:5,
-      Access:80,
+      image: pack1,
+      name: "Basic",
+      price: "3500",
+      product: 5,
+      Access: 80,
     },
     {
-      image:pack2,
-      name:"Lite",
-      price:"5299",
-      product:7,
-      Access:170,
+      image: pack2,
+      name: "Lite",
+      price: "5299",
+      product: 7,
+      Access: 170,
     },
     {
-      image:pack3,
-      name:"Premium",
-      price:"6399",
-      product:12,
-      Access:170,
+      image: pack3,
+      name: "Premium",
+      price: "6399",
+      product: 12,
+      Access: 170,
     },
     {
-      image:pack4,
-      name:"Luxury",
-      price:"7399",
-      product:15,
-      Access:170,
-    }
-    
-  ]
+      image: pack4,
+      name: "Luxury",
+      price: "7399",
+      product: 15,
+      Access: 170,
+    },
+  ];
 
   return (
     <>
@@ -134,46 +142,50 @@ const TogglePack = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                   {packageData.map((pack, index) => (
                     <div
-                    key={index}
-                    className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
-                      selectedBox === index ? "outline-primary cursor-pointer" : ""
-                    } flex flex-col items-center`}
-                    onClick={() => handleBoxClick(index)}
-                  >
-                    <img
-                      className="h-80 w-80 object-cover mx-auto"
-                      src={pack.image}
-                      alt="random"
-                    />
-                    <div className="text-2xl text-center font-bold pt-2">
-                      {pack.name}
-                    </div>
-                    <div className="p-2 text-center">
-                      <p className="text-md">
-                        From <b className="text-4xl font-bold">₹{pack.price}</b>/month
-                      </p>
-                      <p>{pack.product} products</p>
-                      <p>
-                        Access to {pack.Access}+
-                        <br /> products
-                      </p>
-                      <div className="my-5"> 
-                        {selectedBox === index ? (
-                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            Browse Catalog
-                          </button>
-                        ) : (
-                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            <input type="radio" className="hidden" />
-                            Select Plan
-                          </label>
-                        )}
+                      key={index}
+                      className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
+                        selectedBox === index
+                          ? "outline-primary cursor-pointer"
+                          : ""
+                      } flex flex-col items-center`}
+                      onClick={() => handleBoxClick(index)}
+                    >
+                      <img
+                        className="h-80 w-80 object-cover mx-auto"
+                        src={pack.image}
+                        alt="random"
+                      />
+                      <div className="text-2xl text-center font-bold pt-2">
+                        {pack.name}
                       </div>
-                      <p className="text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
+                      <div className="p-2 text-center">
+                        <p className="text-md">
+                          From{" "}
+                          <b className="text-4xl font-bold">₹{pack.price}</b>
+                          /month
+                        </p>
+                        <p>{pack.product} products</p>
+                        <p>
+                          Access to {pack.Access}+
+                          <br /> products
+                        </p>
+                        <div className="my-5">
+                          {selectedBox === index ? (
+                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              Browse Catalog
+                            </button>
+                          ) : (
+                            <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              <input type="radio" className="hidden" />
+                              Select Plan
+                            </label>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          No booking or credit card fees!
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   ))}
                 </div>
               </div>
@@ -181,49 +193,53 @@ const TogglePack = () => {
           ) : (
             <div className="flex flex-row justify-center">
               <div className="card-half">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                   {packageData.map((pack, index) => (
                     <div
-                    key={index}
-                    className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
-                      selectedBox === index ? "outline-primary cursor-pointer" : ""
-                    } flex flex-col items-center`}
-                    onClick={() => handleBoxClick(index)}
-                  >
-                    <img
-                      className="h-80 w-80 object-cover mx-auto"
-                      src={pack.image}
-                      alt="random"
-                    />
-                    <div className="text-2xl text-center font-bold pt-2">
-                      {pack.name}
-                    </div>
-                    <div className="p-2 text-center">
-                      <p className="text-md">
-                        From <b className="text-4xl font-bold">₹{pack.price}</b>/month
-                      </p>
-                      <p>{pack.product} products</p>
-                      <p>
-                        Access to {pack.Access}+
-                        <br /> products
-                      </p>
-                      <div className="my-5"> 
-                        {selectedBox === index ? (
-                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            Browse Catalog
-                          </button>
-                        ) : (
-                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            <input type="radio" className="hidden" />
-                            Select Plan
-                          </label>
-                        )}
+                      key={index}
+                      className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
+                        selectedBox === index
+                          ? "outline-primary cursor-pointer"
+                          : ""
+                      } flex flex-col items-center`}
+                      onClick={() => handleBoxClick(index)}
+                    >
+                      <img
+                        className="h-80 w-80 object-cover mx-auto"
+                        src={pack.image}
+                        alt="random"
+                      />
+                      <div className="text-2xl text-center font-bold pt-2">
+                        {pack.name}
                       </div>
-                      <p className="text-xs text-gray-500">
-                        No booking or credit card fees!
-                      </p>
+                      <div className="p-2 text-center">
+                        <p className="text-md">
+                          From{" "}
+                          <b className="text-4xl font-bold">₹{pack.price}</b>
+                          /month
+                        </p>
+                        <p>{pack.product} products</p>
+                        <p>
+                          Access to {pack.Access}+
+                          <br /> products
+                        </p>
+                        <div className="my-5">
+                          {selectedBox === index ? (
+                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              Browse Catalog
+                            </button>
+                          ) : (
+                            <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              <input type="radio" className="hidden" />
+                              Select Plan
+                            </label>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          No booking or credit card fees!
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   ))}
                 </div>
               </div>
@@ -362,6 +378,7 @@ const TogglePack = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

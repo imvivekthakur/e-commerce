@@ -11,6 +11,14 @@ import { ToastContainer, toast } from "react-toastify";
 import defaultImg from "../assets/default.jpg";
 
 const UserProfile = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const dispatch = useDispatch();
 
   const [users, setUsers] = useState([]);
