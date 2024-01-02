@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  console.log(cart.cart);
+  // console.log(cart.cart);
   const cart2 = cart.cart;
 
   const [allCart, setAllCart] = useState([]);
@@ -67,8 +67,8 @@ const Cart = () => {
   //     });
   // }, [cart]);
 
-  console.log(allCart);
-  console.log(detailedCartItems);
+  // console.log(allCart);
+  // console.log(detailedCartItems);
   return (
     <>
       <DefaultNavbar />
@@ -101,7 +101,7 @@ const Cart = () => {
                 name={card.product.name}
                 description={card.product.description}
                 image={card.product.productImage}
-                owner={card.product.owner.name}
+                // owner={card.product?.owner?.name || "vivek"}
                 productId={card.product._id}
               />
             ))}

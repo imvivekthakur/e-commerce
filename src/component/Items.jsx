@@ -8,7 +8,7 @@ const Items = ({ allProducts }) => {
   const [activeTab, setActiveTab] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState(allProducts);
 
-  console.log("all products ", allProducts);
+  // console.log("all products ", allProducts);
 
   useEffect(() => {
     filterProducts(activeTab);
@@ -19,14 +19,14 @@ const Items = ({ allProducts }) => {
   };
 
   const filterProducts = (index) => {
-    console.log("filtered products called !!", index);
+    // console.log("filtered products called !!", index);
     if (index === 1) {
       setFilteredProducts(allProducts); // Show all products for "Popular" tab
     } else {
       const filtered = allProducts.filter(
         (product) => product.category === getCategoryName(index)
       );
-      console.log("filtered ", filtered);
+      // console.log("filtered ", filtered);
       setFilteredProducts(filtered);
     }
   };
@@ -89,7 +89,7 @@ const Items = ({ allProducts }) => {
         </div>
       </div>
       {/* <Products/> */}
-      {console.log("filtered products ", filteredProducts)}
+      {/* {console.log("filtered products ", filteredProducts)} */}
       {activeTab === 1 && <DynamicProducts />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
         {activeTab !== 1 &&

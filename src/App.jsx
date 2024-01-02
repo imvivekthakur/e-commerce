@@ -48,7 +48,7 @@ function App() {
       });
   }, []);
 
-  console.log(allProducts);
+  // console.log(allProducts);
   return (
     <>
       <BrowserRouter>
@@ -60,8 +60,7 @@ function App() {
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
           <Route path="/about" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
-          <Route path="/product" element={<Product />} />
-          <Route path="/product/:productId" element={<Product />} />
+          <Route path="/product/:productId" element={<Product allProducts={allProducts}/>} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/toggle" element={<TogglePack />} />
