@@ -75,7 +75,7 @@ const Cart = () => {
                 name={card.product.name}
                 description={card.product.description}
                 image={card.product.productImage}
-                // owner={card.product.owner.name}
+                // owner={card.product?.owner?.name || "vivek"}
                 productId={card.product._id}
               />
             ))}

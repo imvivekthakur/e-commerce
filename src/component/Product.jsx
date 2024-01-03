@@ -5,8 +5,9 @@ import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import Review from "./Review";
 import { useParams } from "react-router-dom";
+import ProductCard from "./DynamicProducts/ProductCard";
 
-const Product = () => {
+const Product = ({ allProducts }) => {
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -20,6 +21,27 @@ const Product = () => {
   const [product, setProduct] = useState({});
   const handleClick = (index) => {
     setIsActive(index);
+  };
+
+  const [similarProducts, setSimilarProducts] = useState([]);
+
+  useEffect(() => {
+    filterSimilarProducts(product);
+  }, [product]);
+
+  const filterSimilarProducts = (product) => {
+    if (product && allProducts && allProducts.length > 0) {
+      const arr = allProducts
+        .filter(
+          (item) =>
+            item.category === product.category && item._id !== product._id
+        )
+        .map((item) => console.log("items ", item));
+      const similar = allProducts.filter(
+        (item) => item.category === product.category && item._id !== product._id
+      );
+      setSimilarProducts(similar);
+    }
   };
 
   useEffect(() => {
@@ -106,28 +128,7 @@ const Product = () => {
                 />
               </div>
               <p className="text-sm">{product.description}</p>
-              <div className="my-2">
-                <div className="text-gray-500">Sizes</div>
-                <div>
-                  <button className="w-10 py-1 bg-[#CDA274] rounded-sm text-white ">
-                    L
-                  </button>
-                  <button className="w-10 py-1 ml-4 bg-[#CDA274] rounded-sm text-white ">
-                    XL
-                  </button>
-                  <button className="w-10 py-1 ml-4 bg-[#CDA274] rounded-sm text-white ">
-                    XS
-                  </button>
-                </div>
-              </div>
-              <div className="mt-4">
-                <div className="text-gray-500">Colors</div>
-                <div>
-                  <button className="w-8 h-8 rounded-full bg-blue-300"></button>
-                  <button className="w-8 h-8 rounded-full bg-purple-300 ml-4"></button>
-                  <button className="w-8 h-8 rounded-full bg-red-300 ml-4"></button>
-                </div>
-              </div>
+
               <div className="flex mt-4">
                 <div className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 flex justify-between border-2 border-black rounded-lg p-2">
                   <span>-</span>
@@ -137,11 +138,6 @@ const Product = () => {
                 <div>
                   <button className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 border-black rounded-lg p-2">
                     Add To Cart
-                  </button>
-                </div>
-                <div>
-                  <button className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 border-black rounded-lg p-2">
-                    + Compare
                   </button>
                 </div>
               </div>
@@ -200,7 +196,20 @@ const Product = () => {
           <h1 className="text-2xl text-center font-bold mt-10 mb-5">
             Related Products
           </h1>
-          <Products />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
+            {similarProducts.map((card) => (
+              <ProductCard
+                key={card.productId} // Remember to provide a unique key for list items
+                img={card.productImage}
+                desc={card.description}
+                price={card.price}
+                stock={card.stock}
+                productCard={card.productId}
+                seller={card.owner.name}
+                category={card.category}
+              />
+            ))}
+          </div>
         </div>
       </div>
       <Footer />

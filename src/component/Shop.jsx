@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import ProductCard from "./DynamicProducts/ProductCard";
 
 const Shop = ({ allProducts }) => {
+  const [selectedCategory, setSelectedCategory] = useState("popular"); // Initially, no filter applied ("all" category)
+  const [filteredProduct, setFilteredProduct] = useState(allProducts);
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -14,7 +16,29 @@ const Shop = ({ allProducts }) => {
     });
   }, []);
 
-  const items = allProducts;
+  useEffect(() => {
+    filterProduct(selectedCategory);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    if (allProducts && allProducts.length > 0) {
+      setFilteredProduct(allProducts);
+    }
+  }, [allProducts]);
+
+  const filterProduct = (selectedCategory) => {
+    if (selectedCategory === "popular") {
+      setFilteredProduct(allProducts);
+    } else {
+      const filteredItems = allProducts.filter(
+        (item) => item.category === selectedCategory
+      );
+      setFilteredProduct(filteredItems);
+    }
+  };
+
+  const items = filteredProduct;
+  //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
 
@@ -45,16 +69,38 @@ const Shop = ({ allProducts }) => {
 
       <div className="text-sm w-[90%] mx-auto my-8">
         <div>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          <button
+            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+              selectedCategory === "popular" ? "bg-primary text-white" : ""
+            }`}
+            onClick={() => setSelectedCategory("popular")}
+          >
             Popular
           </button>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
-            Furniture / Home Appliances
+          <button
+            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+              selectedCategory === "Furniture" ? "bg-primary text-white" : ""
+            }`}
+            onClick={() => setSelectedCategory("Furniture")}
+          >
+            Furniture
           </button>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          <button
+            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+              selectedCategory === "Decorative Items"
+                ? "bg-primary text-white"
+                : ""
+            }`}
+            onClick={() => setSelectedCategory("Decorative Items")}
+          >
             Decorative Items
           </button>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          <button
+            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+              selectedCategory === "vehicles" ? "bg-primary text-white" : ""
+            }`}
+            onClick={() => setSelectedCategory("Vehicles")}
+          >
             Vehicles
           </button>
         </div>
@@ -66,7 +112,7 @@ const Shop = ({ allProducts }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
-        {currentItems.map((card, index) => (
+        {filteredProduct.map((card, index) => (
           <ProductCard
             key={card._id}
             img={card.productImage}
