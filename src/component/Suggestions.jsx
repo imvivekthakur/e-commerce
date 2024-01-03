@@ -28,6 +28,8 @@ const Suggestions = () => {
     const clickedSuggestion = event.target.textContent;
     setSearchQuery(clickedSuggestion);
     setSuggestions([]);
+    const formattedSuggestion = clickedSuggestion.toLowerCase().replace(/\s+/g, "-");
+    navigate(`/${formattedSuggestion}`)
   };
 
   const clearSuggestions = () => {

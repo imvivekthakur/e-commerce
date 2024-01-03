@@ -1,27 +1,15 @@
 export const Suggestion=[
 {
     id:1,
-    name:'Sofa'
+    name:'Furniture'
 },
 {
     id:2,
-    name:'Double Bed'
+    name:'Decorative Items'
 },
 {
     id:3,
-    name:'Flex 3 Seater'
-},
-{
-    id:4,
-    name:'Scooty'
-},
-{
-    id:5,
-    name:'Bikes'
-},
-{
-    id:6,
-    name:'Decoration Items'
+    name:'Vehicles'
 },
 ]
 
