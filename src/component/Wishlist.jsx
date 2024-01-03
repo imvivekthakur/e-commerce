@@ -11,7 +11,6 @@ const Wishlist = () => {
   const dispatch = useDispatch();
 
   const wishlist = useSelector((state) => state.wishlist).wishlist;
-  console.log(wishlist, "wishlist");
   const [cardsData, setArr] = useState([]);
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -24,20 +23,15 @@ const Wishlist = () => {
   useEffect(() => {
     dispatch(getWishlistThunk())
       .then((res) => {
-        console.log(res);
         setArr(res.payload.data.wishlist.products);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }, []);
 
-  console.log(cardsData);
-
   const items = wishlist;
-  //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 3;
 

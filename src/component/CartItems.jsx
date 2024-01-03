@@ -12,12 +12,10 @@ const CartItems = (props) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    console.log(props.productId);
     const productId = props.productId;
 
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
-        //     console.log(res);
         if (res.payload.data.success) {
           toast.success("Product added to cart successfully!", {
             position: "top-right",
@@ -42,19 +40,16 @@ const CartItems = (props) => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Please Login to continue");
         return err.response;
       });
   };
 
   const handleRemoveFromCart = () => {
-    console.log(props.productId);
     const productId = props.productId;
 
     dispatch(removeFromCartThunk({ productId }))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success("Product removed from cart successfully!", {
             position: "top-right",
@@ -80,17 +75,14 @@ const CartItems = (props) => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Please Login to continue");
         return err.response;
       });
   };
 
   const deleteProduct = () => {
-    console.log(props.productId);
     const productId = props.productId;
     dispatch(deleteProductThunk({ productId })).then((res) => {
-      console.log(res);
       if (res.payload.data.success) {
         toast.success("Product deleted from cart successfully!", {
           position: "top-right",
@@ -127,10 +119,14 @@ const CartItems = (props) => {
         <div className="w-full sm:w-8/12 p-2 sm:order-2">
           <h1 className="text-lg font-bold md:text-2xl">{props.name}</h1>
 
-          <h2 className="text-md font-semi-bold ">
-            <span className="text-black pr-2">Seller:</span>
-            {props.owner}
-          </h2>
+          {props.owner ? (
+            <h2 className="text-md font-semi-bold ">
+              <span className="text-black pr-2">Seller:</span>
+              {props.owner}
+            </h2>
+          ) : (
+            <></>
+          )}
 
           <p className="text-primary font-bold md:text-lg">
             <span className="text-black pr-2">Rs</span>

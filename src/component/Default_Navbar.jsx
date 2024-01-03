@@ -20,7 +20,6 @@ const DefaultNavbar = () => {
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
-  // console.log("userdata ", userData);
 
   const [users, setUsers] = useState([]);
 
@@ -33,25 +32,19 @@ const DefaultNavbar = () => {
   useEffect(() => {
     dispatch(profileThunk())
       .then((res) => {
-        // console.log(res);
         setProfile(res.payload.data.profile);
         return res;
       })
       .catch((err) => {
-        // console.log(err);
         return err.response;
       });
   }, []);
 
-  // console.log(profile);
   const showUsers = async () => {
     try {
       const response = await axios.get("https://dummyjson.com/users/1");
-      // console.log(response);
       setUsers(response.data);
-    } catch (error) {
-      // console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -36,7 +36,6 @@ const Contact = () => {
     e.preventDefault();
     dispatch(contactFormThunk(data))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -55,7 +54,6 @@ const Contact = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };

@@ -43,7 +43,6 @@ const Shop = ({ allProducts }) => {
   const itemsPerPage = 6;
 
   const endOffset = itemOffset + itemsPerPage;
-  //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 

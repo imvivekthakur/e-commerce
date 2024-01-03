@@ -12,8 +12,6 @@ const DynamicProducts = () => {
   useEffect(() => {
     dispatch(getAllProductThunk())
       .then((res) => {
-        console.log(res);
-
         if (res.payload.data.success) {
           setAllProducts(res.payload.data.products);
           setLoading(false);
@@ -21,12 +19,9 @@ const DynamicProducts = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }, []);
-
-  console.log(allProducts);
 
   return (
     <div className="parent-container mt-5">

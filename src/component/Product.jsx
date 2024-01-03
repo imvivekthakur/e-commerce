@@ -51,7 +51,6 @@ const Product = ({ allProducts }) => {
           `https://renting-carnival.onrender.com/product/get/${productId}`
         );
         const data = await res.json();
-        console.log("product details ", data.product);
         if (!data) {
           console.log("product details could not pe loaded");
         } else {

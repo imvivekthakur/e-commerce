@@ -31,8 +31,6 @@ const Signup = () => {
     role,
   };
 
-  console.log(userData);
-
   const handleSignup = () => {
     if (!password || !phone || !name || !role) {
       toast.error(`Please fill all the required fields`, {
@@ -63,8 +61,6 @@ const Signup = () => {
 
     dispatch(registerUserThunk(userData))
       .then((res) => {
-        // console.log(res);
-
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -95,12 +91,9 @@ const Signup = () => {
         return res;
       })
       .catch((err) => {
-        // console.log(err);
         return err.response;
       });
   };
-
-  console.log(role);
 
   return (
     <>

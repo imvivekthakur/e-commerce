@@ -17,7 +17,6 @@ const EmailVerification = () => {
     e.preventDefault();
     dispatch(emailThunk(data))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -46,7 +45,6 @@ const EmailVerification = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };

@@ -3,12 +3,11 @@ import Products from "./Products";
 import DynamicProducts from "./DynamicProducts/DynamicProducts";
 import Card from "./Card";
 import ProductCard from "./DynamicProducts/ProductCard";
+import { Link } from "react-router-dom";
 
 const Items = ({ allProducts }) => {
   const [activeTab, setActiveTab] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState(allProducts);
-
-  // console.log("all products ", allProducts);
 
   useEffect(() => {
     filterProducts(activeTab);
@@ -57,7 +56,9 @@ const Items = ({ allProducts }) => {
       <div className="flex flex-wrap w-[90%] mx-auto">
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 1 ? "text-primary border-primary font-bold" : ""
+            activeTab === 1
+              ? "text-primary border-primary font-bold cursor-pointer"
+              : ""
           }`}
           onClick={() => handleClick(1)}
         >
@@ -65,7 +66,9 @@ const Items = ({ allProducts }) => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 2 ? "text-primary border-primary font-bold" : ""
+            activeTab === 2
+              ? "text-primary border-primary font-bold cursor-pointer"
+              : ""
           }`}
           onClick={() => handleClick(2)}
         >
@@ -73,7 +76,9 @@ const Items = ({ allProducts }) => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 3 ? "text-primary border-primary font-bold" : ""
+            activeTab === 3
+              ? "text-primary border-primary font-bold cursor-pointer"
+              : ""
           }`}
           onClick={() => handleClick(3)}
         >
@@ -81,7 +86,9 @@ const Items = ({ allProducts }) => {
         </div>
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 4 ? "text-primary border-primary font-bold" : ""
+            activeTab === 4
+              ? "text-primary border-primary font-bold cursor-pointer"
+              : ""
           }`}
           onClick={() => handleClick(4)}
         >
@@ -99,16 +106,19 @@ const Items = ({ allProducts }) => {
               desc={card.description}
               price={card.price}
               stock={card.stock}
-              productCard={card.productId}
+              productId={card._id}
               seller={card.owner.name}
+              name={card.name}
               category={card.category}
             />
           ))}
       </div>
       <div className="text-center my-6">
-        <button className="border-2 border-primary text-primary px-6 py-2 rounded-md">
-          Show More
-        </button>
+        <Link to="/shop">
+          <button className="border-2 border-primary text-primary px-6 py-2 rounded-md">
+            Show More
+          </button>
+        </Link>
       </div>
     </>
   );

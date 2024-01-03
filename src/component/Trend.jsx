@@ -173,7 +173,7 @@ const Trend = () => {
           <div className="w-full lg:w-1/2 p-6 rounded-lg shadow-md">
             <div className="flex items-center">
               <img src={mark} alt="" />
-              <h3 className="text-primary p-4">Pick-up</h3>
+              <h3 className="text-primary p-4">Drop-off</h3>
             </div>
 
             <div className="flex flex-wrap gap-10">
