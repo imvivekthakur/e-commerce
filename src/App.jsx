@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { getAllProductThunk } from "./redux/productSlice";
 import Review from "./component/Review";
 import Wishlist from "./component/Wishlist";
+import Category from "./component/Category";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -60,7 +61,10 @@ function App() {
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
           <Route path="/about" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
-          <Route path="/product/:productId" element={<Product allProducts={allProducts}/>} />
+          <Route
+            path="/product/:productId"
+            element={<Product allProducts={allProducts} />}
+          />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/toggle" element={<TogglePack />} />
@@ -71,8 +75,33 @@ function App() {
           <Route path="/email-verify" element={<EmailVerification />} />
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
-          <Route path="/review" element={<Review />} />{" "}
+          <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
+          <Route
+            path="/furniture"
+            element={
+              <Category category="Furniture" allProducts={allProducts} />
+            }
+          />
+          <Route
+            path="/decorative-items"
+            element={
+              <Category category="Decorative Items" allProducts={allProducts} />
+            }
+          />
+          <Route
+            path="/vehicles"
+            element={
+              <Category category="Vehicles" allProducts={allProducts} />
+            }
+          />
+          <Route
+            path="/popular"
+            element={
+              <Category category="Popular" allProducts={allProducts} />
+            }
+          />
           {/* <Route path="/product/create" element={<ProductForm />} /> */}
         </Routes>
       </BrowserRouter>
