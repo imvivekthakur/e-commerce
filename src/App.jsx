@@ -25,6 +25,8 @@ import { getAllProductThunk } from "./redux/productSlice";
 import Review from "./component/Review";
 import Wishlist from "./component/Wishlist";
 import Category from "./component/Category";
+import AllUsers from "./admin/AllUsers";
+import AllProductsAdmin from "./admin/AllProductsAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -71,6 +73,8 @@ function App() {
           <Route path="/email-verify" element={<EmailVerification />} />
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
+          <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
+
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
@@ -88,16 +92,14 @@ function App() {
           />
           <Route
             path="/vehicles"
-            element={
-              <Category category="Vehicles" allProducts={allProducts} />
-            }
+            element={<Category category="Vehicles" allProducts={allProducts} />}
           />
           <Route
             path="/popular"
-            element={
-              <Category category="Popular" allProducts={allProducts} />
-            }
+            element={<Category category="Popular" allProducts={allProducts} />}
           />
+          <Route path="/allUsers" element={<AllUsers />} />
+
           {/* <Route path="/product/create" element={<ProductForm />} /> */}
         </Routes>
       </BrowserRouter>

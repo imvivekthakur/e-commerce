@@ -9,6 +9,7 @@ import ProductForm from "../component/CreateProduct/ProductForm";
 import Modal from "../component/CreateProduct/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import defaultImg from "../assets/default.jpg";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   useEffect(() => {
@@ -304,6 +305,22 @@ const UserProfile = () => {
             Create New Product
           </button>
         )}
+
+        <Link to="/allUsers">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Show Users
+            </button>
+          )}
+        </Link>
+
+        <Link to="/admin/allProducts">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Show Products
+            </button>
+          )}
+        </Link>
 
         <Modal isOpen={isProductFormOpen} onClose={closeProductForm}>
           <ProductForm />
