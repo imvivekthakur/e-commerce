@@ -19,10 +19,8 @@ const OTPVerification = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Submitted OTP:", otp);
     dispatch(emailVerifyThunk(data))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -54,7 +52,6 @@ const OTPVerification = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };

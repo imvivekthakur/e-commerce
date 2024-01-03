@@ -22,11 +22,9 @@ export const addToWishlistThunk = createAsyncThunk(
 
     return await Api.post(`wishlist/add`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -46,11 +44,9 @@ export const removeFromWishlistThunk = createAsyncThunk(
 
     return await Api.post(`wishlist/remove`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -70,11 +66,9 @@ export const getWishlistThunk = createAsyncThunk(
 
     return await Api.get(`wishlist/get`, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -92,7 +86,6 @@ export const wishlist = createSlice({
       })
       .addCase(addToWishlistThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {
@@ -112,7 +105,6 @@ export const wishlist = createSlice({
       })
       .addCase(removeFromWishlistThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.wishlist = action.payload.data.wishlist.products;
           state.isSuccess = true;
@@ -133,7 +125,6 @@ export const wishlist = createSlice({
       })
       .addCase(getWishlistThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.wishlist = action.payload.data.wishlist.products;
           state.isSuccess = true;

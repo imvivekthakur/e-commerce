@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  console.log(cart.cart);
   const cart2 = cart.cart;
 
   const [allCart, setAllCart] = useState([]);
@@ -28,7 +27,6 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getCartThunk())
       .then((res) => {
-        console.log(res);
         setAllCart(res.payload.data.cart);
         setdetailedCartItems(res.payload.data.detailedCartItems);
 
@@ -41,34 +39,10 @@ const Cart = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
-  }, [cart2]);
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(getCartThunk())
-  //     .then((res) => {
-  //       console.log(res);
-  //       setAllCart(res.payload.data.cart);
-  //       setdetailedCartItems(res.payload.data.detailedCartItems);
-
-  //       const total = res.payload.data.detailedCartItems.reduce(
-  //         (acc, item) => acc + item.itemTotal,
-  //         0
-  //       );
-  //       setOverallTotal(total);
-
-  //       return res;
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       return err.response;
-  //     });
-  // }, [cart]);
-
-  console.log(allCart);
-  console.log(detailedCartItems);
   return (
     <>
       <DefaultNavbar />
@@ -101,7 +75,7 @@ const Cart = () => {
                 name={card.product.name}
                 description={card.product.description}
                 image={card.product.productImage}
-                owner={card.product.owner.name}
+                // owner={card.product.owner.name}
                 productId={card.product._id}
               />
             ))}

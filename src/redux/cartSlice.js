@@ -20,11 +20,9 @@ export const addToCartThunk = createAsyncThunk("cart/add", async (data) => {
 
   return await Api.post(`cart/add`, data, config)
     .then((res) => {
-      //  console.log(res);
       return res;
     })
     .catch((err) => {
-      // console.log(err);
       return err.response;
     });
 });
@@ -43,11 +41,9 @@ export const removeFromCartThunk = createAsyncThunk(
 
     return await Api.post(`cart/remove`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -69,7 +65,6 @@ export const getCartThunk = createAsyncThunk("cart/get", async (data) => {
       return res;
     })
     .catch((err) => {
-      console.log(err);
       return err.response;
     });
 });
@@ -88,11 +83,9 @@ export const deleteProductThunk = createAsyncThunk(
 
     return await Api.post(`cart/delete`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -112,7 +105,6 @@ export const cartSlice = createSlice({
       })
       .addCase(addToCartThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.cart = action.payload.data.cart.items;
@@ -133,7 +125,6 @@ export const cartSlice = createSlice({
       })
       .addCase(removeFromCartThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.cart = action.payload.data.cart.items;
           state.isSuccess = true;
@@ -154,7 +145,6 @@ export const cartSlice = createSlice({
       })
       .addCase(getCartThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.cart = action.payload.data.cart;
@@ -174,7 +164,6 @@ export const cartSlice = createSlice({
       })
       .addCase(deleteProductThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.cart = action.payload.data.cart.items;
           state.isSuccess = true;

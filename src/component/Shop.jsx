@@ -15,21 +15,16 @@ const Shop = ({ allProducts }) => {
   }, []);
 
   const items = allProducts;
-  //   console.log(items);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
 
   const endOffset = itemOffset + itemsPerPage;
-  //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = items.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
-    // console.log(
-    //   `User requested page number ${event.selected}, which is offset ${newOffset}`
-    // );
   };
 
   return (

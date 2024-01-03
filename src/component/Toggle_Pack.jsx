@@ -48,6 +48,8 @@ const TogglePack = () => {
     },
   };
   const [selectedBox, setSelectedBox] = useState(null);
+  const [packages, setPackages] = useState([]);
+  const [bool, setBool] = useState("Half yearly");
 
   const handleBoxClick = (index) => {
     setSelectedBox((prevSelectedBox) =>
@@ -55,37 +57,38 @@ const TogglePack = () => {
     );
   };
 
-  const packageData = [
-    {
-      image: pack1,
-      name: "Basic",
-      price: "3500",
-      product: 5,
-      Access: 80,
-    },
-    {
-      image: pack2,
-      name: "Lite",
-      price: "5299",
-      product: 7,
-      Access: 170,
-    },
-    {
-      image: pack3,
-      name: "Premium",
-      price: "6399",
-      product: 12,
-      Access: 170,
-    },
-    {
-      image: pack4,
-      name: "Luxury",
-      price: "7399",
-      product: 15,
-      Access: 170,
-    },
-  ];
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("userInfo"));
+        const response = await fetch(
+          "https://renting-carnival.onrender.com/package/all/",
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${user.accessToken}`,
+            },
+          }
+        );
+        const data = await response.json();
+        setPackages(data.packages);
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      }
+    };
 
+    fetchPackages();
+  }, []);
+
+  const handleToggleChange = () => {
+    setEnabled(!enabled);
+    setSelectedBox(null); // Reset selected box when changing the plan
+    setBool((prevBool) =>
+      prevBool === "Annually" ? "Half yearly" : "Annually"
+    );
+  };
+
+  console.log(packages);
   return (
     <>
       <DefaultNavbar />
@@ -117,7 +120,8 @@ const TogglePack = () => {
           </p>
           <div className="flex flex-row items-center">
             <span className="text-lg font-medium ml-2">
-              {enabled ? "Annually" : "Half yearly"}
+              {bool}
+              {/* {enabled ? "Annually" : "Half yearly"} */}
             </span>
             <label className="cursor-pointer flex items-center">
               <input
@@ -127,124 +131,63 @@ const TogglePack = () => {
                 readOnly
               />
               <div
-                onClick={() => {
-                  setEnabled(!enabled);
-                  setSelectedBox(null); // Reset selected box when changing the plan
-                }}
+                onClick={handleToggleChange}
                 className={`relative m-5 mr-2 flex items-center rounded-full w-20 h-10 bg-primary peer cursor-pointer peer-focus:ring-green-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-10 after:transition-transform peer-checked:transform translate-x-full`}
               ></div>
             </label>
           </div>
 
-          {enabled ? (
-            <div className="flex flex-row justify-center">
-              <div className="card-Annually">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  {packageData.map((pack, index) => (
-                    <div
-                      key={index}
-                      className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
-                        selectedBox === index
-                          ? "outline-primary cursor-pointer"
-                          : ""
-                      } flex flex-col items-center`}
-                      onClick={() => handleBoxClick(index)}
-                    >
-                      <img
-                        className="h-80 w-80 object-cover mx-auto"
-                        src={pack.image}
-                        alt="random"
-                      />
-                      <div className="text-2xl text-center font-bold pt-2">
-                        {pack.name}
-                      </div>
-                      <div className="p-2 text-center">
-                        <p className="text-md">
-                          From{" "}
-                          <b className="text-4xl font-bold">₹{pack.price}</b>
-                          /month
-                        </p>
-                        <p>{pack.product} products</p>
-                        <p>
-                          Access to {pack.Access}+
-                          <br /> products
-                        </p>
-                        <div className="my-5">
-                          {selectedBox === index ? (
-                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              Browse Catalog
-                            </button>
-                          ) : (
-                            <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              <input type="radio" className="hidden" />
-                              Select Plan
-                            </label>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500">
-                          No booking or credit card fees!
-                        </p>
-                      </div>
+          <div className="flex flex-row justify-center">
+            <div className="card-Annually">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {packages.map((pack, index) => (
+                  <div
+                    key={pack._id}
+                    className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
+                      selectedBox === index
+                        ? "outline-primary cursor-pointer"
+                        : ""
+                    } flex flex-col items-center`}
+                    onClick={() => handleBoxClick(index)}
+                  >
+                    <img
+                      className="h-80 w-80 object-cover mx-auto"
+                      src={pack1}
+                      alt="random"
+                    />
+                    <div className="text-2xl text-center font-bold pt-2">
+                      {pack.name}
                     </div>
-                  ))}
-                </div>
+                    <div className="p-2 text-center">
+                      <p className="text-md">
+                        From{" "}
+                        <b className="text-4xl font-bold">
+                          ₹
+                          {bool === "Annually"
+                            ? pack.durations[0].price
+                            : pack.durations[1].price}
+                        </b>
+                        /month
+                      </p>
+                      <p>
+                        Access to {pack.numberOfProducts}
+                        <br /> products
+                      </p>
+                      <div className="my-5">
+                        <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                          <input type="radio" className="hidden" />
+                          Select Plan
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500">
+                        No booking or credit card fees!
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ) : (
-            <div className="flex flex-row justify-center">
-              <div className="card-half">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  {packageData.map((pack, index) => (
-                    <div
-                      key={index}
-                      className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
-                        selectedBox === index
-                          ? "outline-primary cursor-pointer"
-                          : ""
-                      } flex flex-col items-center`}
-                      onClick={() => handleBoxClick(index)}
-                    >
-                      <img
-                        className="h-80 w-80 object-cover mx-auto"
-                        src={pack.image}
-                        alt="random"
-                      />
-                      <div className="text-2xl text-center font-bold pt-2">
-                        {pack.name}
-                      </div>
-                      <div className="p-2 text-center">
-                        <p className="text-md">
-                          From{" "}
-                          <b className="text-4xl font-bold">₹{pack.price}</b>
-                          /month
-                        </p>
-                        <p>{pack.product} products</p>
-                        <p>
-                          Access to {pack.Access}+
-                          <br /> products
-                        </p>
-                        <div className="my-5">
-                          {selectedBox === index ? (
-                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              Browse Catalog
-                            </button>
-                          ) : (
-                            <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              <input type="radio" className="hidden" />
-                              Select Plan
-                            </label>
-                          )}
-                        </div>
-                        <p className="text-xs text-gray-500">
-                          No booking or credit card fees!
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
         <div className="max-w-screen-lg mx-auto p-8 my-10">
           <h2 className="text-3xl font-bold mb-4 text-center">

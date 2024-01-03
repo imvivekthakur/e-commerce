@@ -24,7 +24,6 @@ const ProductCard = ({
   const handleAddToCart = () => {
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success("Product added to cart successfully!", {
             position: "top-right",
@@ -48,7 +47,6 @@ const ProductCard = ({
       })
 
       .catch((err) => {
-        console.log(err);
         toast.error("Please Login to continue");
         return err.response;
       });
@@ -57,7 +55,6 @@ const ProductCard = ({
   const addToWishlistF = () => {
     dispatch(addToWishlistThunk({ productId }))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success("Product added to wishlist successfully!", {
             position: "top-right",
@@ -80,7 +77,6 @@ const ProductCard = ({
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };

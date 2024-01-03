@@ -39,12 +39,11 @@ const ProductForm = () => {
 
     // Log FormData content
     for (const pair of fd.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
+      // console.log(pair[0] + ", " + pair[1]);
     }
 
     dispatch(createProductThunk(fd))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -73,7 +72,6 @@ const ProductForm = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };

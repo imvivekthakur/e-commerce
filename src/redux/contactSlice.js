@@ -18,11 +18,9 @@ export const contactFormThunk = createAsyncThunk(
 
     return await Api.post(`contact/`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -39,7 +37,6 @@ export const contactSlice = createSlice({
       })
       .addCase(contactFormThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {

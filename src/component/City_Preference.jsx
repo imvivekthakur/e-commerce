@@ -42,35 +42,41 @@ const CityPreference = () => {
       const options = {
         method: "GET",
         headers: {
-          "X-RapidAPI-Key": "6cbc1af7f0msh228776942d7512ap14da64jsn7e940118f10e",
-          "X-RapidAPI-Host": "india-pincode-with-latitude-and-longitude.p.rapidapi.com",
+          "X-RapidAPI-Key":
+            "6cbc1af7f0msh228776942d7512ap14da64jsn7e940118f10e",
+          "X-RapidAPI-Host":
+            "india-pincode-with-latitude-and-longitude.p.rapidapi.com",
         },
       };
       const response = await fetch(url, options);
       const data = await response.json();
-  
+
       const cityData = data;
-  
+
       if (cityData && Array.isArray(cityData)) {
         let foundCity1 = null;
-        let foundCity2 = null
-  
+        let foundCity2 = null;
+
         for (let i = 0; i < cityData.length; i++) {
           let cityName1 = cityData[i].state;
-          foundCity1 = indianCities.find((city) => city.name.toLowerCase() === cityName1.toLowerCase());
+          foundCity1 = indianCities.find(
+            (city) => city.name.toLowerCase() === cityName1.toLowerCase()
+          );
           let cityName2 = cityData[i].district;
-          foundCity2 = indianCities.find((city) => city.name.toLowerCase() === cityName2.toLowerCase());
+          foundCity2 = indianCities.find(
+            (city) => city.name.toLowerCase() === cityName2.toLowerCase()
+          );
 
           let foundCity = null;
           let cityName = null;
-          if(foundCity1) {
+          if (foundCity1) {
             foundCity = foundCity1;
             cityName = cityName1;
           } else {
             foundCity = foundCity2;
             cityName = cityName2;
           }
-  
+
           if (foundCity) {
             setCity(cityName);
             setLocation({
@@ -80,7 +86,7 @@ const CityPreference = () => {
             break; // Break out of the loop once a city is found
           }
         }
-  
+
         if (!foundCity1 && !foundCity2) {
           toast.error("Not available in your area!");
           console.log("City not available in the list.");
@@ -92,7 +98,6 @@ const CityPreference = () => {
       console.error("Error fetching city:", error);
     }
   };
-  
 
   // const searchLocationByPinCode = async () => {
   //   const url = `https://india-pincode-with-latitude-and-longitude.p.rapidapi.com/api/v1/pincode/${pinCode}`;
@@ -244,7 +249,7 @@ const CityPreference = () => {
           </nav>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

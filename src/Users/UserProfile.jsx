@@ -41,9 +41,7 @@ const UserProfile = () => {
     try {
       const response = await axios.get("https://dummyjson.com/users/1");
       setUsers(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const handleEditProfile = () => {
@@ -87,9 +85,9 @@ const UserProfile = () => {
       formData.append("file", sendImage);
     }
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
 
     try {
       const response = await axios.put(
@@ -103,7 +101,6 @@ const UserProfile = () => {
         }
       );
 
-      console.log(response.data);
       if (response.data.success) {
         toast.success(`${response.data.msg}`, {
           position: "top-right",
@@ -116,9 +113,7 @@ const UserProfile = () => {
       }
 
       setIsEditMode(false);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const validateEmail = (email) => {
@@ -151,12 +146,9 @@ const UserProfile = () => {
     // }));
   };
 
-  // console.log(sendImage, "sendImage");
-
   useEffect(() => {
     dispatch(profileThunk())
       .then((res) => {
-        console.log(res);
         setProfile(res.payload.data.profile);
         setName(res.payload.data.profile.name);
         setEmail(res.payload.data.profile.email);
@@ -165,7 +157,6 @@ const UserProfile = () => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }, []);
@@ -173,8 +164,6 @@ const UserProfile = () => {
   useEffect(() => {
     showUsers();
   }, []);
-
-  console.log(profile);
 
   return (
     <>

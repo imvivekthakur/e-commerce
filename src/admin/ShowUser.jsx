@@ -9,11 +9,8 @@ const ShowUser = () => {
   const showUsers = async () => {
     try {
       const response = await axios.get("https://dummyjson.com/users/1");
-      console.log(response);
       setUsers(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

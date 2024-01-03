@@ -20,11 +20,9 @@ export const createProductThunk = createAsyncThunk(
     };
     return await Api.post(`product/create/`, data, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -40,11 +38,9 @@ export const getAllProductThunk = createAsyncThunk(
     };
     return await Api.get(`product/getAll/`, config)
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   }
@@ -62,7 +58,6 @@ export const productSlice = createSlice({
       })
       .addCase(createProductThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {

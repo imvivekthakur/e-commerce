@@ -28,8 +28,6 @@ const Login = () => {
     password,
   };
 
-  // console.log(userData, "userdata");
-
   const handleLogin = () => {
     if (!email || !password) {
       toast.error(`Please fill all the required fields`, {
@@ -70,7 +68,6 @@ const Login = () => {
     }
     dispatch(loginUserThunk(userData))
       .then((res) => {
-        // console.log(res);
         // setLoading(res.payload.data.isLoading);
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`, {
@@ -103,7 +100,6 @@ const Login = () => {
         return res;
       })
       .catch((err) => {
-        // console.log(err);
         return err.response;
       });
   };

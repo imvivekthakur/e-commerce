@@ -12,11 +12,9 @@ const initialState = {
 export const emailThunk = createAsyncThunk("auth/email", async (data) => {
   return await Api.post(`auth/email`, data)
     .then((res) => {
-      // console.log(res);
       return res;
     })
     .catch((err) => {
-      // console.log(err);
       return err.response;
     });
 });
@@ -26,11 +24,9 @@ export const emailVerifyThunk = createAsyncThunk(
   async (data) => {
     return await Api.post(`auth/email/verify`, data)
       .then((res) => {
-        // console.log(res);
         return res;
       })
       .catch((err) => {
-        // console.log(err);
         return err.response;
       });
   }
@@ -47,14 +43,11 @@ export const registerUserThunk = createAsyncThunk(
       },
     };
 
-    console.log(user.accessToken);
     return await Api.post(`auth/signup`, data, config)
       .then((res) => {
-        // console.log(res);
         return res;
       })
       .catch((err) => {
-        // console.log(err);
         return err.response;
       });
   }
@@ -63,11 +56,9 @@ export const registerUserThunk = createAsyncThunk(
 export const loginUserThunk = createAsyncThunk("auth/login", async (data) => {
   return await Api.post(`auth/login`, data)
     .then((res) => {
-      // console.log(res);
       return res;
     })
     .catch((err) => {
-      // console.log(err);
       return err.response;
     });
 });
@@ -82,11 +73,9 @@ export const profileThunk = createAsyncThunk("auth/profile", async (data) => {
   };
   return await Api.get(`auth/profile`, config)
     .then((res) => {
-      // console.log(res);
       return res;
     })
     .catch((err) => {
-      // console.log(err);
       return err.response;
     });
 });
@@ -103,7 +92,6 @@ export const authSlice = createSlice({
       })
       .addCase(emailThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {
@@ -121,7 +109,6 @@ export const authSlice = createSlice({
       })
       .addCase(emailVerifyThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {
@@ -139,7 +126,6 @@ export const authSlice = createSlice({
       })
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.profile = action.payload.data;
@@ -161,7 +147,6 @@ export const authSlice = createSlice({
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.user = action.payload.data.user;
@@ -183,7 +168,6 @@ export const authSlice = createSlice({
       .addCase(profileThunk.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {

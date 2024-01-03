@@ -53,7 +53,6 @@ const Review = () => {
         }
       );
       const data = await res.json();
-      console.log("response data ", data);
       if (!data) {
         toast.error("Some error occured! Comment not sent");
         console.log("comment not sent");

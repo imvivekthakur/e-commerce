@@ -7,11 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 const WishlistCard = ({ img, desc, price, title, productId }) => {
   const dispatch = useDispatch();
 
-  console.log(productId);
   const handleRemove = () => {
     dispatch(removeFromWishlistThunk({ productId }))
       .then((res) => {
-        console.log(res);
         if (res.payload.data.success) {
           toast.success("Product removed from wishlist successfully!", {
             position: "top-right",
@@ -34,7 +32,6 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
         return res;
       })
       .catch((err) => {
-        console.log(err);
         return err.response;
       });
   };
