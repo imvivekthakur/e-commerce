@@ -63,7 +63,7 @@ const Cart = () => {
       "Content-Type": "application/json",
     };
   
-    const res = await fetch("http://localhost:5000/payment/checkout", {
+    const res = await fetch("https://renting-carnival.onrender.com/payment/checkout", {
       method: "POST",
       headers: headers,
       body: JSON.stringify(body),
@@ -116,8 +116,8 @@ const Cart = () => {
               />
             ))}
         </div>
-        <div className="w-[95%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center">
-          <div className="text-2xl font-bold text-center m-3 p-4 bg-white">
+        <div className="w-[90%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center rounded-md h-fit">
+          <div className="text-2xl font-bold text-center m-3 p-4 text-white">
             Cart Total
           </div>
 
@@ -133,13 +133,13 @@ const Cart = () => {
           ))} */}
 
           {/* Display overall total */}
-          <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mt-10 mb-5">
+          <div className="bt text-white text-center mt-10 mb-5">
             Total: Rs {overallTotal}
-          </button>
+          </div>
 
-          <hr className="border-t-2 border-black my-5 w-full" />
+          <hr className="border-t-2 border-white my-5 w-full" />
           {/* <Link to="/checkout"> */}
-            <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
+            <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
               Checkout
             </button>
           {/* </Link> */}
