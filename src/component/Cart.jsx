@@ -5,7 +5,8 @@ import Pricing from "./Pricing";
 import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
-import { Link } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+// import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,41 @@ const Cart = () => {
         return err.response;
       });
   }, []);
+
+  const makePayment = async () => {
+    const stripe = await loadStripe("pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi");
+    const body = {
+      products: cart2,
+      customer: {
+        name: "John Doe",
+        address: {
+          line1: "123 Main St",
+          city: "New Delhi",
+          state: "Delhi",
+          postal_code: "110043",
+          country: "IN",
+        },
+      },
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+  
+    const res = await fetch("http://localhost:5000/payment/checkout", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+  
+    const session = await res.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+  
+    if (result.error) {
+      console.log(result.error);
+    }
+  }
 
   return (
     <>
@@ -102,11 +138,11 @@ const Cart = () => {
           </button>
 
           <hr className="border-t-2 border-black my-5 w-full" />
-          <Link to="/checkout">
-            <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
+          {/* <Link to="/checkout"> */}
+            <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
               Checkout
             </button>
-          </Link>
+          {/* </Link> */}
         </div>
       </div>
       <Footer />

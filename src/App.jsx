@@ -25,6 +25,8 @@ import { getAllProductThunk } from "./redux/productSlice";
 import Review from "./component/Review";
 import Wishlist from "./component/Wishlist";
 import Category from "./component/Category";
+import Success from "./component/Success";
+import Failure from "./component/Failure";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -73,6 +75,9 @@ function App() {
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/failure" element={<Failure />} />
+
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
             path="/furniture"
