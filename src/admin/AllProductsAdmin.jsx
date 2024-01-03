@@ -11,6 +11,14 @@ const AllProductsAdmin = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
+  useEffect(() => {
     dispatch(getAllProductThunk())
       .then((res) => {
         if (res.payload.data.success) {

@@ -9,6 +9,14 @@ const AllUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchUsers = async () => {
       try {
         const user = JSON.parse(localStorage.getItem("userInfo"));

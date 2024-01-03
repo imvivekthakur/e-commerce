@@ -5,7 +5,8 @@ import Pricing from "./Pricing";
 import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
-import { Link } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+// import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,41 @@ const Cart = () => {
         return err.response;
       });
   }, []);
+
+  const makePayment = async () => {
+    const stripe = await loadStripe("pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi");
+    const body = {
+      products: cart2,
+      customer: {
+        name: "John Doe",
+        address: {
+          line1: "123 Main St",
+          city: "New Delhi",
+          state: "Delhi",
+          postal_code: "110043",
+          country: "IN",
+        },
+      },
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+  
+    const res = await fetch("https://renting-carnival.onrender.com/payment/checkout", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+  
+    const session = await res.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+  
+    if (result.error) {
+      console.log(result.error);
+    }
+  }
 
   return (
     <>
@@ -80,8 +116,8 @@ const Cart = () => {
               />
             ))}
         </div>
-        <div className="w-[95%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center">
-          <div className="text-2xl font-bold text-center m-3 p-4 bg-white">
+        <div className="w-[90%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center rounded-md h-fit">
+          <div className="text-2xl font-bold text-center m-3 p-4 text-white">
             Cart Total
           </div>
 
@@ -97,16 +133,16 @@ const Cart = () => {
           ))} */}
 
           {/* Display overall total */}
-          <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mt-10 mb-5">
+          <div className="bt text-white text-center mt-10 mb-5">
             Total: Rs {overallTotal}
-          </button>
+          </div>
 
-          <hr className="border-t-2 border-black my-5 w-full" />
-          <Link to="/checkout">
-            <button className="btn bg-black hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
+          <hr className="border-t-2 border-white my-5 w-full" />
+          {/* <Link to="/checkout"> */}
+            <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
               Checkout
             </button>
-          </Link>
+          {/* </Link> */}
         </div>
       </div>
       <Footer />
