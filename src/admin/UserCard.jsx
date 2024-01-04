@@ -12,7 +12,7 @@ const UserCard = ({ img, name, email, phone, role }) => {
         />
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">{name}</h1>
-          <h2 className="text-md font-semibold p-1">{email}</h2>
+          <h2 className="text-sm font-semibold p-1">{email}</h2>
 
           <p className="text-sm p-1">{phone}</p>
           <p className="text-md text-black font-medium p-1">{role}</p>

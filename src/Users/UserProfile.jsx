@@ -170,7 +170,11 @@ const UserProfile = () => {
     <>
       <DefaultNavbar />
       <div className="flex flex-col justify-center items-center" key={users.id}>
-        <h1 className="text-4xl font-bold p-3 mt-40">User Profile</h1>
+        <h1 className="text-4xl font-bold p-3 mt-40">
+          {profile && profile.role === "Admin" && "Admin "}
+          {profile && profile.role !== "Admin" && "User "}
+          Profile
+        </h1>
         <div className="relative">
           <input
             type="file"
@@ -280,7 +284,7 @@ const UserProfile = () => {
           </li>
         </ul>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-wrap">
         <button
           onClick={handleEditProfile}
           className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2"
@@ -302,7 +306,7 @@ const UserProfile = () => {
             onClick={openProductForm}
             className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2"
           >
-            Create New Product
+            Create Product
           </button>
         )}
 
