@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultNavbar from "../component/Default_Navbar";
 import Footer from "../component/Footer";
+import AllOrders from "./AllOrders";
 
 const ShowUser = () => {
   const [users, setUsers] = useState([]);
@@ -48,7 +49,7 @@ const ShowUser = () => {
           <li className="p-3 border transition  text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
             <span>Pin-code:</span> {users.address.postalCode}
           </li> */}
-          <li className="p-3 border transition  text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
+          <li className="p-3 border transition text-center duration-500 ease-in-out transform hover:bg-primary hover:text-white hover:scale-90">
             <span>Gender:</span> {users.gender}
           </li>
         </ul>

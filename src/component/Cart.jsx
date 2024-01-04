@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -138,11 +138,14 @@ const Cart = () => {
           </div>
 
           <hr className="border-t-2 border-white my-5 w-full" />
-          {/* <Link to="/checkout"> */}
-            <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
-              Checkout
-            </button>
-          {/* </Link> */}
+          <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
+            Checkout
+          </button>
+          <Link to="/checkout">
+          <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
+            Cash on Delivery
+          </button>
+          </Link>
         </div>
       </div>
       <Footer />

@@ -71,6 +71,7 @@ const TogglePack = () => {
           }
         );
         const data = await response.json();
+        console.log("data packages ", data);
         setPackages(data.packages);
       } catch (error) {
         console.error("Error fetching packages:", error);
