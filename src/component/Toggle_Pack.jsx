@@ -49,7 +49,7 @@ const TogglePack = () => {
   };
   const [selectedBox, setSelectedBox] = useState(null);
   const [packages, setPackages] = useState([]);
-  const [bool, setBool] = useState("Half yearly");
+  const [bool, setBool] = useState("Annually");
 
   const handleBoxClick = (index) => {
     setSelectedBox((prevSelectedBox) =>
