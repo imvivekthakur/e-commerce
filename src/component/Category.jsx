@@ -5,6 +5,15 @@ import ProductCard from "./DynamicProducts/ProductCard";
 
 const Category = ({ category, allProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [display, setDisplay] = useState(1);
+
+  useEffect(() => {
+    if(display === 1) {
+      filteredProduct.sort((a,b) => a.price - b.price)
+    } else {
+      filteredProduct.sort((a,b) => b.price - a.price)
+    }
+  }, [display])
 
   // Filter products based on the category
   useEffect(() => {
@@ -35,6 +44,27 @@ const Category = ({ category, allProducts }) => {
             {category ? category : "Popular"}
           </span>
         </h1>
+      </div>
+      <div className="w-[90%] mx-auto my-10">
+        <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          Sort by :
+        </button>
+        <button
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            display == 1 ? "bg-primary text-white" : ""
+          }`}
+          onClick={() => setDisplay(1)}
+        >
+          Low to High
+        </button>
+        <button
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            display == 2 ? "bg-primary text-white" : ""
+          }`}
+          onClick={() => setDisplay(2)}
+        >
+          High to Low
+        </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto my-10">
         {/* Map filtered products to ProductCard */}

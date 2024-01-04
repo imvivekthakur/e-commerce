@@ -42,8 +42,10 @@ const DefaultNavbar = () => {
 
   const showUsers = async () => {
     try {
-      const response = await axios.get("https://dummyjson.com/users/1");
-      setUsers(response.data);
+      const userPhoto = await JSON.parse(localStorage.getItem("userInfo")).user;
+      console.log("user photo ", userPhoto.photo);
+      setUsers(userPhoto?.photo || "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740");
+      console.log(users);
     } catch (error) {}
   };
 
@@ -162,12 +164,12 @@ const DefaultNavbar = () => {
                 ) : (
                   <>
                     <div
-                      className="flex justify-center items-center w-8 h-8 hover:scale-125 duration-300"
+                      className="flex justify-center items-center w-8 h-8 hover:scale-125 duration-300 overflow-hidden rounded-full border-2"
                       onClick={() => setModalOpen(true)}
                     >
                       <img
-                        className="rounded-full border-2 object-cover justify-center items-center text-white"
-                        src={users.image}
+                        className="w-full object-cover justify-center items-center text-white"
+                        src={users}
                         alt=""
                       />
                     </div>
@@ -188,7 +190,7 @@ const DefaultNavbar = () => {
                           // onClick={handleProfile}
                         >
                           <img
-                            src={users.image}
+                            src={users}
                             className="object-cover h-9 w-9 mr-2 rounded-full bg-secondary"
                           />
                           <div className="text-lg font-bold">
@@ -204,7 +206,7 @@ const DefaultNavbar = () => {
                             className="mt-4 p-2 bg-primary rounded-md hover:bg-gray-500 hover:text-white"
                             onClick={handleLogout}
                           >
-                            <div className="font-light text-lg tracking-widest text-white ">
+                            <div className="font-bold text-lg tracking-wider text-white ">
                               Signout
                             </div>
                           </button>

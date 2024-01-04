@@ -35,7 +35,7 @@ const Buy = () => {
           </button>
         </NavLink>
 
-        <NavLink to="/Vehicles">
+        <NavLink to="/vehicles">
           <button className="flex flex-col items-center m-4 p-4 hover:shadow-md hover:scale-90 hover:border hover:border-gray-500 hover:transition duration-300">
             <img src={bike} alt="Vehicles" className="m-10"></img>
             <span>Vehicles</span>

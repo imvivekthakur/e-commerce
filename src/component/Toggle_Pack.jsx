@@ -18,6 +18,7 @@ import room3 from "../assets/Room3.svg";
 import room4 from "../assets/Room4.svg";
 import room5 from "../assets/Room5.svg";
 import Footer from "./Footer";
+import Working from "./Working";
 
 const TogglePack = () => {
   useEffect(() => {
@@ -279,54 +280,7 @@ const TogglePack = () => {
             </div>
           </div>
         </div>
-        <div className="w-[90%] mx-auto m-8">
-          <div className="text-center m-8">
-            <h1 className="text-4xl text-[#CDA274] font-bold m-3">
-              How Unlimited Works
-            </h1>
-            <p>
-              A high-performing web-based car rental system for any rent-a-car
-              company and website
-            </p>
-          </div>
-          <div className="flex flex-wrap">
-            <div className="text-center w-full lg:w-1/3 p-6">
-              <img
-                src={location}
-                alt="location"
-                className="mx-auto p-3 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.8)]"
-              />
-              <h3 className="text-2xl font-bold p-4">Choose Location</h3>
-              <p className="text-center">
-                Choose from Basic, Lite, Premium or Luxury subscription plans.
-              </p>
-            </div>
-            <div className="text-center w-full lg:w-1/3 p-6">
-              <img
-                src={calender}
-                alt="location"
-                className="mx-auto p-3 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.8)]"
-              />
-              <h3 className="text-2xl font-bold p-4">Choose Location</h3>
-              <p className="text-center">
-                Pick furniture and appliances to add to your cart and pay the
-                half yearly subscription fee.
-              </p>
-            </div>
-            <div className="text-center w-full lg:w-1/3 p-6">
-              <img
-                src={car}
-                alt="location"
-                className="mx-auto p-3 rounded-xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.8)]"
-              />
-              <h3 className="text-2xl font-bold p-4">Choose Location</h3>
-              <p className="text-center">
-                Submit the required documents and complete onboarding. We'll
-                deliver your products within 7-10
-              </p>
-            </div>
-          </div>
-        </div>
+        <Working/>
       </div>
       <Footer />
     </>
