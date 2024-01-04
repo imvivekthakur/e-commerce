@@ -174,10 +174,16 @@ const TogglePack = () => {
                         <br /> products
                       </p>
                       <div className="my-5">
-                        <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                          <input type="radio" className="hidden" />
-                          Select Plan
-                        </label>
+                        {selectedBox === index ? (
+                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            Browse Catalog
+                          </button>
+                        ) : (
+                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            <input type="radio" className="hidden" />
+                            Select Plan
+                          </label>
+                        )}
                       </div>
                       <p className="text-xs text-gray-500">
                         No booking or credit card fees!
