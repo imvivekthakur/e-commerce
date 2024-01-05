@@ -300,6 +300,11 @@ const UserProfile = () => {
             Update Profile Picture
           </button>
         )}
+        <Link to="/user/package">
+          <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+            View Packages
+          </button>
+        </Link>
 
         {profile && profile.role !== "buyer" && (
           <button

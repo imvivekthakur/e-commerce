@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { GoDotFill } from "react-icons/go";
-import { FaCheckCircle } from "react-icons/fa";
 import packagebg from "../assets/packagepg.svg";
 import pack1 from "../assets/pack1.svg";
-import pack2 from "../assets/pack2.svg";
-import pack3 from "../assets/pack3.svg";
-import pack4 from "../assets/pack4.svg";
 import DefaultNavbar from "./Default_Navbar";
-import calender from "../assets/calender.svg";
-import location from "../assets/location.svg";
-import car from "../assets/car.svg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import room1 from "../assets/Room1.svg";
 import room2 from "../assets/Room2.svg";
 import room3 from "../assets/Room3.svg";
-import room4 from "../assets/Room4.svg";
 import room5 from "../assets/Room5.svg";
 import Footer from "./Footer";
 import { loadStripe } from "@stripe/stripe-js";
@@ -31,6 +22,44 @@ const TogglePack = () => {
   }, []);
 
   const [enabled, setEnabled] = useState(false);
+  const [userPackages, setUserPackages] = useState([]);
+  const [userBoughtPackage, setUserBoughtPackage] = useState(null);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
+        .accessToken;
+      try {
+        const response = await fetch(
+          "https://renting-carnival.onrender.com/profile/package",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        // console.log("response ", response);
+        if (!response.ok) {
+          throw new Error("Failed to fetch packages");
+        }
+        const data = await response.json();
+        // console.log(data);
+        // console.log(data.packages[0]._id);
+        if (data.packages.length > 0) {
+          setUserPackages([data.packages[0]._id]);
+          setUserBoughtPackage(data.packages[0]._id);
+        }
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      }
+    };
+
+    fetchPackages();
+  }, []);
+
+  // console.log(userPackages);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -74,7 +103,6 @@ const TogglePack = () => {
           }
         );
         const data = await response.json();
-        console.log("data packages ", data);
         setPackages(data.packages);
       } catch (error) {
         console.error("Error fetching packages:", error);
@@ -122,8 +150,6 @@ const TogglePack = () => {
     const stripe = await loadStripe(
       "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
     );
-
-    console.log(packageId);
 
     fetchPack(packageId);
 
@@ -244,17 +270,20 @@ const TogglePack = () => {
                         <br /> products
                       </p>
                       <div className="my-5">
-                        <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                          Browse Catalog
-                        </button>
-                        <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                          <input
-                            type="radio"
-                            className="hidden"
-                            onClick={() => makePayment(pack._id)}
-                          />
-                          Select Plan
-                        </label>
+                        {userBoughtPackage === pack._id ? (
+                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            Browse Catalog
+                          </button>
+                        ) : (
+                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            <input
+                              type="radio"
+                              className="hidden"
+                              onClick={() => makePayment(pack._id)}
+                            />
+                            Select Plan
+                          </label>
+                        )}
                       </div>
                       <p className="text-xs text-gray-500">
                         No booking or credit card fees!
