@@ -18,6 +18,7 @@ import room3 from "../assets/Room3.svg";
 import room4 from "../assets/Room4.svg";
 import room5 from "../assets/Room5.svg";
 import Footer from "./Footer";
+import { loadStripe } from "@stripe/stripe-js";
 
 const TogglePack = () => {
   useEffect(() => {
@@ -50,6 +51,7 @@ const TogglePack = () => {
   const [selectedBox, setSelectedBox] = useState(null);
   const [packages, setPackages] = useState([]);
   const [bool, setBool] = useState("Annually");
+  const [pack, setPack] = useState();
 
   const handleBoxClick = (index) => {
     setSelectedBox((prevSelectedBox) =>
@@ -88,7 +90,73 @@ const TogglePack = () => {
     );
   };
 
-  console.log(packages);
+  const fetchPack = async (packageId) => {
+    try {
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+
+      const response = await fetch(
+        `https://renting-carnival.onrender.com/package/${packageId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setPack(data.package);
+      } else {
+        console.error("Failed to fetch users");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const makePayment = async (packageId) => {
+    const stripe = await loadStripe(
+      "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
+    );
+
+    console.log(packageId);
+
+    fetchPack(packageId);
+
+    const body = {
+      products: pack,
+      packageId: packageId,
+    };
+
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.accessToken}`,
+    };
+
+    const res = await fetch(
+      "https://renting-carnival.netlify.app/payment/buy_package",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await res.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
+  };
+
+  // console.log(packages);
   return (
     <>
       <DefaultNavbar />
@@ -174,16 +242,17 @@ const TogglePack = () => {
                         <br /> products
                       </p>
                       <div className="my-5">
-                        {selectedBox === index ? (
-                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            Browse Catalog
-                          </button>
-                        ) : (
-                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            <input type="radio" className="hidden" />
-                            Select Plan
-                          </label>
-                        )}
+                        <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                          Browse Catalog
+                        </button>
+                        <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                          <input
+                            type="radio"
+                            className="hidden"
+                            onClick={() => makePayment(pack._id)}
+                          />
+                          Select Plan
+                        </label>
                       </div>
                       <p className="text-xs text-gray-500">
                         No booking or credit card fees!

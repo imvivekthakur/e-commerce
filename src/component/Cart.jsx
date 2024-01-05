@@ -45,7 +45,9 @@ const Cart = () => {
   }, []);
 
   const makePayment = async () => {
-    const stripe = await loadStripe("pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi");
+    const stripe = await loadStripe(
+      "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
+    );
     const body = {
       products: cart2,
       customer: {
@@ -59,25 +61,32 @@ const Cart = () => {
         },
       },
     };
+
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
     const headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${user.accessToken}`,
     };
-  
-    const res = await fetch("https://renting-carnival.onrender.com/payment/checkout", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body),
-    });
-  
+
+    const res = await fetch(
+      "https://renting-carnival.netlify.app/payment/checkout",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
     const session = await res.json();
     const result = stripe.redirectToCheckout({
       sessionId: session.id,
     });
-  
+
     if (result.error) {
       console.log(result.error);
     }
-  }
+  };
 
   return (
     <>
@@ -139,9 +148,12 @@ const Cart = () => {
 
           <hr className="border-t-2 border-white my-5 w-full" />
           {/* <Link to="/checkout"> */}
-            <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5" onClick={makePayment}>
-              Checkout
-            </button>
+          <button
+            className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
+            onClick={makePayment}
+          >
+            Checkout
+          </button>
           {/* </Link> */}
         </div>
       </div>
