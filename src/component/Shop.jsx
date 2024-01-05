@@ -6,8 +6,9 @@ import Footer from "./Footer";
 import ProductCard from "./DynamicProducts/ProductCard";
 
 const Shop = ({ allProducts }) => {
-  const [selectedCategory, setSelectedCategory] = useState("popular"); // Initially, no filter applied ("all" category)
+  const [selectedCategory, setSelectedCategory] = useState("popular"); 
   const [filteredProduct, setFilteredProduct] = useState(allProducts);
+  const [display, setDisplay] = useState(1);
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -25,6 +26,14 @@ const Shop = ({ allProducts }) => {
       setFilteredProduct(allProducts);
     }
   }, [allProducts]);
+
+  useEffect(() => {
+    if(display === 1) {
+      filteredProduct.sort((a,b) => b.price - a.price)
+    } else {
+      filteredProduct.sort((a,b) => a.price - b.price)
+    }
+  }, [display])
 
   const filterProduct = (selectedCategory) => {
     if (selectedCategory === "popular") {
@@ -107,7 +116,13 @@ const Shop = ({ allProducts }) => {
         <br />
         <div>
           <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
-            Filters
+            Sort by :
+          </button>
+          <button className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 1 ? "bg-primary text-white" : ""}`} onClick={() => setDisplay(1)}>
+            Low to High
+          </button>
+          <button className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 2 ? "bg-primary text-white" : ""}`} onClick={() => setDisplay(2)}>
+            High to Low
           </button>
         </div>
       </div>

@@ -29,6 +29,7 @@ import Success from "./component/Success";
 import Failure from "./component/Failure";
 import AllUsers from "./admin/AllUsers";
 import AllProductsAdmin from "./admin/AllProductsAdmin";
+import AllOrders from "./admin/AllOrders";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -81,7 +82,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/success" element={<Success />} />
           <Route path="/failure" element={<Failure />} />
-
+          <Route path="/orders" element={<AllOrders/>} />
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
             path="/furniture"
@@ -100,8 +101,12 @@ function App() {
             element={<Category category="Vehicles" allProducts={allProducts} />}
           />
           <Route
+            path="/home-appliance"
+            element={<Category category="Home Appliance" allProducts={allProducts} />}
+          />
+          <Route
             path="/popular"
-            element={<Category category="Popular" allProducts={allProducts} />}
+            element={<Category category="popular" allProducts={allProducts} />}
           />
           <Route path="/allUsers" element={<AllUsers />} />
 

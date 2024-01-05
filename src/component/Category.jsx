@@ -5,9 +5,19 @@ import ProductCard from "./DynamicProducts/ProductCard";
 
 const Category = ({ category, allProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [display, setDisplay] = useState(1);
+
+  useEffect(() => {
+    if(display === 1) {
+      filteredProducts.sort((a,b) => b.price - a.price)
+    } else {
+      filteredProducts.sort((a,b) => a.price - b.price)
+    }
+  }, [display]);
 
   // Filter products based on the category
   useEffect(() => {
+    console.log("filtered products ", filteredProducts);
     if (category.toLowerCase() === "popular") {
       // Display all products for "Popular" category
       setFilteredProducts(allProducts);
@@ -32,9 +42,30 @@ const Category = ({ category, allProducts }) => {
         />
         <h1 className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-opacity-70 p-4">
           <span className="text-white drop-shadow text-4xl font-bold">
-            {category ? category : "Popular"}
+            {category}
           </span>
         </h1>
+      </div>
+      <div className="w-[90%] mx-auto my-10">
+        <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          Sort by :
+        </button>
+        <button
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            display == 1 ? "bg-primary text-white" : ""
+          }`}
+          onClick={() => setDisplay(1)}
+        >
+          Low to High
+        </button>
+        <button
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            display == 2 ? "bg-primary text-white" : ""
+          }`}
+          onClick={() => setDisplay(2)}
+        >
+          High to Low
+        </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto my-10">
         {/* Map filtered products to ProductCard */}
