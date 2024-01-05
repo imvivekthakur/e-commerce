@@ -70,7 +70,7 @@ const Cart = () => {
     };
 
     const res = await fetch(
-      "https://renting-carnival.netlify.app/payment/checkout",
+      "https://renting-carnival.onrender.com/payment/checkout",
       {
         method: "POST",
         headers: headers,
