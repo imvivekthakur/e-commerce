@@ -24,10 +24,10 @@ const Rent = () => {
         </button>
         </NavLink>
 
-        <NavLink to="/popular">
+        <NavLink to="/home-appliances">
           <button className="flex flex-col items-center m-4 p-4 hover:shadow-md hover:scale-90 hover:border hover:border-gray-500 hover:transition duration-300">
             <img src={stars} alt="decorations" className="m-10"></img>
-            <span>Popular</span>
+            <span>Home appliances</span>
           </button>
         </NavLink>
 

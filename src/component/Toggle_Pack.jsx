@@ -82,6 +82,31 @@ const TogglePack = () => {
     fetchPackages();
   }, []);
 
+  const makePayment = async () => {
+    const stripe = await loadStripe("pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi");
+    const body = {
+      products: packages,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+    };
+  
+    const res = await fetch("https://renting-carnival.onrender.com/payment/checkout", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+  
+    const session = await res.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+  
+    if (result.error) {
+      console.log(result.error);
+    }
+  }
+
   const handleToggleChange = () => {
     setEnabled(!enabled);
     setSelectedBox(null); // Reset selected box when changing the plan

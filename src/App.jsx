@@ -101,8 +101,8 @@ function App() {
             element={<Category category="Vehicles" allProducts={allProducts} />}
           />
           <Route
-            path="/popular"
-            element={<Category category="Popular" allProducts={allProducts} />}
+            path="/home-appliance"
+            element={<Category category="Home Appliance" allProducts={allProducts} />}
           />
           <Route path="/allUsers" element={<AllUsers />} />
 
