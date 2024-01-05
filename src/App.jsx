@@ -104,6 +104,10 @@ function App() {
             path="/home-appliance"
             element={<Category category="Home Appliance" allProducts={allProducts} />}
           />
+          <Route
+            path="/popular"
+            element={<Category category="popular" allProducts={allProducts} />}
+          />
           <Route path="/allUsers" element={<AllUsers />} />
 
           {/* <Route path="/product/create" element={<ProductForm />} /> */}

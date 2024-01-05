@@ -17,6 +17,7 @@ const Category = ({ category, allProducts }) => {
 
   // Filter products based on the category
   useEffect(() => {
+    console.log("filtered products ", filteredProducts);
     if (category.toLowerCase() === "popular") {
       // Display all products for "Popular" category
       setFilteredProducts(allProducts);
