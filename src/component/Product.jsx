@@ -19,6 +19,20 @@ const Product = ({ allProducts }) => {
   const { productId } = useParams();
   const [isActive, setIsActive] = useState(1);
   const [product, setProduct] = useState({});
+
+  const [selectedImage, setSelectedImage] = useState('');
+
+  useEffect(() => {
+    // Set the initial selected image when the product details load
+    if (product?.productImages?.length > 0) {
+      setSelectedImage(product.productImages[0]);
+    }
+  }, [product]);
+
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+
   const handleClick = (index) => {
     setIsActive(index);
   };
@@ -82,36 +96,20 @@ const Product = ({ allProducts }) => {
         <div className="flex flex-wrap pb-4 mb-4 border-b-2">
           <div className="md:flex gap-2 w-full lg:w-1/2">
             <div className="flex md:block">
-              <img
-                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="product"
-              />
-              <img
-                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="product"
-              />
-              <img
-                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="product"
-              />
-              <img
-                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="product"
-              />
-              <img
-                className="h-12 w-24 m-1 overflow-hidden md:m-4 rounded-md"
-                src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVkcm9vbXxlbnwwfHwwfHx8MA%3D%3D"
-                alt="product"
-              />
+              {product?.productImages?.map((image, index) => (
+                <img
+                  key={index}
+                  className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md cursor-pointer"
+                  src={image}
+                  alt={`product-${index}`}
+                  onClick={() => handleImageClick(image)}
+                />
+              ))}
             </div>
-            <div className="">
+            <div className="w-full">
               <img
-                className="md:m-4 rounded-lg w-full block"
-                src={product.productImage}
+                className="md:m-4 h-80 object-contain rounded-lg w-full block"
+                src={selectedImage || product?.productImage}
                 alt="product"
               />
             </div>

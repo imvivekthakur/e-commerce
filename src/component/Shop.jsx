@@ -28,12 +28,15 @@ const Shop = ({ allProducts }) => {
   }, [allProducts]);
 
   useEffect(() => {
-    if(display === 1) {
-      filteredProduct.sort((a,b) => b.price - a.price)
-    } else {
-      filteredProduct.sort((a,b) => a.price - b.price)
+    // Check for display value to sort on initial load and subsequent clicks
+    if (display === 1) {
+      const sortedLowToHigh = [...filteredProduct].sort((a, b) => a.price - b.price);
+      setFilteredProduct(sortedLowToHigh);
+    } else if (display === 2) {
+      const sortedHighToLow = [...filteredProduct].sort((a, b) => b.price - a.price);
+      setFilteredProduct(sortedHighToLow);
     }
-  }, [display])
+  }, [display]);
 
   const filterProduct = (selectedCategory) => {
     if (selectedCategory === "popular") {
@@ -42,23 +45,22 @@ const Shop = ({ allProducts }) => {
       const filteredItems = allProducts.filter(
         (item) => item.category === selectedCategory
       );
+      console.log("filtered items ", filteredItems);
       setFilteredProduct(filteredItems);
     }
   };
 
-  const items = filteredProduct;
-  //   console.log(items);
-  const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
+  const pageCount = Math.ceil(filteredProduct.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    setItemOffset(newOffset);
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
   };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = filteredProduct.slice(startIndex, endIndex);
 
   return (
     <>
@@ -127,10 +129,10 @@ const Shop = ({ allProducts }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
-        {filteredProduct.map((card, index) => (
+        {currentProducts.map((card, index) => (
           <ProductCard
             key={card._id}
-            img={card.productImage}
+            img={card.productImages}
             title={card.name}
             desc={card.description}
             price={card.price}

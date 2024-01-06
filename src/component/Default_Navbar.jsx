@@ -21,7 +21,7 @@ const DefaultNavbar = () => {
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState("");
 
   const handleLogout = () => {
     localStorage.clear();
