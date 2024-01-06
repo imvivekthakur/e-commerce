@@ -45,7 +45,7 @@ const DynamicProducts = () => {
           {allProducts.map((card, index) => (
             <ProductCard
               key={card._id}
-              img={card.productImage}
+              img={card.productImages}
               title={card.name}
               desc={card.description}
               price={card.price}

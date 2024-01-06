@@ -28,6 +28,7 @@ const Product = ({ allProducts }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
+    console.log("product id ", productId);
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {

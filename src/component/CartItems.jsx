@@ -111,7 +111,7 @@ const CartItems = (props) => {
     <>
       <div className="border-secondary border-t-2 mb-4 pt-4 sm:flex sm:flex-wrap">
         <img
-          src={props.image}
+          src={props.image[0]}
           alt="cart item"
           className="w-[100%]  m-2 mx-auto
          sm:w-3/12 object-cover  rounded-md  sm:order-1"

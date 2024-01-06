@@ -119,7 +119,7 @@ const Cart = () => {
                 price={card.product.price}
                 name={card.product.name}
                 description={card.product.description}
-                image={card.product.productImage}
+                image={card.product.productImages}
                 // owner={card.product?.owner?.name || "vivek"}
                 productId={card.product._id}
               />

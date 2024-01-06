@@ -102,7 +102,7 @@ const Items = ({ allProducts }) => {
         {activeTab !== 1 &&
           filteredProducts.map((card) => (
             <ProductCard
-              img={card.productImage}
+              img={card.productImages}
               desc={card.description}
               price={card.price}
               stock={card.stock}
