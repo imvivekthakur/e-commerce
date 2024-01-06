@@ -6,6 +6,9 @@ import Footer from "./Footer";
 import Review from "./Review";
 import { useParams } from "react-router-dom";
 import ProductCard from "./DynamicProducts/ProductCard";
+import { addToCartThunk } from "../redux/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const Product = ({ allProducts }) => {
   useEffect(() => {
@@ -21,6 +24,40 @@ const Product = ({ allProducts }) => {
   const [product, setProduct] = useState({});
 
   const [selectedImage, setSelectedImage] = useState('');
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCartThunk({ productId }))
+      .then((res) => {
+        if (res.payload.data.success) {
+          toast.success("Product added to cart successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          toast.error(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
+        return res;
+      })
+
+      .catch((err) => {
+        toast.error("Please Login to continue");
+        return err.response;
+      });
+  };
+
 
   useEffect(() => {
     // Set the initial selected image when the product details load
@@ -128,13 +165,8 @@ const Product = ({ allProducts }) => {
               <p className="text-sm">{product.description}</p>
 
               <div className="flex mt-4">
-                <div className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 flex justify-between border-2 border-black rounded-lg p-2">
-                  <span>-</span>
-                  <span>1</span>
-                  <span>+</span>
-                </div>
                 <div>
-                  <button className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 border-black rounded-lg p-2">
+                  <button className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 rounded-lg p-2 text-primary border-primary hover:text-white hover:bg-primary font-bold" onClick={handleAddToCart}>
                     Add To Cart
                   </button>
                 </div>
@@ -210,6 +242,7 @@ const Product = ({ allProducts }) => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
       <Footer />
     </>
   );
