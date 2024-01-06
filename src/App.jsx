@@ -31,6 +31,7 @@ import AllUsers from "./admin/AllUsers";
 import AllProductsAdmin from "./admin/AllProductsAdmin";
 import AllOrders from "./admin/AllOrders";
 import ShowPackages from "./admin/ShowPackage";
+import ProductForm from "./component/CreateProduct/ProductForm";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -115,7 +116,7 @@ function App() {
           />
           <Route path="/allUsers" element={<AllUsers />} />
 
-          {/* <Route path="/product/create" element={<ProductForm />} /> */}
+          <Route path="/product/create" element={<ProductForm />} />
         </Routes>
       </BrowserRouter>
     </>

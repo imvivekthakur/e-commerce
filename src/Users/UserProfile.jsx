@@ -307,12 +307,11 @@ const UserProfile = () => {
         </Link>
 
         {profile && profile.role !== "buyer" && (
-          <button
-            onClick={openProductForm}
-            className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2"
-          >
-            Create Product
-          </button>
+          <Link to="/product/create">
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Create Product
+            </button>
+          </Link>
         )}
 
         <Link to="/allUsers">
@@ -337,9 +336,6 @@ const UserProfile = () => {
             </button>
           )}
         </Link>
-        <Modal isOpen={isProductFormOpen} onClose={closeProductForm}>
-          <ProductForm />
-        </Modal>
       </div>
       <ToastContainer />
       <Footer />
