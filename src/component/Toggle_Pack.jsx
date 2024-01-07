@@ -11,6 +11,7 @@ import room5 from "../assets/Room5.svg";
 import Footer from "./Footer";
 import { loadStripe } from "@stripe/stripe-js";
 import Working from "./Working";
+import { Link } from "react-router-dom";
 
 const TogglePack = () => {
   useEffect(() => {
@@ -165,23 +166,29 @@ const TogglePack = () => {
       Authorization: `Bearer ${user.accessToken}`,
     };
 
-    const res = await fetch(
-      "https://renting-carnival.onrender.com/payment/buy_package",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-      }
-    );
+    const metadata = {
+      userId: user._id,
+      packageId: packageId,
+    };
+  
+    const res = await fetch("https://renting-carnival.onrender.com/payment/buy_package", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({ ...body, metadata }),
+    });
 
+    console.log("res ", res);
     const session = await res.json();
+    console.log("session ", session);
     const result = stripe.redirectToCheckout({
       sessionId: session.id,
     });
 
+    console.log("result ", result);
+
     if (result.error) {
       console.log(result.error);
-    }
+    } 
   };
 
   // console.log(packages);
@@ -270,10 +277,12 @@ const TogglePack = () => {
                         <br /> products
                       </p>
                       <div className="my-5">
-                        {userBoughtPackage === pack._id ? (
-                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            Browse Catalog
-                          </button>
+                        {/* {userBoughtPackage === pack._id ? (
+                          <Link to="/shop">
+                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              Browse Catalog
+                            </button>
+                          </Link>
                         ) : (
                           <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
                             <input
@@ -283,7 +292,20 @@ const TogglePack = () => {
                             />
                             Select Plan
                           </label>
-                        )}
+                        )} */}
+                        <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                          <input
+                            type="radio"
+                            className="hidden"
+                            onClick={() => makePayment(pack._id)}
+                          />
+                          Select Plan
+                        </label>
+                        <Link to="/shop">
+                          <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            Browse Catalog
+                          </button>
+                        </Link>
                       </div>
                       <p className="text-xs text-gray-500">
                         No booking or credit card fees!

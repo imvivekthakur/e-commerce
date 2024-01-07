@@ -169,7 +169,7 @@ const DefaultNavbar = () => {
                     >
                       <img
                         className="w-full object-cover justify-center items-center text-white"
-                        src={users}
+                        src={profile && profile.photo}
                         alt=""
                       />
                     </div>
@@ -190,7 +190,7 @@ const DefaultNavbar = () => {
                           // onClick={handleProfile}
                         >
                           <img
-                            src={users}
+                            src={profile && profile.photo}
                             className="object-cover h-9 w-9 mr-2 rounded-full bg-secondary"
                           />
                           <div className="text-lg font-bold">
