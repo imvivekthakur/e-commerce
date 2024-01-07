@@ -44,7 +44,10 @@ const DefaultNavbar = () => {
     try {
       const userPhoto = await JSON.parse(localStorage.getItem("userInfo")).user;
       console.log("user photo ", userPhoto.photo);
-      setUsers(userPhoto?.photo || "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740");
+      setUsers(
+        userPhoto?.photo ||
+          "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740"
+      );
       console.log(users);
     } catch (error) {}
   };
