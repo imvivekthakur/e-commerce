@@ -16,6 +16,7 @@ import Setup from "./Setup";
 import Features from "./Features";
 import Trend from "./Trend";
 import DynamicProducts from "./DynamicProducts/DynamicProducts";
+import Deals from "./Deals";
 
 const Home = ({allProducts}) => {
   
@@ -32,7 +33,8 @@ const Home = ({allProducts}) => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
-      <Trend />
+      <Deals allProducts={allProducts}/>
+      {/* <Trend /> */}
       <Working />
       <Categories />
       <Rooms />

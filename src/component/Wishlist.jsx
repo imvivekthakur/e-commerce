@@ -6,6 +6,8 @@ import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { getWishlistThunk } from "../redux/wishlistSlice";
 import WishlistCard from "./WishListCard";
+import empty from "../assets/empty1.png";
+import { Link } from "react-router-dom";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -63,18 +65,38 @@ const Wishlist = () => {
           </span>
         </h1>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 w-[90%] mx-auto">
-        {currentItems.map((card, index) => (
-          <WishlistCard
-            key={index}
-            img={card.productImage}
-            title={card.name}
-            desc={card.description}
-            price={card.price}
-            productId={card._id}
-          />
-        ))}
-      </div>
+
+      {currentItems.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 w-[90%] mx-auto">
+            {currentItems.map((card, index) => (
+              <WishlistCard
+                key={index}
+                img={card.productImages}
+                title={card.name}
+                desc={card.description}
+                price={card.price}
+                productId={card._id}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex flex-col items-center">
+            <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">
+              Wishlist is Empty!!
+            </h1>
+            <img src={empty} alt="" />
+            <Link to="/shop">
+              <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4">
+                Continue Shopping
+              </button>
+            </Link>
+          </div>
+        </>
+      )}
+
       <div className="flex justify-center items-center m-10 mb-16">
         <ReactPaginate
           breakLabel="..."

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllProductThunk } from "../redux/productSlice";
-import ProductCard from "./ProductCardAdmin";
 import { ColorRing } from "react-loader-spinner";
 import DefaultNavbar from "../component/Default_Navbar";
 import Footer from "../component/Footer";
+import ProductCardAdmin from "./ProductCardAdmin";
 const AllProductsAdmin = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -54,9 +54,9 @@ const AllProductsAdmin = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
             {allProducts.map((card, index) => (
-              <ProductCard
+              <ProductCardAdmin
                 key={card._id}
-                img={card.productImage}
+                img={card.productImages}
                 title={card.name}
                 desc={card.description}
                 price={card.price}

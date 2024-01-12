@@ -10,12 +10,12 @@ const Footer = () => {
       <div className="container mx-auto p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="p-5">
-            <h2 className="text-3xl font-bold mb-4">
-              Renting Carnival
-            </h2>
+            <h2 className="text-3xl font-bold mb-4">Renting Carnival</h2>
             <p className="font-medium">
-              Our vision is to provide convenience and help increase your sales
-              business.
+              Elevate life with Renting Carnival, where seamless rentals meet
+              style and functionalty. Transform spaces with our curated
+              collectio of furniture,appliances, and vehicles, tailored to your
+              every need.
             </p>
             <div className="flex mt-8">
               <img

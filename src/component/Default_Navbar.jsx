@@ -127,20 +127,38 @@ const DefaultNavbar = () => {
               </li>
               <li className="mb-2 md:mb-0">
                 <NavLink
-                  to="/about"
+                  to="/combos"
                   className="nav-link"
                   activeClassName="active-link"
                 >
-                  About
+                  Combos
                 </NavLink>
               </li>
               <li className="mb-2 md:mb-0">
+                <NavLink
+                  to="/vehicle"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Vehicles
+                </NavLink>
+              </li>
+              <li className="mb-2 md:mb-0">
+                <NavLink
+                  to="/blog"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Blog
+                </NavLink>
+              </li>
+              <li className="mb-2 md:mb-0 w-52">
                 <NavLink
                   to="/contact"
                   className="nav-link"
                   activeClassName="active-link"
                 >
-                  Contact
+                  Make an appointment
                 </NavLink>
               </li>
               <li className="flex items-center mt-5">

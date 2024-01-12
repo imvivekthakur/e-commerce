@@ -1,46 +1,42 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { emailThunk } from "../redux/authSlice";
-import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ColorRing } from "react-loader-spinner";
+import toast from "react-hot-toast";
 
 const EmailVerification = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const data = {
     email,
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email) {
+      toast.error("Enter Email ");
+      return;
+    }
+
+    setLoading(true);
+
     dispatch(emailThunk(data))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
-
+          toast.success(`${res.payload.data.msg}`);
+          setLoading(false);
           setEmail("");
 
           setTimeout(() => {
             navigate("/otp-verify");
-          }, 5000);
+          }, 2000);
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading(false);
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -72,18 +68,40 @@ const EmailVerification = () => {
             </div>
             <div className="submit mt-8">
               <div className="text-center">
-                <div
-                  className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
-                  onClick={handleSubmit}
-                >
-                  Send OTP
-                </div>
+                {loading ? (
+                  <div className="loader-container w-[100%] mx-auto flex items-center justify-center">
+                    <ColorRing
+                      visible={true}
+                      height="80"
+                      width="80"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                      wrapperClass="color-ring-wrapper"
+                      colors={[
+                        "#e15b64",
+                        "#f47e60",
+                        "#f8b26a",
+                        "#abbd81",
+                        "#849b87",
+                      ]}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="btn bg-primary hover:bg-white text-white hover:text-primary hover:border-primary hover:border-2 border-2 border-primary text-center shadow-gray-300 shadow-md hover:shadow-2xl p-2 rounded-md cursor-pointer"
+                    onClick={handleSubmit}
+                  >
+                    Send OTP
+                  </div>
+                )}
               </div>
             </div>
           </form>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

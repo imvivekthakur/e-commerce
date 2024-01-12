@@ -5,16 +5,22 @@ import Footer from "./Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
 import CartItems from "./CartItems";
-import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import toast from "react-hot-toast";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const cart2 = cart.cart;
+  // console.log("cart2  ", cart2);
+  // console.log("cart ", cart);
+  // console.log("cart ", cart._id);
 
   const [allCart, setAllCart] = useState([]);
   const [detailedCartItems, setdetailedCartItems] = useState([]);
   const [overallTotal, setOverallTotal] = useState(0);
+  const [cartId, setCartId] = useState("");
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -27,6 +33,8 @@ const Checkout = () => {
   useEffect(() => {
     dispatch(getCartThunk())
       .then((res) => {
+        setCartId(res.payload.data.cartId);
+        console.log(res.payload.data.cartId);
         setAllCart(res.payload.data.cart);
         setdetailedCartItems(res.payload.data.detailedCartItems);
 
@@ -66,7 +74,7 @@ const Checkout = () => {
       const productsForOrder = cart2.map((item) => ({
         _id: item.product._id,
       }));
-      const response = await fetch("http://localhost:5000/order/create", {
+      const response = await fetch("https://renting-carnival.onrender.com/order/create", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -91,11 +99,101 @@ const Checkout = () => {
       console.log("Order placed:", data);
       toast.success("Order placed successfully!!")
       
+      const cartToDelete = cartId;
+      deleteCart(cartToDelete)
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        country: "",
+        address: "",
+        city: "",
+        pinCode: "",
+      });
+      
       // Handle success/failure or redirect after order placement
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Error occurred while placing order!!")
       // Handle error state
+    }
+  };
+
+  const deleteCart = async (cartId) => {
+    try {
+      let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
+        .accessToken;
+  
+      const response = await fetch(
+        `https://renting-carnival.onrender.com/cart/delete/${cartId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      const data = await response.json();
+      if (!data.success) {
+        console.log("Error deleting cart");
+        toast.error("Error deleting cart");
+        return;
+      }
+  
+      console.log("Cart deleted successfully");
+      // Optionally handle success state or UI changes after cart deletion
+    } catch (error) {
+      console.error("Error occurred while deleting cart:", error);
+      toast.error("Error occurred while deleting cart");
+      // Handle error state
+    }
+  };
+  
+
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
+    );
+    const body = {
+      products: cart2,
+      customer: {
+        name: "John Doe",
+        address: {
+          line1: "123 Main St",
+          city: "New Delhi",
+          state: "Delhi",
+          postal_code: "110043",
+          country: "IN",
+        },
+      },
+    };
+
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${user.accessToken}`,
+    };
+
+    const res = await fetch(
+      "https://renting-carnival.onrender.com/payment/checkout",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await res.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
     }
   };
 
@@ -236,12 +334,16 @@ const Checkout = () => {
             Total : {overallTotal}
           </div>
           <div className="text-center">
-            <button className="text-primary bg-white px-4 py-2 rounded-lg my-6 hover:scale-110 duration-200" onClick={placeOrder}>
-              <NavLink to="/checkout">Place order</NavLink>
+            <button className="text-primary bg-white px-4 py-2 rounded-lg my-6 hover:scale-110 duration-200 block w-fit mx-auto" onClick={makePayment}>
+              Online Payment
+            </button>
+            <button className="text-primary bg-white px-4 py-2 rounded-lg my-6 hover:scale-110 duration-200 block w-fit mx-auto" onClick={placeOrder}>
+              Cash on Delivery
             </button>
           </div>
         </div>
       </div>
+      <ToastContainer/>
       <Footer/>
     </>
   );

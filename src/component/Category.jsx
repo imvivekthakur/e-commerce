@@ -6,12 +6,19 @@ import ProductCard from "./DynamicProducts/ProductCard";
 const Category = ({ category, allProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [display, setDisplay] = useState(1);
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   useEffect(() => {
-    if(display === 1) {
-      filteredProducts.sort((a,b) => b.price - a.price)
+    if (display === 1) {
+      filteredProducts.sort((a, b) => b.price - a.price);
     } else {
-      filteredProducts.sort((a,b) => a.price - b.price)
+      filteredProducts.sort((a, b) => a.price - b.price);
     }
   }, [display]);
 
@@ -72,7 +79,7 @@ const Category = ({ category, allProducts }) => {
         {filteredProducts.map((product) => (
           <ProductCard
             key={product._id}
-            img={product.productImage}
+            img={product.productImages}
             title={product.name}
             desc={product.description}
             price={product.price}

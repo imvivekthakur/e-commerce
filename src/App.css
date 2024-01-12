@@ -7,3 +7,37 @@
 .ant-modal {
   width: 250px !important;
 }
+
+.react-multi-carousel-track {
+  gap: 20px;
+}
+
+.react-multiple-carousel__arrow {
+  z-index: 1;
+}
+.react-multiple-carousel__arrow--left {
+  z-index: 1;
+}
+.product-card {
+  position: relative;
+  overflow: hidden; 
+
+  .hover-button {
+    opacity: 0;
+    position: absolute;
+    bottom: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    height: max-content;
+    border-radius: 5px;
+  }
+}
+
+.product-card:hover {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+  .hover-button {
+    opacity: 1;
+    top: 50%;
+    transform: translate(-50%, 50%);
+  }
+}

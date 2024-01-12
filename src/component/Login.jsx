@@ -4,13 +4,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import { validatemail, validatepassword } from "../utils/validation";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { loginUserThunk } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
+import { ColorRing } from "react-loader-spinner";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -30,72 +32,40 @@ const Login = () => {
 
   const handleLogin = () => {
     if (!email || !password) {
-      toast.error(`Please fill all the required fields`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error("Fill all the fields ");
       return;
     }
     if (!validatemail(email)) {
-      toast.error(`Invalid email format`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error(`Invalid email format`);
       return;
     }
 
     if (!validatepassword(password)) {
       toast.error(
-        `Invalid password format, Use capital ,small letters, numbers and special characters`,
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        }
+        `Invalid password format, Use capital ,small letters, numbers and special characters`
       );
       return;
     }
+    setLoading(true);
+
     dispatch(loginUserThunk(userData))
       .then((res) => {
         // setLoading(res.payload.data.isLoading);
         if (res.payload.data.success) {
-          toast.success(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success(`${res.payload.data.msg}`);
+          setLoading(false);
 
           setEmail("");
           setPassword("");
 
           setTimeout(() => {
             navigate("/");
-          }, 3000);
+          }, 2000);
 
           localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading(false);
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -166,12 +136,35 @@ const Login = () => {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button
-                      className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white font-bold  rounded-lg px-3 py-3 dark:hover:bg-gray-700 p-3 hover:bg-gray-500 hover:text-white hover:no-underlinen  text-center m-2"
-                      onClick={handleLogin}
-                    >
-                      LOGIN
-                    </button>
+                    {loading ? (
+                      <div className="loader-container w-[100%] mx-auto flex items-center justify-center">
+                        <ColorRing
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="color-ring-loading"
+                          wrapperStyle={{
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          wrapperClass="color-ring-wrapper"
+                          colors={[
+                            "#e15b64",
+                            "#f47e60",
+                            "#f8b26a",
+                            "#abbd81",
+                            "#849b87",
+                          ]}
+                        />
+                      </div>
+                    ) : (
+                      <button
+                        className="block w-full max-w-xs mx-auto bg-primary hover:bg-focus:bg-primary text-white font-bold  rounded-lg px-3 py-3 dark:hover:bg-gray-700 p-3 hover:bg-gray-500 hover:text-white hover:no-underlinen  text-center m-2"
+                        onClick={handleLogin}
+                      >
+                        LOGIN
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className="text-center">
@@ -188,7 +181,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
       <Footer />
     </>
   );

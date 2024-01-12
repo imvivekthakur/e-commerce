@@ -50,6 +50,16 @@ const Categories = () => {
           </NavLink>
           <div className="text-center m-4 font-bold text-xl">Vehicles</div>
         </div>
+        <div>
+          <NavLink to="/home-appliance">
+            <img
+              className="w-full h-64 object-cover rounded-lg cursor-pointer hover:scale-105 duration-200"
+              src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2l0Y2hlbnxlbnwwfHwwfHx8MA%3D%3D"
+              alt="Bedroom"
+            />
+          </NavLink>
+          <div className="text-center m-4 font-bold text-xl">Home Appliance</div>
+        </div>
       </div>
     </div>
   );

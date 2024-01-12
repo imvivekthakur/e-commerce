@@ -10,6 +10,13 @@ export const Suggestion=[
 {
     id:3,
     name:'Vehicles'
+},{
+    id:4,
+    name:'Home Appliance'
+},
+{
+    id:5,
+    name:'Popular'
 },
 ]
 

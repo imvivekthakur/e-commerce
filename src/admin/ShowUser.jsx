@@ -21,6 +21,7 @@ const ShowUser = () => {
   return (
     <>
       <DefaultNavbar />
+      
       <div className="flex flex-col justify-center items-center" key={users.id}>
         <h1 className="text-4xl font-bold p-3 mt-40">Admin Profile</h1>
         <img

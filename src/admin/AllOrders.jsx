@@ -13,7 +13,7 @@ const AllOrders = () => {
         .accessToken;
       try {
         const response = await fetch(
-          "http://localhost:5000/order/getAll",
+          "https://renting-carnival.onrender.com/order/getAll",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -42,7 +42,7 @@ const AllOrders = () => {
     <>
     <DefaultNavbar/>
       <div className="mt-40 my-10">
-        <h1 className="text-4xl font-bold text-center m-8 text-primary">All Orders</h1>
+        <h1 className="text-4xl font-bold text-center m-8 mt-52 text-primary">All Orders</h1>
         <table className="mx-auto border-collapse border">
           <thead>
             <tr>
@@ -68,7 +68,7 @@ const AllOrders = () => {
                   <ul className="list-disc pl-4">
                     {order.products.map((product) => (
                       <li key={product._id}>
-                        {product.name} : Rs{product.price}
+                        {product.name} : Rs {product.price}
                       </li>
                     ))}
                   </ul>

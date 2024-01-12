@@ -4,9 +4,10 @@ import ReactPaginate from "react-paginate";
 import Card from "./Card";
 import Footer from "./Footer";
 import ProductCard from "./DynamicProducts/ProductCard";
+import { ColorRing } from "react-loader-spinner";
 
 const Shop = ({ allProducts }) => {
-  const [selectedCategory, setSelectedCategory] = useState("popular"); 
+  const [selectedCategory, setSelectedCategory] = useState("popular");
   const [filteredProduct, setFilteredProduct] = useState(allProducts);
   const [display, setDisplay] = useState(1);
   useEffect(() => {
@@ -30,10 +31,14 @@ const Shop = ({ allProducts }) => {
   useEffect(() => {
     // Check for display value to sort on initial load and subsequent clicks
     if (display === 1) {
-      const sortedLowToHigh = [...filteredProduct].sort((a, b) => a.price - b.price);
+      const sortedLowToHigh = [...filteredProduct].sort(
+        (a, b) => a.price - b.price
+      );
       setFilteredProduct(sortedLowToHigh);
     } else if (display === 2) {
-      const sortedHighToLow = [...filteredProduct].sort((a, b) => b.price - a.price);
+      const sortedHighToLow = [...filteredProduct].sort(
+        (a, b) => b.price - a.price
+      );
       setFilteredProduct(sortedHighToLow);
     }
   }, [display]);
@@ -62,6 +67,7 @@ const Shop = ({ allProducts }) => {
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = filteredProduct.slice(startIndex, endIndex);
 
+  console.log(currentProducts);
   return (
     <>
       <DefaultNavbar />
@@ -77,11 +83,10 @@ const Shop = ({ allProducts }) => {
           </span>
         </h1>
       </div>
-
-      <div className="text-sm w-[90%] mx-auto my-8">
+      <div className="text-sm w-[90%] mx-auto mt-8">
         <div>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "popular" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("popular")}
@@ -89,7 +94,7 @@ const Shop = ({ allProducts }) => {
             Popular
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Furniture" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("Furniture")}
@@ -97,7 +102,7 @@ const Shop = ({ allProducts }) => {
             Furniture
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Decorative Items"
                 ? "bg-primary text-white"
                 : ""
@@ -107,7 +112,7 @@ const Shop = ({ allProducts }) => {
             Decorative Items
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("Vehicles")}
@@ -117,31 +122,61 @@ const Shop = ({ allProducts }) => {
         </div>
         <br />
         <div>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          <button className="mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full">
             Sort by :
           </button>
-          <button className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 1 ? "bg-primary text-white" : ""}`} onClick={() => setDisplay(1)}>
+          <button
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
+              display == 1 ? "bg-primary text-white" : ""
+            }`}
+            onClick={() => setDisplay(1)}
+          >
             Low to High
           </button>
-          <button className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 2 ? "bg-primary text-white" : ""}`} onClick={() => setDisplay(2)}>
+          <button
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
+              display == 2 ? "bg-primary text-white" : ""
+            }`}
+            onClick={() => setDisplay(2)}
+          >
             High to Low
           </button>
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
-        {currentProducts.map((card, index) => (
-          <ProductCard
-            key={card._id}
-            img={card.productImages}
-            title={card.name}
-            desc={card.description}
-            price={card.price}
-            stock={card.stock}
-            category={card.category}
-            seller={card.owner.name}
-            productId={card._id}
-          />
-        ))}
+        {currentProducts.length > 0 ? (
+          currentProducts.map((card, index) => (
+            <div className="mt-20" key={card._id}>
+              <ProductCard
+                img={card.productImages}
+                title={card.name}
+                desc={card.description}
+                price={card.price}
+                stock={card.stock}
+                category={card.category}
+                seller={card.owner.name}
+                productId={card._id}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="loader-container w-full h-full flex items-center justify-center">
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "200px", // Add this line to set a minimum height
+              }}
+              wrapperClass="color-ring-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          </div>
+        )}
       </div>
       <div className="flex justify-center items-center m-10 mb-16">
         <ReactPaginate

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { addToCartThunk, removeFromCartThunk } from "../../redux/cartSlice";
 import {
   addToWishlistThunk,
   getWishlistThunk,
 } from "../../redux/wishlistSlice";
 import { NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
+import { ColorRing } from "react-loader-spinner";
+import "../../App.css";
 
 const ProductCard = ({
   img,
@@ -26,28 +27,19 @@ const ProductCard = ({
     }
   }, [img]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   const handleAddToCart = () => {
+    setLoading(true);
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product added to cart successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading(false);
+          toast.success("Product added to cart successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading(false);
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -59,26 +51,15 @@ const ProductCard = ({
   };
 
   const addToWishlistF = () => {
+    setLoading2(true);
     dispatch(addToWishlistThunk({ productId }))
       .then((res) => {
+        setLoading2(false);
         if (res.payload.data.success) {
-          toast.success("Product added to wishlist successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product added to wishlist successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading2(false);
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -90,9 +71,49 @@ const ProductCard = ({
   // console.log("images ", img);
   return (
     <div className="product-card-link">
-      <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
+      <div className="rounded-lg overflow-hidden bg-gray-100 product-card h-[34rem]">
+        <div className="hover-button">
+          {(loading || loading2) && (
+            <div className="loader-container hover-button ">
+              <ColorRing
+                visible={true}
+                height="40"
+                width="40"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                wrapperClass="color-ring-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            </div>
+          )}
+          {!loading && (
+            <button
+              onClick={handleAddToCart}
+              className="w-48 block bg-white py-2 my-2 rounded-md"
+            >
+              Add To Cart
+            </button>
+          )}
+          {!loading2 && (
+            <button
+              onClick={addToWishlistF}
+              className="w-48 block bg-white py-2 my-2 rounded-md"
+            >
+              Add To Wishlist
+            </button>
+          )}
+        </div>
         <NavLink to={`/product/${productId}`}>
-          <img src={selectedImage} alt="Bikes" className="object-cover h-64 w-full" />
+          <div className="gradient-container">
+            <img
+              src={selectedImage}
+              alt="Bikes"
+              className="object-cover h-64 w-full"
+            />
+          </div>
         </NavLink>
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">{title}</h1>
@@ -101,7 +122,9 @@ const ProductCard = ({
             {seller}
           </h2>
 
-          <p className="text-sm p-1">{desc}</p>
+          <p className="text-sm p-1">
+            {desc.length > 100 ? `${desc.slice(0, 100)}...` : desc}
+          </p>
           <p className="text-md font-medium p-1">
             <span>Category: </span>
             {category}
@@ -113,24 +136,7 @@ const ProductCard = ({
             {stock}
           </p>
         </div>
-
-        <div className="flex">
-          <button
-            onClick={handleAddToCart}
-            className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4"
-          >
-            Add To Cart
-          </button>
-
-          <button
-            className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
-            onClick={addToWishlistF}
-          >
-            Add To Wishlist
-          </button>
-        </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

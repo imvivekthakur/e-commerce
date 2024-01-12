@@ -24,7 +24,7 @@ const customStyles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    // backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 1000,
   },
   content: {
@@ -42,7 +42,6 @@ const customStyles = {
   },
 };
 
-
 const overlayStyle = {
   position: "absolute",
   top: 0,
@@ -52,7 +51,6 @@ const overlayStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
   color: "white",
   fontSize: "24px",
   zIndex: 2,
@@ -81,78 +79,82 @@ const Slider = () => {
     setIsOpen1(false);
   }
   return (
-    <>
-      <Carousel interval={1000} showIndicators={false}>
-        <div style={{ position: "relative", height: "600px" }}>
-          <div style={overlayStyle}>
-            <div
-              id="box"
-              className="text-left p-5 sm:p-8 md:p-10 lg:p-12 xl:p-16 mt-10 rounded-lg"
+    <div style={{ position: "relative" }}>
+      <div style={overlayStyle}>
+        <div
+          id="box"
+          className="text-left p-5 sm:p-8 md:p-10 lg:p-12 xl:p-16 mt-10 rounded-lg"
+        >
+          <h1 className="text-2xl sm:text-3xl md:text-4xl  font-semibold p-2 sm:p-4 text-black">
+            Rent High-Quality
+            <br />
+            Appliances, Furnitures
+            <br />& Bikes
+          </h1>
+          <p className="text-sm sm:text-md md:text-lg font-semibold p-2 sm:p-4 text-left text-black">
+            Plan and book your perfect trip with expert advice, travel tips,
+            <br />
+            destination information and inspiration from us!
+          </p>
+          <div className="flex flex-col sm:flex-row">
+            <button
+              onClick={openModal}
+              className="flex items-center text-primary mr-3 mt-3 border rounded-lg p-2 sm:p-3 hover:bg-primary hover:text-white hover:scale-110 transition-transform"
             >
-              <h1 className="text-2xl sm:text-3xl md:text-4xl  font-semibold p-2 sm:p-4 text-black">
-                Rent High-Quality
-                <br />
-                Appliances, Furnitures
-                <br />& Bikes
-              </h1>
-              <p className="text-sm sm:text-md md:text-lg font-semibold p-2 sm:p-4 text-left text-black">
-                Plan and book your perfect trip with expert advice, travel tips,
-                <br />
-                destination information and inspiration from us!
-              </p>
-              <div className="flex flex-col sm:flex-row">
+              <CiCircleCheck className="mr-2" /> Buy
+            </button>
+            <Modal
+              isOpen={modalIsOpen}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div>
                 <button
-                  onClick={openModal}
-                  className="flex items-center text-primary mr-3 mt-3 border rounded-lg p-2 sm:p-3 hover:bg-primary hover:text-white hover:scale-110 transition-transform"
+                  onClick={closeModal}
+                  className="bg-red-500 border rounded-lg absolute text-white p-2 mt-4"
                 >
-                  <CiCircleCheck className="mr-2" /> Buy
+                  x
                 </button>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onAfterOpen={afterOpenModal}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                >
-                  <div>
-                    <button
-                      onClick={closeModal}
-                      className="bg-red-500 border rounded-lg absolute text-white p-2 mt-4"
-                    >
-                      x
-                    </button>
-                    <Buy className="z-50" />
-                  </div>
-                </Modal>
-
-                <button
-                  onClick={openModal1}
-                  className="flex items-center text-primary mr-3 mt-3 border rounded-lg p-2 sm:p-3 hover:bg-primary hover:text-white hover:scale-110 transition-transform"
-                >
-                  <CiClock2 className="mr-2" /> Rent
-                </button>
-                <Modal
-                  isOpen={modalIsOpen1}
-                  onAfterOpen={afterOpenModal}
-                  onRequestClose={closeModal1}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                >
-                  <div>
-                    <button
-                      onClick={closeModal1}
-                      className="bg-red-500 border rounded-lg text-white p-2 mt-10  "
-                    >
-                      x
-                    </button>
-                    <Rent className="z-100" />
-                  </div>
-                </Modal>
-
-                
+                <Buy className="z-50" />
               </div>
-            </div>
+            </Modal>
+
+            <button
+              onClick={openModal1}
+              className="flex items-center text-primary mr-3 mt-3 border rounded-lg p-2 sm:p-3 hover:bg-primary hover:text-white hover:scale-110 transition-transform"
+            >
+              <CiClock2 className="mr-2" /> Rent
+            </button>
+            <Modal
+              isOpen={modalIsOpen1}
+              onAfterOpen={afterOpenModal}
+              onRequestClose={closeModal1}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div>
+                <button
+                  onClick={closeModal1}
+                  className="bg-red-500 border rounded-lg text-white p-2 mt-10  "
+                >
+                  x
+                </button>
+                <Rent className="z-50" />
+              </div>
+            </Modal>
           </div>
+        </div>
+      </div>
+      <Carousel interval={1000} showIndicators={false}>
+        <div
+          style={{
+            height: "600px",
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)",
+          }}
+        >
           <img src={slider1} style={imageStyle} alt="Slider 1" />
         </div>
         <div style={{ position: "relative", height: "600px" }}>
@@ -168,7 +170,7 @@ const Slider = () => {
           <img src={slider5} style={imageStyle} alt="Slider 5" />
         </div>
       </Carousel>
-    </>
+    </div>
   );
 };
 

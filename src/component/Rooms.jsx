@@ -6,6 +6,7 @@ import room2 from "../assets/Room2.svg";
 import room3 from "../assets/Room3.svg";
 import room4 from "../assets/Room4.svg";
 import room5 from "../assets/Room5.svg";
+import "./trend.css"
 
 const Rooms = () => {
   const responsive = {

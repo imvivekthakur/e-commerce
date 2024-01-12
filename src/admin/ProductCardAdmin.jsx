@@ -119,7 +119,7 @@ const ProductCardAdmin = ({
     <div className="product-card-link">
       <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
         <NavLink to={`/product/${productId}`}>
-          <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+          <img src={img[0]} alt="Bikes" className="object-cover h-64 w-full" />
         </NavLink>
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">

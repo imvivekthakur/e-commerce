@@ -3,13 +3,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { ColorRing } from "react-loader-spinner";
+import toast from "react-hot-toast";
 import { validatemail, validatepassword } from "../utils/validation";
 import { registerUserThunk } from "../redux/authSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -33,44 +35,23 @@ const Signup = () => {
 
   const handleSignup = () => {
     if (!password || !phone || !name || !role) {
-      toast.error(`Please fill all the required fields`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error(`Please fill all the required fields`);
       return;
     }
 
     if (!validatepassword(password)) {
       toast.error(
-        `Invalid password format, Use capital ,small letters, numbers and special characters`,
-        {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        }
+        `Invalid password format, Use capital ,small letters, numbers and special characters`
       );
       return;
     }
+    setLoading(true);
 
     dispatch(registerUserThunk(userData))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success(`${res.payload.data.msg}`, {
-            position: "top-right",
-            // theme: "dark",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success(`${res.payload.data.msg}`);
+          setLoading(false);
 
           setName("");
           setPassword("");
@@ -79,14 +60,9 @@ const Signup = () => {
             navigate("/");
           }, 3000);
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          setLoading(false);
+
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -419,7 +395,6 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
       <Footer />
     </>
   );
